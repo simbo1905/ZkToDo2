@@ -38,7 +38,7 @@ public class Reminder {
 	public int hashCode() {
 		return new HashCodeBuilder().append(id).append(name).append(priority).append(date).toHashCode();
 	}
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "REMINDER_ID")
 	private Long id;
 	

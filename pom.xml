@@ -4,7 +4,7 @@
 	<groupId>org.zkforge.zktodo2</groupId>
 	<artifactId>zktodo2</artifactId>
 	<packaging>war</packaging>
-	<version>1.5.0</version>
+	<version>1.6.0</version>
 	<name>zktodo2</name>
 	<url>http://java.dzone.com/articles/using-desktop-model-view</url>
 	<repositories>
@@ -14,6 +14,7 @@
 		</repository>
 	</repositories>
 	<properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<zk.version>5.0.5</zk.version>
 		<zkel.version>1.0.2</zkel.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
@@ -31,6 +32,7 @@
 		<zkspring.version>3.0RC</zkspring.version>
 		<commons-lang.version>2.5</commons-lang.version>
  		<jetty.version>7.4.5.v20110725</jetty.version>
+ 		<postgresql.version>8.4-702.jdbc3</postgresql.version>
  	</properties>
 	<dependencies>
 		<dependency>
@@ -289,6 +291,12 @@
 			<version>${hsqldb.version}</version>
 			<scope>runtime</scope>
 		</dependency>
+    	<dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+            <classifier/>
+        </dependency>
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>

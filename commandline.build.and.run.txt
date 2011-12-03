@@ -1,4 +1,21 @@
 
+Linux/Mac
+
+1) Obtain the maven3 tar.gz and extract into a folder such as /home/simon/maven
+2) Setup the environment variables for maven and the jdk and ensure that their bin
+folders are on your path
+	MAVEN_HOME=/home/simon/maven
+	export MAVEN_HOME
+	JAVA_HOME=/home/simon/jdk1.6
+	export JAVA_HOME
+	PATH=$JAVA_HOME\bin:$MAVEN_HOME\bin:$PATH
+3) Checkout the sourcecode from GitHub
+	git clone https://simbo1905@github.com/simbo1905/ZkToDo2.git
+4) Run it
+	cd ZkToDo2 
+	mvn -Djetty.port=8080 package jetty:run
+
+
 Windows: 
 
 1) Download an apache Maven zip file from http://maven.apache.org/
@@ -22,21 +39,3 @@ binary PATH with the command
 8) Compile and run the jetty webcontainer with the maven command
 	mvn -Djetty.port=8080 clean install jetty:run
 jetty will stay running on port until you kill it by entering Ctrl+c  
-
-Linux
-
-1) Obtain the maven3 tar.gz and extract into a folder such as /home/simon/maven
-2) Checkout the sourcecode from GitHub
-	git clone https://simbo1905@github.com/simbo1905/ZkToDo2.git
-3) Setup the environment variables for maven and the jdk and ensure that thier bin
-folders are on your path
-	MAVEN_HOME=/home/simon/maven
-	export MAVEN_HOME
-	JAVA_HOME=/home/simon/jdk1.6
-	export JAVA_HOME
-	PATH=$JAVA_HOME\bin:$MAVEN_HOME\bin:$PATH
-4) Change directory in to the top level folder of the source code which 
-contains the pom.xml file and build and run the code with the command 
-	mvn -Djetty.port=8080 clean install jetty:run
-
-
