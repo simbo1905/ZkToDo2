@@ -4,18 +4,15 @@ These instructions have been tested on:
 Version: 3.4.1 GANYMEDE eclipse-java-ganymede-SR1-win32.zip
 Build id: M20080911-1700
 
-1) Get the latest subclipse plug-in as per plug-in instructions 
-http://subclipse.tigris.org/install.html
+1) Get the latest EGit plug-in as per plug-in instructions 
+	http://www.eclipse.org/egit/download/
 2) Get the m2eclipse plug-in using same steps as for subclipse but with the 
 url detailed at http://m2eclipse.codehaus.org/
 The maven plug-in requires that your workspace is building with a jdk. If the 
 plug-in complains that you are not using a jdk simply use "Window > Preferences
 > Java > Installed JREs" to add then select a jdk as the workspaces default 
 java runtime. 
-3) Switch to the SVN Perspective. Right click in the left panel and add a new 
-SVN location for the zk.forge svn repository: 
-	https://zkforge.svn.sourceforge.net/svnroot/zkforge
-Then expand the location to find the zktodo2 subproject at trunk/zktodo2	
+3) TODO: eclipse git ...
 4) Right click on the zktodo2 folder within the SVN left and panel of the svn 
 perspective and choose "Checkout...". Accept the default settings.
 5) The source code will checkout as a project and eclipse will ask the 

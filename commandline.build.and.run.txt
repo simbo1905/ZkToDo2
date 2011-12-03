@@ -4,13 +4,8 @@ Windows:
 1) Download an apache Maven zip file from http://maven.apache.org/
 and extract into a folder that does not have spaces in the path 
 e.g. C:\users\simon\apache\maven
-2) Checkout the sourcecode from the maven repository at sourceforge
-using a program like TortoiseSVN or the Subclipse plugin for eclipse. 
-See the soureforge documenation for the Zk Forge project for details. 
-The URL of the repository is either 
-	https://zkforge.svn.sourceforge.net/svnroot/zkforge/zktodo2
-or 
-	https://zkforge.svn.sourceforge.net/svnroot/zkforge/trunk/zktodo2
+2) Checkout the sourcecode from GitHub
+	git clone https://simbo1905@github.com/simbo1905/ZkToDo2.git
 it is a good idea to check the code out into a folder that doex not have
 spaces e.g. C:\users\simon\projects\zktodo2
 3) Open up a command shell (cmd.exe) either from Start > Run... > cmd.exe
@@ -30,19 +25,18 @@ jetty will stay running on port until you kill it by entering Ctrl+c
 
 Linux
 
-1) Obtain the maven tar.gz and extract into a folder such as /home/simon/maven
-2) Checkout the source code from ZK Forge on sourceforge with a command such as 
-	svn co https://zkforge.svn.sourceforge.net/svnroot/zkforge/zktodo2 zktodo2
-or 
-	svn co https://zkforge.svn.sourceforge.net/svnroot/zkforge/trunk/zktodo2 zktodo2
+1) Obtain the maven3 tar.gz and extract into a folder such as /home/simon/maven
+2) Checkout the sourcecode from GitHub
+	git clone https://simbo1905@github.com/simbo1905/ZkToDo2.git
 3) Setup the environment variables for maven and the jdk and ensure that thier bin
 folders are on your path
 	MAVEN_HOME=/home/simon/maven
 	export MAVEN_HOME
-	JAVA_HOME=/home/simon/jdk1.5
+	JAVA_HOME=/home/simon/jdk1.6
 	export JAVA_HOME
 	PATH=$JAVA_HOME\bin:$MAVEN_HOME\bin:$PATH
 4) Change directory in to the top level folder of the source code which 
 contains the pom.xml file and build and run the code with the command 
 	mvn -Djetty.port=8080 clean install jetty:run
+
 

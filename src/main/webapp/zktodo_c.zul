@@ -32,9 +32,9 @@
 	 	onChange="@{toDoViewModel, converter='org.zkforge.zktodo2.binding.InputEventCommandConverter'}"/>
 	</hbox>
 	<hbox id="buttons">
-		 <button id="add" label="Add" width="36px" height="24px" onClick="@{toDoViewModel}"/>
-		 <button id="update" label="Update" width="46px" height="24px" onClick="@{toDoViewModel}"/>
+		 <button id="add" label="New" width="36px" height="24px" onClick="@{toDoViewModel}"/>
 		 <button id="delete" label="Delete" width="46px" height="24px" onClick="@{toDoViewModel}"/>
+		 <button id="update" label="Save" width="46px" height="24px" onClick="@{toDoViewModel}"/>
 	</hbox>
 </vbox> 
 </window>
