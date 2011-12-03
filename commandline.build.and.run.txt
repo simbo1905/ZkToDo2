@@ -1,0 +1,48 @@
+
+Windows: 
+
+1) Download an apache Maven zip file from http://maven.apache.org/
+and extract into a folder that does not have spaces in the path 
+e.g. C:\users\simon\apache\maven
+2) Checkout the sourcecode from the maven repository at sourceforge
+using a program like TortoiseSVN or the Subclipse plugin for eclipse. 
+See the soureforge documenation for the Zk Forge project for details. 
+The URL of the repository is either 
+	https://zkforge.svn.sourceforge.net/svnroot/zkforge/zktodo2
+or 
+	https://zkforge.svn.sourceforge.net/svnroot/zkforge/trunk/zktodo2
+it is a good idea to check the code out into a folder that doex not have
+spaces e.g. C:\users\simon\projects\zktodo2
+3) Open up a command shell (cmd.exe) either from Start > Run... > cmd.exe
+on XP or by searching for cmd on the start menu of vista.
+4) Change directories into the folder where the pom.xml file was checked 
+out from Subversion e.g. cd C:\users\simon\projects\zktodo2
+5) Within the cmd.exe configure the location of your jdk1.5 or above with
+	set JAVA_HOME=C:\users\simon\jdk1.5
+6) With the cmd.exe configure the location of your maven install
+	set MAVEN_HOME=C:\users\simon\apache\maven
+7) Ensure that both the java.exe and the mvn.bat folders are on your 
+binary PATH with the command
+	set PATH=%JAVA_HOME%\bin;%MAVEN_HOME%\bin;%PATH%
+8) Compile and run the jetty webcontainer with the maven command
+	mvn -Djetty.port=8080 clean install jetty:run
+jetty will stay running on port until you kill it by entering Ctrl+c  
+
+Linux
+
+1) Obtain the maven tar.gz and extract into a folder such as /home/simon/maven
+2) Checkout the source code from ZK Forge on sourceforge with a command such as 
+	svn co https://zkforge.svn.sourceforge.net/svnroot/zkforge/zktodo2 zktodo2
+or 
+	svn co https://zkforge.svn.sourceforge.net/svnroot/zkforge/trunk/zktodo2 zktodo2
+3) Setup the environment variables for maven and the jdk and ensure that thier bin
+folders are on your path
+	MAVEN_HOME=/home/simon/maven
+	export MAVEN_HOME
+	JAVA_HOME=/home/simon/jdk1.5
+	export JAVA_HOME
+	PATH=$JAVA_HOME\bin:$MAVEN_HOME\bin:$PATH
+4) Change directory in to the top level folder of the source code which 
+contains the pom.xml file and build and run the code with the command 
+	mvn -Djetty.port=8080 clean install jetty:run
+

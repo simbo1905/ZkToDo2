@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ZK.forge is distributed under Lesser GPL Version see also http://www.gnu.org/licenses/lgpl.html  -->
+<?page title="Weather Station MVVM Demo"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" ?>
+<?init class="org.zkforge.zktodo2.binding.CommandBinderInit" root="./buttons"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver" ?>
+<!-- 
+This example is inspired by Martin Fowler's Weather Station example at 
+http://martinfowler.com/eaaDev/uiArchs.html
+ -->
+<zk xmlns="http://www.zkoss.org/2005/zul">
+<style>
+.z-intbox { color: red; }
+.z-intbox-disd, .z-intbox-disd * { color: black !important; background: #fff !important;}
+.z-textbox-disd, .z-textbox-disd * { color: black !important; background: #fff !important;}
+</style>
+	<window title="Model-View-Binder (MVB) aka MVVM with Databindings, Statebindings &amp; CommandBindings" width="640px" border="normal">
+		<hbox width="100px">
+
+			<div width="200px">
+				<listbox id="list" multiple="true" rows="12"
+					model="@{testBean.stations, load-after='add.onClick'}" selectedItem="@{testBean.station}">
+					<listhead>
+						<listheader label="Station" />
+					</listhead>
+					<listitem self="@{each=station}">
+						<listcell label="@{station.name}" />
+					</listitem>
+				</listbox>
+			</div>
+			<grid width="350px">
+				<rows>
+					<row>
+						Station
+						<textbox id="nameTextbox" value="@{testBean.station.name, load-after='create.onClick'}" disabled="@{testBean.stationIsNotNew, load-after='create.onClick,add.onClick,list.onSelect'}" />
+					</row>
+					<row>
+						Date
+						<datebox value="@{testBean.station.date, load-after='create.onClick'}"/>
+					</row>
+					<row>
+						Target
+						<intbox value="@{testBean.station.target, load-after='create.onClick'}" disabled="@{testBean.stationIsNotNew, load-after='create.onClick,list.onSelect'}" />
+					</row>
+					<row>
+						Actual
+						<intbox id="actualIntbox" value="@{testBean.station.actual, load-after='create.onClick'}" disabled="@{testBean.station.confirmed, load-after='confirmedCheckbox.onChange'}" />
+					</row>
+					<row>
+						Variance
+						<intbox value="@{testBean.station.variance, load-after='actualIntbox.onChange,create.onClick'}" disabled="true" />
+					</row>
+					<row>
+						Confirmed
+						<checkbox id="confirmedCheckbox" checked="@{testBean.station.confirmed, load-after='create.onClick'}" />
+					</row>
+					<row id="buttons">
+						<div>	
+						</div>
+						<div>
+							<button id="create" label="New" onClick="@{testBean}"/>
+							<button id="add" label="Add" onClick="@{testBean}" disabled="@{testBean.isNotValidToAdd, load-after='nameTextbox.onChange'}"/>
+						</div>
+					</row>
+				</rows>
+			</grid>
+		</hbox>
+		<label value="This was inspired by Martin Fowler's Weather Station example at http://martinfowler.com/eaaDev/uiArchs.html"/>
+	</window>
+</zk>

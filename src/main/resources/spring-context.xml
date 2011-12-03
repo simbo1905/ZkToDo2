@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+	">
+
+	<tx:annotation-driven />
+
+	<!-- 
+    JPA config   
+    -->
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+		p:persistence-xml-location="classpath:META-INF/persistence-spring.xml"
+		p:data-source-ref="dataSource">
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+				p:showSql="true" p:generateDdl="true">
+			</bean>
+		</property>
+		<property name="jpaProperties">
+			<value>
+				hibernate.ejb.naming_strategy=org.hibernate.cfg.ImprovedNamingStrategy
+				hibernate.dialect=${hibernate.dialect}
+				hibernate.hbm2ddl.auto=${hibernate.hbm2ddl.auto}
+			</value>
+		</property>
+	</bean>
+
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<!-- 
+    JPA helpers
+    -->
+
+	<bean id="basicDao" class="org.zkforge.zktodo2.BasicDao" />
+
+	<!--
+		Classes used with MVP pattern version (original zkoss.org mvc4
+		article) http://www.zkoss.org/smalltalks/mvc4/
+	-->
+
+	<bean id="reminderService" class="org.zkforge.zktodo2.ReminderService"
+		p:basicDao-ref="basicDao" />
+
+	<bean id="toDoControllerV1" class="org.zkforge.zktodo2.ZkToDoControllerV1"
+		p:reminderService-ref="reminderService" scope="prototype" />
+
+	<!--
+	ZK-Spring support for beans scoped to the Zk Desktop 
+	 -->
+
+	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+		<property name="scopes">
+			<map>
+				<entry key="desktop">
+					<bean class="org.zkoss.spring.web.context.request.DesktopScope" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+	
+	<!--
+		Classes used with MVC pattern version (dzon.com mvc article)
+		http://java.dzone.com/articles/using-desktop-model-view
+	-->
+
+	<!-- 
+	Note that the following bean is desktop scoped. 
+	-->
+	<bean id="toDoModel" class="org.zkforge.zktodo2.ZkToDoModelImpl"
+		p:reminderService-ref="reminderService" scope="desktop" />
+
+	<bean id="toDoControllerV2" class="org.zkforge.zktodo2.ZkToDoControllerV2"
+		p:toDoModel-ref="toDoModel" scope="prototype" />
+
+	<!--
+	MVVM version 
+	-->
+
+	<bean id="toDoViewModel" class="org.zkforge.zktodo2.ZkToDoViewModel"
+		p:reminderService-ref="reminderService" scope="desktop" />
+
+
+</beans>

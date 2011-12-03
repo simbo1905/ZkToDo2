@@ -1,0 +1,39 @@
+
+These instructions have been tested on:
+
+Version: 3.4.1 GANYMEDE eclipse-java-ganymede-SR1-win32.zip
+Build id: M20080911-1700
+
+1) Get the latest subclipse plug-in as per plug-in instructions 
+http://subclipse.tigris.org/install.html
+2) Get the m2eclipse plug-in using same steps as for subclipse but with the 
+url detailed at http://m2eclipse.codehaus.org/
+The maven plug-in requires that your workspace is building with a jdk. If the 
+plug-in complains that you are not using a jdk simply use "Window > Preferences
+> Java > Installed JREs" to add then select a jdk as the workspaces default 
+java runtime. 
+3) Switch to the SVN Perspective. Right click in the left panel and add a new 
+SVN location for the zk.forge svn repository: 
+	https://zkforge.svn.sourceforge.net/svnroot/zkforge
+Then expand the location to find the zktodo2 subproject at trunk/zktodo2	
+4) Right click on the zktodo2 folder within the SVN left and panel of the svn 
+perspective and choose "Checkout...". Accept the default settings.
+5) The source code will checkout as a project and eclipse will ask the 
+m2eclipse plug-in to build the war file. You might want to switch off the menu 
+item "Project > Build Automatically" else maven will rebuild the war file any 
+time you change a file. With build automatically turned off simply hit the 
+keyboard shortcut Ctrl+b to run the build. When debugging you may wish 
+to turn automatic build back on to cause eclipse compile and injected new code
+into methods that you are stepping through. 
+6) Switch to the Java perspective. Right click on the project and choose 
+"Run As... > Run Configurations..." and then right click on "Maven Build" and 
+chose "New". Give it a name "jetty zktodo2". Use the "Browse Workspace" button 
+to set the "Base Directory" to be the zktodo2 project. In the goals textbox 
+enter "jetty:run" then click "Apply" then "Run". Maven should down load the 
+embedded jetty server which will run the application on port 8080. To stop the 
+server press the red stop button on the console view. If you would like to 
+configure a different port set a jvm variable of jetty.port in the run 
+configuration. If you kill the running process (red box on the console output) 
+you can now click the debug button to debug the app running within jetty. Be 
+sure to kill old jetty servers as thing can get confused if you try to run 
+more than one at a time.    
