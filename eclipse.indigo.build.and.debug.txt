@@ -28,7 +28,7 @@ CLONE THE REMOVE REPO AND IMPORT AS MAVEN
 	"Import Maven Projects...". 
 	
 	5) Switch to the Java perspective. Right click on the project and choose "Team > Share Project".
-	Select the checkbox "User or create repository in parent folder of project". 
+	Select Git and on the next step tick the box "Use or create repository in parent folder of project". 
 
 COMPILE / RUN / DEBUG
 
