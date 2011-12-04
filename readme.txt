@@ -29,6 +29,11 @@ Remember
 	data locally. flipping between the two seems to get things working. of course that setting is a 
 	bit lazy you can have hibernate generate the sql ddl script and use the heroku tools to manage 
 	your schema for a real app.
-	
+
+More documentation at: 
+
+	./commandline.build.and.run.txt
+	./eclipse.indigo.build.and.debug.txt
+
 
 

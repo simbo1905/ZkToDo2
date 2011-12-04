@@ -1,0 +1,48 @@
+
+These instructions have been tested on Eclipse 3.7.1 "Indigo" 
+
+Eclipse Indigo now has official JGit/EGit and m2eclipse plug-ins support. . 
+
+INSURE YOU HAVE THE PLUGINS AND THEIR CONNECTOR
+
+	1) [The first step may not be required in later Inidgo versions] Confirm that Egit is 'on'. 
+	"Help > Install New Software.." chose from the dropdown "Eclipse Git Plugin Update Site". 
+	If it is not in the dropdown click 'Available Software Sites' link on 
+	that dialogue. Scroll down looking for the url 
+		'http://download.eclipse.org/egit/updates' 
+	and make sure it is enabled. Back in the original dialogue it should be in 
+	the dropdown. See if anything is installable and if so install it. 
+	
+	2) Enable the Maven/EGit connector with these instructions
+		http://stackoverflow.com/questions/4542104/how-do-you-get-git-integration-working-with-m2eclipse
+
+CLONE THE REMOVE REPO AND IMPORT AS MAVEN
+
+	3) Switch to the "Window > Open Prespective > Git Repository" perspective. 
+	Copy the url following URL to the clipboard: 
+		https://simbo1905@github.com/simbo1905/ZkToDo2.git
+	In the left panel right click and "Paste Repository Path". This brings up a wizard 
+	which results in making a local repo clone; the defaults should work. 
+	
+	4) Expand the local repository and right click on the "Working directory" and choose 
+	"Import Maven Projects...". 
+	
+	5) Switch to the Java perspective. Right click on the project and choose "Team > Share Project".
+	Select the checkbox "User or create repository in parent folder of project". 
+
+COMPILE / RUN / DEBUG
+
+6) "Debug As... > Maven Build..." In the goals textbox enter "package jetty:run".
+Swith to the JRE tab and set a VM argument "-Djetty.port=8080" or whatever port 
+you wish to run on. Switch to the Environment tab and set a variable "DATABASE_URL" 
+to be your PostgreSQL server JDBC string e.g. 
+	"postgres://foodToGoUser:foodToGoPassword@localhost/testdb"
+
+7) Open a brower at "http://localhost:8080/
+
+8) Set a break point BasicDao.findAll method. Refresh the browser. It should stop and show you
+the "Source not found. Edit Source Lookup Path...". Click on that. Select "Add > Java Project" and 
+select the project. You should now be at your break point ready to explore the code. 
+
+End. 
+

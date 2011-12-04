@@ -4,3 +4,6 @@ zktodo2.dat.properties
 zktodo2.dat.script
 zktodo2test.dat.log
 zktodo2test.dat.properties
+/.project
+/.classpath
+/.settings
