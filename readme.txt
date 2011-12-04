@@ -5,14 +5,15 @@ Getting the source:
 	
 Ensure that it will create the database tables as necessary:
 
-	hibernate.hbm2ddl.auto=update file src/main/webapp/WEB-INF/classes/zktodo2.properties
+	set "hibernate.hbm2ddl.auto=update" in file src/main/webapp/WEB-INF/classes/zktodo2.properties
 
-Building and running it locally (requires a PostgreSQL database host/db/user/passwd):
+Building and running it locally requires a PostgreSQL database host/db/user/passwd:
 
 	mvn -Djetty.port=8080 -DDATABASE_URL=postgres://foodToGoUser:foodToGoPassword@localhost/testdb package jetty:run
 
-Running locally with Heroku dev tools
+Running locally with Heroku dev tools requres that you let it know the DATABASE_URL in an environment variable
 
+	export DATABASE_URL=postgres://foodToGoUser:foodToGoPassword@localhost/testdb
 	foreman start
 
 Pushing to Heroku Cloud: 
@@ -23,6 +24,7 @@ Pushing to Heroku Cloud:
 
 Remember
 
-	set hibernate.hbm2ddl.auto=validate file src/main/webapp/WEB-INF/classes/zktodo2.properties 
-	then mvn package as it seems to drop the data whenever you push when it is set to update
+	set "hibernate.hbm2ddl.auto=validate" file src/main/webapp/WEB-INF/classes/zktodo2.properties 
+	if it seems that it drops the data whenever you restart.
+
 
