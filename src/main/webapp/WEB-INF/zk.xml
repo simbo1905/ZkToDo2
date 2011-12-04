@@ -12,7 +12,7 @@
 		<!-- 
 		Do not enabled the following unless you fully understand the documentation and implication at
 		http://books.zkoss.org/wiki/Small_Talks/2007/July/ZK_Using_Grinder_3.0#IdGenerator
-		 -->
 		<id-generator-class>org.zkforge.zktodo2.loadtest.GrinderIdGenerator</id-generator-class>
+		 -->
 	</system-config>
 </zk>
