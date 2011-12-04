@@ -27,4 +27,5 @@ chose "New". Give it a name "jetty zktodo2". Use the "Browse Workspace" button
 to set the "Base Directory" to be the zktodo2 project. In the goals textbox 
 enter "jetty:run" then click "Apply" then "Run". 
 
+End. 
 
