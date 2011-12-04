@@ -24,7 +24,8 @@ Pushing to Heroku Cloud:
 
 Remember
 
-	set "hibernate.hbm2ddl.auto=validate" file src/main/webapp/WEB-INF/classes/zktodo2.properties 
-	if it seems that it drops the data whenever you restart.
+	setting "hibernate.hbm2ddl.auto=xxxx" in file src/main/webapp/WEB-INF/classes/zktodo2.properties 
+	seems to give some issues. 'validate' does not seem to work on heroku and 'update' seems to drop 
+	data locally. flipping between the two seems to get things working. 
 
 
