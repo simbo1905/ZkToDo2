@@ -22,8 +22,18 @@ Copyright (C) 2006 Potix Corporation. All Rights Reserved.
 	<separator bar="true"/>
 	<zscript>
 	int cnt = 0;
+	String helloName = "ZK";
+	try { 
+		helloName = Executions.getCurrent().getParameter("helloName");
+		if( helloName == null || helloName.trim().equals("") ) {
+			helloName = "ZK";
+		}
+	} catch (Throwable e) {
+		System.out.println("no name give: "+e);
+	}	
+	String hiString = "Hi, "+helloName+"!";
 	</zscript>
-	<button label="Hi" onClick='alert("Hi, Heroku!")'/>
+	<button label="Hi" onClick='alert(hiString)'/>
 	<button label="Click me" onClick='new Label("Click " + ++cnt + " ").setParent(self.parent)'/>
 	<button label="pause 10s" onClick='org.zkoss.lang.Threads.sleep(10000);new Label("I am back. ").setParent(self.parent)'/>
 	<separator bar="true"/>

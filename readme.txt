@@ -27,7 +27,7 @@ Remember
 	setting "hibernate.hbm2ddl.auto=xxxx" in file src/main/webapp/WEB-INF/classes/zktodo2.properties 
 	seems to give some issues. 'validate' does not seem to work on heroku and 'update' seems to drop 
 	data locally. flipping between the two seems to get things working. of course that setting is a 
-	bit lazy you can have hibernate generate the sql ddl script and use the heroku tools to mangage 
+	bit lazy you can have hibernate generate the sql ddl script and use the heroku tools to manage 
 	your schema for a real app.
 	
 
