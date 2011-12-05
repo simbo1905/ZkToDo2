@@ -18,9 +18,9 @@ Running locally with Heroku dev tools requres that you let it know the DATABASE_
 
 Pushing to Heroku Cloud: 
 
-  heroku create --stack cedar
-  git push heroku master
-  heroku open
+	heroku create --stack cedar
+	git push heroku master
+	heroku open
 
 Remember
 
@@ -34,6 +34,11 @@ More documentation at:
 
 	./commandline.build.and.run.txt
 	./eclipse.indigo.build.and.debug.txt
+	
+An article about the ZK, JPA & Spring code in this sample app is at:
+
+	http://java.dzone.com/articles/test-driving-mvvm-pattern-zk-0
+
 
 
 
