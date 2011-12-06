@@ -9,8 +9,8 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.InputEvent;
 import org.zkoss.zkplus.databind.TypeConverter;
-import org.zkoss.zul.api.Datebox;
-import org.zkoss.zul.api.Intbox;
+import org.zkoss.zul.Datebox;
+import org.zkoss.zul.Intbox;
 
 public class InputEventCommandConverter implements CommandConverter, TypeConverter {
 

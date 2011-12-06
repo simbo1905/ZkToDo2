@@ -8,18 +8,16 @@
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd
 	">
 
-<!-- 	
-	original HSQL settings
-		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close" p:driverClassName="${jdbc.driver}" p:url="${jdbc.url}"
-		p:username="${jdbc.username}" p:password="${jdbc.password}" />
- -->
-
-	<!-- PostgreSQL DATABASE_URL should be set with a -DDATABASE_URL=postgres://user:password@hostname/path -->
+	<!-- 
+	PostgreSQL DATABASE_URL should be set with a -DDATABASE_URL=postgres://user:password@hostname/path 
+	-->
 	<bean class="java.net.URI" id="dbUrl">
 		<constructor-arg value="${DATABASE_URL}" />
 	</bean>
 
+	<!-- 
+	Connection pool config will parse the properties held in DATABASE_URL and zktodo2.properties
+	 -->
 	<bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" id="dataSource">
 	    <property name="driverClassName" value="${database.driverClassName}"/>
 	    <property name="url" value="#{ 'jdbc:postgresql://' + @dbUrl.getHost() + @dbUrl.getPath() }"/>
@@ -27,16 +25,4 @@
 	    <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
 	</bean>
 
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
-		p:entity-manager-factory-ref="entityManagerFactory" />
-
-	<!-- Injected properties -->
-	<bean
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<list>
-				<value>classpath:zktodo2.properties</value>
-			</list>
-		</property>
-	</bean>
 </beans>

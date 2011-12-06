@@ -12,6 +12,26 @@
 	<tx:annotation-driven />
 
 	<!-- 
+	Injected properties 
+	-->
+	
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:zktodo2.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!--
+	Spring TX 
+	-->
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+		p:entity-manager-factory-ref="entityManagerFactory" />
+
+	<!-- 
     JPA config   
     -->
 

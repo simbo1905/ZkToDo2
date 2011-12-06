@@ -3,10 +3,6 @@ Getting the source:
 
 	git clone https://simbo1905@github.com/simbo1905/ZkToDo2.git
 	
-Ensure that it will create the database tables as necessary:
-
-	set "hibernate.hbm2ddl.auto=update" in file src/main/webapp/WEB-INF/classes/zktodo2.properties
-
 Building and running it locally requires a PostgreSQL database host/db/user/passwd:
 
 	mvn -Djetty.port=8080 -DDATABASE_URL=postgres://foodToGoUser:foodToGoPassword@localhost/testdb package jetty:run
@@ -22,13 +18,13 @@ Pushing to Heroku Cloud:
 	git push heroku master
 	heroku open
 
-Remember
+Note
 
-	setting "hibernate.hbm2ddl.auto=xxxx" in file src/main/webapp/WEB-INF/classes/zktodo2.properties 
-	seems to give some issues. 'validate' does not seem to work on heroku and 'update' seems to drop 
-	data locally. flipping between the two seems to get things working. of course that setting is a 
-	bit lazy you can have hibernate generate the sql ddl script and use the heroku tools to manage 
-	your schema for a real app.
+	"hibernate.hbm2ddl.auto=update" in file src/main/webapp/WEB-INF/classes/zktodo2.properties 
+	may or may not create the required database table. Also note that setting it to 'validate' 
+	is not something that Heroku db likes. of course that setting is a bit lazy you can have 
+	hibernate generate the sql ddl script and use the local/heroku tools to manage your schema 
+	for a real app.
 
 More documentation at: 
 

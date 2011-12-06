@@ -13,14 +13,14 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
-import org.zkoss.zul.ListitemRenderer;
+import org.zkoss.zul.Datebox;
+import org.zkoss.zul.Intbox;
 import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Listitem;
-import org.zkoss.zul.api.Listbox;
-import org.zkoss.zul.api.Textbox;
-import org.zkoss.zul.api.Datebox;
-import org.zkoss.zul.api.Intbox;
+import org.zkoss.zul.ListitemRenderer;
+import org.zkoss.zul.Textbox;
 
 /**
  * This class demonstrates "Model-View-Presenter" pattern as the Composer is 
