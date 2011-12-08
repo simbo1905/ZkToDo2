@@ -21,8 +21,8 @@ Pushing to Heroku Cloud:
 Note
 
 	"hibernate.hbm2ddl.auto=update" in file src/main/webapp/WEB-INF/classes/zktodo2.properties 
-	may or may not create the required database table. Also note that setting it to 'validate' 
-	is not something that Heroku db likes. of course that setting is a bit lazy you can have 
+	may or may not create the required database table. lso note that setting it to 'validate' 
+	is not something that Heroku db likes. O f course that setting is a bit lazy you can have 
 	hibernate generate the sql ddl script and use the local/heroku tools to manage your schema 
 	for a real app.
 

@@ -102,11 +102,16 @@
 		p:toDoModel-ref="toDoModel" scope="prototype" />
 
 	<!--
-	MVVM version 
+	ZK5 MVVM version (obsolete)
 	-->
 
 	<bean id="toDoViewModel" class="org.zkforge.zktodo2.ZkToDoViewModel"
 		p:reminderService-ref="reminderService" scope="desktop" />
 
+	<!-- 
+	ZK6 MVVM version
+	 -->
+	<bean id="toDoViewModel2" class="org.zkforge.zktodo2.ZkBindViewModel"
+		p:toDoModel-ref="toDoModel" scope="desktop" />
 
 </beans>
