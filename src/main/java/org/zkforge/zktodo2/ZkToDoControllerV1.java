@@ -9,7 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
@@ -21,6 +20,7 @@ import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.ListitemRenderer;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 /**
  * This class demonstrates "Model-View-Presenter" pattern as the Composer is 
@@ -30,8 +30,8 @@ import org.zkoss.zul.Textbox;
  * 
  * also known as Supervising Controller and Passive View. 
  */
-public class ZkToDoControllerV1 extends GenericForwardComposer implements
-		ListitemRenderer {
+public class ZkToDoControllerV1 extends GenericForwardComposer<Window> implements
+		ListitemRenderer<Reminder> {
 
 	private static final long serialVersionUID = -3486059156312322420L;
 
@@ -50,8 +50,9 @@ public class ZkToDoControllerV1 extends GenericForwardComposer implements
 
 	protected Reminder selectedReminder = null;
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public void doAfterCompose(Component comp) throws Exception {
+	public void doAfterCompose(Window comp) throws Exception {
 		super.doAfterCompose(comp);
 		listModelList = new ListModelList();
 		List<Reminder> reminders = reminderService.findAll();
@@ -74,7 +75,7 @@ public class ZkToDoControllerV1 extends GenericForwardComposer implements
 	protected Intbox priority;
 	protected Datebox date;
 	protected Listbox list;
-	protected ListModelList listModelList;
+	protected ListModelList<Reminder> listModelList;
 
 	public void onClick$add(Event e) {
 		Date dateValue = date.getValue();
@@ -147,8 +148,7 @@ public class ZkToDoControllerV1 extends GenericForwardComposer implements
 
 	protected SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy");
 	
-	public void render(Listitem listItem, Object data) throws Exception {
-		Reminder reminder = (Reminder) data;
+	public void render(Listitem listItem, Reminder reminder) throws Exception {
 		new Listcell(reminder.getName()).setParent(listItem);
 		new Listcell(reminder.getPriority()+"").setParent(listItem);
 		new Listcell(dateFormat.format(reminder.getDate())).setParent(listItem);

@@ -56,8 +56,7 @@ public class CommandBinderInit extends DataBinder implements Initiator, Initiato
 	
 	protected String root = null;
 	
-	@SuppressWarnings("unchecked")
-	public void doInit(Page page, Map args) throws Exception {
+	public void doInit(Page page, Map<String, Object> args) throws Exception {
 		this.page = page;
 		root = (String) args.get("root");
 		return;
@@ -98,7 +97,6 @@ public class CommandBinderInit extends DataBinder implements Initiator, Initiato
 
 		loadComponentPropertyAnnotationByAnnotName(comp, "default");
 		
-		@SuppressWarnings("unchecked")
 		final List<Component> children = comp.getChildren();
 		for (final Iterator<Component> it = children.iterator(); it.hasNext(); ) {
 			loadAnnotations((Component) it.next()); //recursive
@@ -114,11 +112,9 @@ public class CommandBinderInit extends DataBinder implements Initiator, Initiato
 		}
 		ComponentCtrl compCtrl = (ComponentCtrl) comp;
 		
-		@SuppressWarnings("unchecked")
 		final List<String> props = compCtrl.getAnnotatedPropertiesBy(annotName);
 		
-		for (@SuppressWarnings("unchecked") 
-				final Iterator it = props.iterator(); it.hasNext();) {
+		for( final Iterator<String> it = props.iterator(); it.hasNext();) {
 			
 			final String eventName = (String) it.next();
 			

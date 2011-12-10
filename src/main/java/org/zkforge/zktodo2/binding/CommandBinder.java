@@ -10,6 +10,8 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 
 /**
+ * NOTE WELL: THIS IS NOW OBSOLETE WITH ZK6 "ZK Bind"
+ * 
  * CommandBinder bind events such as "onClick"/"onChange" onto a POJO business object.  
  * 
  * An optional converter class can be specified. The converter bridges the View world of the 
@@ -26,6 +28,7 @@ import org.zkoss.zk.ui.event.EventListener;
  */
 public class CommandBinder {
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public CommandBinder(Component comp, String eventName, final Object target, String methodName, final CommandConverter converter) {
 		Method[] methods = target.getClass().getDeclaredMethods();
 		for (final Method m : methods) {
@@ -48,7 +51,7 @@ public class CommandBinder {
 								.append(" using parameters ")
 								.append(format(parameters))
 								.toString();
-							System.err.println(message);
+							System.err.println(message); // NOPMD by simbo on 12/10/11 12:06 PM
 						}
 					}
 

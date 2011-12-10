@@ -33,6 +33,7 @@
 		<commons-lang.version>2.5</commons-lang.version>
 		<jetty.version>7.4.5.v20110725</jetty.version>
 		<postgresql.version>8.4-702.jdbc3</postgresql.version>
+		<commons-logging.version>1.0.4</commons-logging.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -43,7 +44,7 @@
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
-			<version>1.0.4</version>
+			<version>${commons-logging.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-fileupload</groupId>

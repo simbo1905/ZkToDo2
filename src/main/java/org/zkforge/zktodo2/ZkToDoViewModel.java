@@ -79,6 +79,6 @@ public class ZkToDoViewModel {
 	 * are not bound to any Model pass data down into the ViewModel
 	 */
 	public void date(Date date ){
-		System.out.println("The date has changed to "+date);
+		System.out.println("The date has changed to "+date); // NOPMD by simbo on 12/10/11 12:07 PM
 	}
 }

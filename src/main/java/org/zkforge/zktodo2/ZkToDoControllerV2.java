@@ -16,6 +16,7 @@ import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 
 /**
@@ -25,7 +26,7 @@ import org.zkoss.zul.Textbox;
  * 
  * @author simon
  */
-public class ZkToDoControllerV2 extends GenericForwardComposer {
+public class ZkToDoControllerV2 extends GenericForwardComposer<Window> {
 
 	private static final long serialVersionUID = 2560535692993939331L;
 	protected Textbox name;
@@ -56,8 +57,8 @@ public class ZkToDoControllerV2 extends GenericForwardComposer {
 			reminder.setPriority(priority.getValue());
 			this.toDoModel.persistEvent(reminder);
 			List<Reminder> reminders = this.toDoModel.findAll();
-			ListModel listModel = this.list.getModel();
-			ListModelList listModelList = (ListModelList)listModel;
+			ListModel<Reminder> listModel = this.list.getModel();
+			ListModelList<Reminder> listModelList = (ListModelList<Reminder>)listModel;
 			listModelList.clear();
 			listModelList.addAll(reminders);
 		}
@@ -67,7 +68,7 @@ public class ZkToDoControllerV2 extends GenericForwardComposer {
 	public void onClick$update(Event e) {
 		Reminder selectedReminder = this.toDoModel.getSelectedReminder();
 		if( selectedReminder != null ){
-			ListModelList listModelList = (ListModelList)this.list.getModel();
+			ListModelList<Object> listModelList = (ListModelList<Object>) this.list.getModel();
 			try {
 				this.toDoModel.mergeEvent(selectedReminder);
 			} catch (EntityNotFoundException exception){
@@ -93,8 +94,8 @@ public class ZkToDoControllerV2 extends GenericForwardComposer {
 	public void onClick$delete(Event e) {
 		Reminder selectedReminder = this.toDoModel.getSelectedReminder();
 		if( null != selectedReminder ){
-			ListModel listModel = this.list.getModel();
-			ListModelList listModelList = (ListModelList)listModel;
+			ListModel<Reminder> listModel = this.list.getModel();
+			ListModelList<Reminder> listModelList = (ListModelList<Reminder>)listModel;
 			int index = listModelList.indexOf(selectedReminder);
 			try {
 				this.toDoModel.deleteEvent(selectedReminder);
