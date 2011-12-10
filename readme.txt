@@ -12,9 +12,10 @@ Running locally with Heroku dev tools requres that you let it know the DATABASE_
 	export DATABASE_URL=postgres://foodToGoUser:foodToGoPassword@localhost/testdb
 	foreman start
 
-Pushing to Heroku Cloud: 
+Pushing to Heroku Cloud (see http://devcenter.heroku.com/articles/git): 
 
-	heroku create --stack cedar
+	#heroku create --stack cedar
+	#git remote add heroku git@heroku.com:_your_app_.git
 	git push heroku master
 	heroku open
 

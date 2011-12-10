@@ -14,6 +14,7 @@
 			<listitem>
 				<listcell label="@load(reminder.name)"/>
 				<listcell label="@load(reminder.priority)"/>
+				<listcell label="@load(reminder.date)"/>
 			</listitem>
 		</template>
 	</listbox>
