@@ -31,9 +31,11 @@ More documentation at:
 	./commandline.build.and.run.txt
 	./eclipse.indigo.build.and.debug.txt
 	
-An article about the ZK, JPA & Spring code in this sample app is at:
+An article about the ZK, JPA & Spring code in this sample app is at: 
 
 	http://java.dzone.com/articles/test-driving-mvvm-pattern-zk-0
+
+(Note: articles does *not* cover ZK6 MVVM)
 
 
 
