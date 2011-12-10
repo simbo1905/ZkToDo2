@@ -17,3 +17,5 @@ And adaption of the test page from  http://books.zkoss.org/wiki/ZK_Installation_
         </hbox>
     </window>
 </window>
+<button label="Reload Page" onClick='Clients.evalJavaScript("window.location = window.location;")' /> 
+
