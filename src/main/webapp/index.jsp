@@ -1,7 +1,5 @@
 <br/>
-Click <a href="zktodo_c.zul">here</a> for the MVB aka MVVM version based on the approach 
-presented at the 
-<a href="http://dl.dropbox.com/u/2622674/zk/zk-mvvm.pdf">2010 UK ZK Users Group</a>.
+Click <a href="zktodo_d.zul">here</a> for the MVVM (aka MVB) version adapted from <a href="http://books.zkoss.org/wiki/Small_Talks/2011/November/MVVM_in_ZK_6_-_Design_CRUD_page_by_MVVM_pattern">Design CRUD page by MVVM pattern</a>.
 <br/>
 <br/>
 Click <a href="zktodo_b.zul">here</a> for the databindings MVC version of the zul with an explicit model class
@@ -11,12 +9,9 @@ which was written up in the <a href="http://java.dzone.com/articles/using-deskto
 Click <a href="zktodo_a.zul">here</a> for the original MVP version of the zul from the original article <a href="http://books.zkoss.org/wiki/Small%20Talks/2008/November/ZK%20With%20Spring%20JPA%20And%20A%20Model-View-Controller%20Pattern">ZK With Spring JPA And A Model-View-Controller Pattern</a>.  
 <br/>
 <br/>
-Click <a href="mvvm-demo/weather-station-mvvm.zul">here</a> for the weather station MVVM demo which is mentioned in the presentation at the link above.
-<br/>
 <h2>References</h2>
 <ul>
-        <li>Preview of up comming MVVM article <a href="http://dl.dropbox.com/u/2622674/zk/Test%20Driving%20The%20MVVM%20Pattern%20With%20The%20ZK%20Java%20Ajax%20Framework.html">Test
-Driving The MVVM Pattern With The ZK Java Ajax Framework</a><br> 
+        <li><a href="http://books.zkoss.org/wiki/Small_Talks/2011/November/MVVM_in_ZK_6_-_Design_CRUD_page_by_MVVM_pattern">Design CRUD page by MVVM pattern</a><br> 
         </li> 
 <li>MVC article <a
 href="http://java.dzone.com/articles/using-desktop-model-view">Desktop

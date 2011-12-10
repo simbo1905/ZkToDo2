@@ -5,6 +5,11 @@ package org.zkforge.zktodo2;
 
 import java.util.List;
 
+/**
+ * The service is a singleton so stateless. This class wraps holds state for 
+ * the user and delegates actions through to the statless service. 
+ * @author simbo
+ */
 public class ZkToDoModelImpl implements ZkToDoModel {
 	protected ReminderService reminderService; 
 

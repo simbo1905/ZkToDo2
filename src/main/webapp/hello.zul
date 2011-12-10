@@ -1,40 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?page title="Hello"?>
 <!--
-hello.zul
-
-{{IS_NOTE
-	Purpose:
-		
-	Description:
-		
-	History:
-		Thu Mar 23 21:03:20     2006, Created by tomyeh
-}}IS_NOTE
-
-Copyright (C) 2006 Potix Corporation. All Rights Reserved.
-
-{{IS_RIGHT
-}}IS_RIGHT
--->
-<window title="My First window at Heroku" border="normal" width="200px">
+And adaption of the test page from  http://books.zkoss.org/wiki/ZK_Installation_Guide/Setting_up_Servers/Google_App_Engine 
+ -->
+<window title="Hello MVVM" border="normal" width="200px" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkforge.zktodo2.loadtest.HelloVM')" >
 	Hello, World!
 	<separator bar="true"/>
-	<zscript>
-	int cnt = 0;
-	String helloName = "ZK";
-	try { 
-		helloName = Executions.getCurrent().getParameter("helloName");
-		if( helloName == null || helloName.trim().equals("") ) {
-			helloName = "ZK";
-		}
-	} catch (Throwable e) {
-		System.out.println("no name give: "+e);
-	}	
-	String hiString = "Hi, "+helloName+"!";
-	</zscript>
-	<button label="Hi" onClick='alert(hiString)'/>
-	<button label="Click me" onClick='new Label("Click " + ++cnt + " ").setParent(self.parent)'/>
-	<button label="pause 10s" onClick='org.zkoss.lang.Threads.sleep(10000);new Label("I am back. ").setParent(self.parent)'/>
-	<separator bar="true"/>
+	<button label="Hi" onClick="@command('toggle')"/>
+	<button label="Click Me" onClick="@command('append')"/>
+	<button label="Pause 3s" onClick="@command('pause')"/>
+	<label value="@bind(vm.message)"/>
+    <window title="Hello" width="300px" height="200px" mode="modal" visible="@load(vm.visible)">
+        <hbox align="center" pack="center" hflex="true" vflex="true">
+            <label value="Hi To You!"/>
+            <button label="Close" onClick="@command('toggle')"/>
+        </hbox>
+    </window>
 </window>

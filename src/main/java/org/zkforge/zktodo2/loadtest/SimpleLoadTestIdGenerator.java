@@ -19,7 +19,7 @@ import org.zkoss.zk.ui.http.DHtmlLayoutServlet;
  * IF YOU WANT TO LOAD TEST A REAL APP YOU NEED TO FIGURE OUT THE CORRECT WAY OF GENERATING REPEATABLE 
  * UUIDs FOR YOUR REAL APP.
  */
-public class GrinderIdGenerator extends DHtmlLayoutServlet implements org.zkoss.zk.ui.sys.IdGenerator {
+public class SimpleLoadTestIdGenerator extends DHtmlLayoutServlet implements org.zkoss.zk.ui.sys.IdGenerator {
 	 
 	private static final long serialVersionUID = -7124474398656691937L;
 	private static AtomicInteger desktop = new AtomicInteger();
@@ -76,7 +76,7 @@ public class GrinderIdGenerator extends DHtmlLayoutServlet implements org.zkoss.
         String dtid = "Desktop_"+desktop.getAndIncrement();
         System.out.println("desktop id: " + dtid); // NOPMD by simbo on 12/10/11 12:06 PM
         
-        HttpServletResponse response = (HttpServletResponse)GrinderIdGenerator.response.get();
+        HttpServletResponse response = (HttpServletResponse)SimpleLoadTestIdGenerator.response.get();
         response.addHeader("Desktop", dtid);// ...and here it is!
         return dtid;
     }

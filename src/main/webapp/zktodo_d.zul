@@ -1,54 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- ZK.forge is distributed under Lesser GPL Version see also http://www.gnu.org/licenses/lgpl.html  -->
-<?page title="ZkTodo2 - MVVM Example"?>
-<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" ?>
-<?init class="org.zkforge.zktodo2.binding.CommandBinderInit"?>
+<?page title="ZkTodo2 - ZK Bind MVVM Example"?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver" ?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
-<window title="To Do List :: Model-View-ViewModel MVVM" width="640px" border="normal">
-<listbox id="list" multiple="true" rows="12" apply="org.zkoss.bind.BindComposer" model="@load(toDoViewModel2.reminders)" selectedItem="@bind(toDoViewModel2.selectedReminder)">
-	<listhead>
-		<listheader label="Item" />
-		<listheader label="Priority" width="80px" />
-		<listheader label="Opened" width="90px" />
-	</listhead>
-	<template name="model" var="reminder">
-		<listitem>
-			<listcell label="@load(reminder.name)"/>
-			<listcell label="@load(reminder.priority)"/>
-		</listitem>
-	</template>
-</listbox>
-<listbox id="list2" multiple="true" rows="12" 
-		model="@{toDoViewModel.reminders, load-after='add.onClick,update.onClick,delete.onClick'}"
-		selectedItem="@{toDoViewModel.selectedReminder}">
-	<listhead>
-		<listheader label="Item" />
-		<listheader label="Priority" width="80px" />
-		<listheader label="Opened" width="90px" />
-	</listhead>
-	<listitem self="@{each=reminder}">
-		<listcell label="@{reminder.name}"/>
-		<listcell label="@{reminder.priority}"/>
-		<listcell label="@{reminder.date, converter='org.zkforge.zktodo2.DateFormatConverter'}"/>
-	</listitem>
-</listbox>
-<vbox>
-	<hbox>
-	 Item:<textbox cols="40" constraint="no empty" 
-	 	value="@{toDoViewModel.selectedReminder.name, load-after='add.onClick,delete.onClick'}"/>
-	 Priority:<intbox id="priority" cols="1" constraint="no empty" 
-	 	value="@{toDoViewModel.selectedReminder.priority, load-after='add.onClick,delete.onClick'}"
-	 	/>
-	 Date:<datebox id="date" cols="14" constraint="no empty" 
-	 	value="@{toDoViewModel.selectedReminder.date, load-after='add.onClick,delete.onClick'}"
-	 	onChange="@{toDoViewModel, converter='org.zkforge.zktodo2.binding.InputEventCommandConverter'}"/>
-	</hbox>
-	<hbox id="buttons">
-		 <button id="add" label="New" width="36px" height="24px" onClick="@{toDoViewModel}"/>
-		 <button id="delete" label="Delete" width="46px" height="24px" onClick="@{toDoViewModel}"/>
-		 <button id="update" label="Save" width="46px" height="24px" onClick="@{toDoViewModel}"/>
-	</hbox>
-</vbox> 
+<window title="To Do List :: 'ZK Bind MVVM' Model-View-ViewModel" width="640px" border="normal" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init(toDoViewModel2)">
+	<listbox id="list" multiple="true" rows="12" model="@load(vm.reminders)" selectedItem="@bind(vm.selectedReminder)">
+		<listhead>
+			<listheader label="Item" />
+			<listheader label="Priority" width="80px" />
+			<listheader label="Date" width="90px" />
+		</listhead>
+		<template name="model" var="reminder">
+			<listitem>
+				<listcell label="@load(reminder.name)"/>
+				<listcell label="@load(reminder.priority)"/>
+			</listitem>
+		</template>
+	</listbox>
+	<vbox>
+	 	<hbox>
+		 Item:<textbox cols="40" instant="true" 
+		 	value="@bind(vm.selectedReminder.name)" 
+		 	/>
+		 Priority:<intbox cols="2" instant="true"  
+		 	value="@bind(vm.selectedReminder.priority)" 
+		 	/>
+		 Date:<datebox cols="14" instant="true" 
+		 	value="@bind(vm.selectedReminder.date)" 
+		 	/>
+		</hbox>
+		<hbox>
+			 <button id="add" label="Add" width="36px" height="24px" onClick="@command('add')"/>
+			 <button id="delete" label="Delete" width="46px" height="24px" onClick="@command('delete')"/>
+			 <button id="save" label="Save" width="46px" height="24px" onClick="@command('save')"/>
+		</hbox>
+	</vbox> 
 </window>
 </zk>

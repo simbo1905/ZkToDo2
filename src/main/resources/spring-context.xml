@@ -9,12 +9,10 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
 	">
 
-	<tx:annotation-driven />
-
 	<!-- 
-	Injected properties 
+	Injected properties. There are two properties files. One in src/test/resource for junit
+	and another in src/main/webapp/WEB-INF/class for running in a Servlet container. 
 	-->
-	
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
@@ -25,15 +23,32 @@
 	</bean>
 
 	<!--
-	Spring TX 
+	ZK-Spring support for "desktop" scoped beans which are cached in the users Zk Desktop 
+	 -->
+	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+		<property name="scopes">
+			<map>
+				<entry key="desktop">
+					<bean class="org.zkoss.spring.web.context.request.DesktopScope" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<!--
+	Spring TX with @Transactional annotations
 	-->
+	<tx:annotation-driven />
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
 		p:entity-manager-factory-ref="entityManagerFactory" />
 
 	<!-- 
-    JPA config   
+    JPA config with @Repository annotations
     -->
+
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
@@ -53,65 +68,45 @@
 		</property>
 	</bean>
 
-	<bean
-		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
-
 	<!-- 
-    JPA helpers
+    JPA helpers. Everyone knows about DAOs so lets call it that but really 
+    an EntityManager<Reminder> would be more JPA
     -->
 
 	<bean id="basicDao" class="org.zkforge.zktodo2.BasicDao" />
+
+	<!-- 
+	This simple app has one service. A more complex app would have difference 
+	services which each used multiple JPA Helpers (e.g. clientDoa, productDao, orderDao)
+	 -->
+
+	<bean id="reminderService" class="org.zkforge.zktodo2.ReminderService"
+		p:basicDao-ref="basicDao" />
 
 	<!--
 		Classes used with MVP pattern version (original zkoss.org mvc4
 		article) http://www.zkoss.org/smalltalks/mvc4/
 	-->
 
-	<bean id="reminderService" class="org.zkforge.zktodo2.ReminderService"
-		p:basicDao-ref="basicDao" />
-
 	<bean id="toDoControllerV1" class="org.zkforge.zktodo2.ZkToDoControllerV1"
 		p:reminderService-ref="reminderService" scope="prototype" />
 
-	<!--
-	ZK-Spring support for beans scoped to the Zk Desktop 
-	 -->
-
-	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
-		<property name="scopes">
-			<map>
-				<entry key="desktop">
-					<bean class="org.zkoss.spring.web.context.request.DesktopScope" />
-				</entry>
-			</map>
-		</property>
-	</bean>
-	
-	<!--
-		Classes used with MVC pattern version (dzon.com mvc article)
-		http://java.dzone.com/articles/using-desktop-model-view
-	-->
-
 	<!-- 
-	Note that the following bean is desktop scoped. 
+	Note that the following bean has desktop scope. 
 	-->
 	<bean id="toDoModel" class="org.zkforge.zktodo2.ZkToDoModelImpl"
 		p:reminderService-ref="reminderService" scope="desktop" />
 
+	<!-- 
+	ZK5 MVC version. Note that the following bean has prototype scope. 
+	-->
 	<bean id="toDoControllerV2" class="org.zkforge.zktodo2.ZkToDoControllerV2"
 		p:toDoModel-ref="toDoModel" scope="prototype" />
 
-	<!--
-	ZK5 MVVM version (obsolete)
-	-->
-
-	<bean id="toDoViewModel" class="org.zkforge.zktodo2.ZkToDoViewModel"
-		p:reminderService-ref="reminderService" scope="desktop" />
-
 	<!-- 
-	ZK6 MVVM version
+	ZK6 MVVM version. Note that the following bean has prototype scope.
 	 -->
-	<bean id="toDoViewModel2" class="org.zkforge.zktodo2.ZkBindViewModel"
-		p:toDoModel-ref="toDoModel" scope="desktop" />
+	<bean id="toDoViewModel2" class="org.zkforge.zktodo2.ZkToDoViewModel"
+		p:reminderService-ref="reminderService" scope="desktop" />
 
 </beans>
