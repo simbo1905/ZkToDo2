@@ -1,0 +1,41 @@
+
+Linux/Mac
+
+1) Obtain the maven3 tar.gz and extract into a folder such as /home/simon/maven
+2) Setup the environment variables for maven and the jdk and ensure that their bin
+folders are on your path
+	MAVEN_HOME=/home/simon/maven
+	export MAVEN_HOME
+	JAVA_HOME=/home/simon/jdk1.6
+	export JAVA_HOME
+	PATH=$JAVA_HOME\bin:$MAVEN_HOME\bin:$PATH
+3) Checkout the sourcecode from GitHub
+	git clone https://simbo1905@github.com/simbo1905/ZkToDo2.git
+4) Run it
+	cd ZkToDo2 
+	mvn -Djetty.port=8080 package jetty:run
+
+
+Windows: 
+
+1) Download an apache Maven zip file from http://maven.apache.org/
+and extract into a folder that does not have spaces in the path 
+e.g. C:\users\simon\apache\maven
+2) Checkout the sourcecode from GitHub
+	git clone https://simbo1905@github.com/simbo1905/ZkToDo2.git
+it is a good idea to check the code out into a folder that doex not have
+spaces e.g. C:\users\simon\projects\zktodo2
+3) Open up a command shell (cmd.exe) either from Start > Run... > cmd.exe
+on XP or by searching for cmd on the start menu of vista.
+4) Change directories into the folder where the pom.xml file was checked 
+out from Subversion e.g. cd C:\users\simon\projects\zktodo2
+5) Within the cmd.exe configure the location of your jdk1.5 or above with
+	set JAVA_HOME=C:\users\simon\jdk1.5
+6) With the cmd.exe configure the location of your maven install
+	set MAVEN_HOME=C:\users\simon\apache\maven
+7) Ensure that both the java.exe and the mvn.bat folders are on your 
+binary PATH with the command
+	set PATH=%JAVA_HOME%\bin;%MAVEN_HOME%\bin;%PATH%
+8) Compile and run the jetty webcontainer with the maven command
+	mvn -Djetty.port=8080 clean install jetty:run
+jetty will stay running on port until you kill it by entering Ctrl+c  

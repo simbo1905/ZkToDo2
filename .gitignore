@@ -1,1 +1,10 @@
 target
+zktodo2.dat.log
+zktodo2.dat.properties
+zktodo2.dat.script
+zktodo2test.dat.log
+zktodo2test.dat.properties
+/.project
+/.classpath
+/.settings
+/zktodo2test.dat.script
