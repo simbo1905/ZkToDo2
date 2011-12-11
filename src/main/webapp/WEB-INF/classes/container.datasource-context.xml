@@ -9,31 +9,13 @@
 	">
 
 	<!-- 
-	PostgreSQL DATABASE_URL should be set with a -DDATABASE_URL=postgres://user:password@hostname/path 
-	-->
-	<bean class="java.net.URI" id="dbUrl">
-		<constructor-arg value="${DATABASE_URL}" />
-	</bean>
-
-	<!-- 
-	Connection pool config will parse the properties held in DATABASE_URL and zktodo2.properties
-	 -->
-	<bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" id="dataSource">
-	    <property name="driverClassName" value="${database.driverClassName}"/>
-	    <property name="url" value="#{ 'jdbc:postgresql://' + @dbUrl.getHost() + @dbUrl.getPath() }"/>
-	    <property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
-	    <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
-	</bean>
-
-	<!-- 
 		The following spring entity manager configuration has:
-			* A datasource set directly. 
-			* Does _not_ use the magic filename "META-INF/persistence.xml"
+			* No datasource set directly. It needs to set in the persistence.xml
+			* Uses the default container filename META-INF/persistence.xml
 	 -->
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-		p:persistence-xml-location="classpath:META-INF/default.persistence.xml"
-		p:data-source-ref="dataSource">
+		p:persistence-xml-location="classpath:META-INF/persistence.xml">
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
 				p:showSql="true" p:generateDdl="true">
@@ -47,5 +29,5 @@
 			</value>
 		</property>
 	</bean>
-
+	
 </beans>
