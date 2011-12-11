@@ -38,6 +38,9 @@ An article about the ZK, JPA & Spring code in this sample app is at:
 
 (Note: articles does *not* cover ZK6 MVVM)
 
+Openshift (Experimental):
+
+	./opensshift.build.and.run.txt
 
 
 
