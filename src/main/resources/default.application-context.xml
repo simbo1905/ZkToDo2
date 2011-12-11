@@ -9,18 +9,6 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
 	">
 
-	<!-- Injected properties. There are two properties files. One in src/test/resource 
-		for junit and another in src/main/webapp/WEB-INF/class for running in a Servlet 
-		container. -->
-	<bean
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<list>
-				<value>classpath:zktodo2.properties</value>
-			</list>
-		</property>
-	</bean>
-
 	<!-- ZK-Spring support for "desktop" scoped beans which are cached in the 
 		users Zk Desktop -->
 	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">

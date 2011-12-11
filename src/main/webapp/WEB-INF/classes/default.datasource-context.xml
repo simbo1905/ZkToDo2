@@ -8,6 +8,15 @@
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd
 	">
 
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:postgresql.zktodo2.properties</value>
+			</list>
+		</property>
+	</bean>
+
 	<!-- 
 	PostgreSQL DATABASE_URL should be set with a -DDATABASE_URL=postgres://user:password@hostname/path 
 	-->

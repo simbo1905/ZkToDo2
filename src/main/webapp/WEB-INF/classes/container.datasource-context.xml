@@ -8,6 +8,15 @@
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd
 	">
 
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:mysql.zktodo2.properties</value>
+			</list>
+		</property>
+	</bean>
+
 	<!-- 
 		The following spring entity manager configuration has:
 			* No datasource set directly. It needs to set in the persistence.xml
