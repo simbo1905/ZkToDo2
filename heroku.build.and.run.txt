@@ -1,0 +1,28 @@
+
+Heroku Cloud (see http://devcenter.heroku.com/articles/git): 
+
+	heroku create --stack cedar
+	#other heroku setup setups for to create a blank app
+	...
+	
+	#pull the sample code into the folder which is setup for your app
+	git remote add upstream https://simbo1905@github.com/simbo1905/ZkToDo2.git
+	git pull -s recursive -X theirs upstream master
+	git commit -am 'import'
+	#deploy as source code
+	git push
+	heroku open
+
+Running locally with Heroku toolbelt & PostgreSQL DB
+	
+	export DATABASE_URL=postgres://foodToGoUser:foodToGoPassword@localhost/testdb
+	mvn package
+	foreman start
+
+Note
+
+	"hibernate.hbm2ddl.auto=update" in file src/main/webapp/WEB-INF/classes/postgresql.zktodo2.properties 
+	should create the required database table. Note that setting it to 'validate' 
+	is not something that Heroku db seems to like. Of course that setting is a bit lazy you can have 
+	hibernate generate the sql ddl script and use the local/heroku tools to manage your schema 
+	for a real app.
