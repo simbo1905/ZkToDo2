@@ -22,6 +22,9 @@ To develop locally on JBossAS7.0 & MySQL 5.x DB (not strictly necessary but can 
 		http://community.jboss.org/wiki/DataSourceConfigurationInAS7
 			step "Installing a JDBC driver as a module" @ that page		
 			step "Defining the DataSource itself" @ that page
+			
+	your openshift app will deploy as ROOT.war so you need to disable the JBossAS7.0 welcome page
+		in $JBOSS_HOME/standalone/configuration/standalone.xml set "enable-welcome-root=false"
 	
 	ensure that you have your local db settings as environment variables before you run the code
 		export OPENSHIFT_DB_HOST=localhost
@@ -32,8 +35,9 @@ To develop locally on JBossAS7.0 & MySQL 5.x DB (not strictly necessary but can 
 	build the app setting the profile 'openzone' to package the mysql settings and deploy to local server
 	
 		mvn -Dmaven.test.skip=true -P openzone clean package
-		cp target\zktodo2-*.war $JBOSSAS7_HOME\standalone\deployments
-		$JBOSSAS7_HOME\bin\standalone.sh
+		cp deployments/ROOT.war $JBOSSAS7_HOME/standalone/deployments
+		$JBOSSAS7_HOME/bin/standalone.sh
+		browse http://127.0.0.1:9999
 		
 Note
 
