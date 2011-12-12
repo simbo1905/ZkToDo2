@@ -8,7 +8,7 @@
 	<!-- Spring -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/classes/default.application-context.xml,/WEB-INF/classes/container.datasource-context.xml</param-value>
+		<param-value>/WEB-INF/spring/spring-context.xml</param-value>
 	</context-param>
 
 	<listener>
