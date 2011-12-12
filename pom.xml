@@ -341,9 +341,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<version>2.3</version>
-<!-- 				<configuration>
-					<overrideWebXml>src/main/WEB-INF/default.web.xml</overrideWebXml>
-				</configuration> -->
+				<!-- <configuration> <overrideWebXml>src/main/WEB-INF/default.web.xml</overrideWebXml> 
+					</configuration> -->
 				<executions>
 					<execution>
 						<phase>package</phase>
@@ -374,7 +373,7 @@
 		</plugins>
 	</build>
 	<profiles>
-<!-- 		<profile>
+		<profile>
 			<id>default</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -390,7 +389,7 @@
 					</plugin>
 				</plugins>
 			</build>
-		</profile> -->
+		</profile>
 		<profile>
 			<id>openshift</id>
 			<build>
@@ -399,6 +398,8 @@
 						<artifactId>maven-war-plugin</artifactId>
 						<version>2.1.1</version>
 						<configuration>
+							<outputDirectory>deployments</outputDirectory>
+							<warName>ROOT</warName>
 							<webXml>src/main/webapp/WEB-INF/openshift.web.xml</webXml>
 						</configuration>
 					</plugin>
