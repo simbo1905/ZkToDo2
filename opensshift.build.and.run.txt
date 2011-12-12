@@ -2,7 +2,7 @@
 	rhc-create-domain -n zkdemo -l your@login.email -p 
 	rhc-create-app -a zktd2 -t jbossas-7.0
 	cd zktd2/
-	git remote add upstream git://github.com/simbo1905/ZkToDo2.git
+	git remote add upstream https://simbo1905@github.com/simbo1905/ZkToDo2.git
 	git pull -s recursive -X theirs upstream master
 	git commit -m 'import'
 
