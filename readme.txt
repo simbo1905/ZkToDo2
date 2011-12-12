@@ -7,8 +7,8 @@ This is the code for the "ZkToDo2" sample with ZK, JPA & Spring documented on dz
 
 See it running on the cloud (the apps may shutdown on idle so very slow on first request): 
 
-	http://zktd2-zkdemo.rhcloud.com/zktodo_d.zul (Heroku PaaS Cloud)
-	http://glowing-light-1070.herokuapp.com/zktodo_d.zul (OpenShift PaaS Cloud)
+	http://glowing-light-1070.herokuapp.com/zktodo_d.zul (Heroku PaaS Cloud)
+	http://zktd2-zkdemo.rhcloud.com/zktodo_d.zul (OpenShift PaaS Cloud)
 
 Getting the source:
 
@@ -22,7 +22,7 @@ Note
 
 	"hibernate.hbm2ddl.auto=update" in file src/main/webapp/WEB-INF/classes/postgresql.zktodo2.properties 
 	may or may not create the required database table. Of course that setting is a bit lazy you can have 
-	hibernate generate the sql ddl script and use the local/heroku tools to manage your schema 
+	hibernate generate the sql ddl script and use the local tools to manage your schema 
 	for a real app.
 	
 	within the source code there are config settings for running on mysql db, postgresql db and hsqldb
