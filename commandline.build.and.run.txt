@@ -1,4 +1,9 @@
 
+By default it requires a PostgreSQL db (source has examples of mysql)
+This is picked up from a DATABASE_URL env variable such as
+
+	postgres://foodToGoUser:foodToGoPassword@localhost/testdb
+
 Linux/Mac
 
 1) Obtain the maven3 tar.gz and extract into a folder such as /home/simon/maven
@@ -9,6 +14,8 @@ folders are on your path
 	JAVA_HOME=/home/simon/jdk1.6
 	export JAVA_HOME
 	PATH=$JAVA_HOME\bin:$MAVEN_HOME\bin:$PATH
+	DATABASE_URL=postgres://foodToGoUser:foodToGoPassword@localhost/testdb
+	export DATABASE_URL
 3) Checkout the sourcecode from GitHub
 	git clone https://simbo1905@github.com/simbo1905/ZkToDo2.git
 4) Run it
@@ -36,6 +43,8 @@ out from Subversion e.g. cd C:\users\simon\projects\zktodo2
 7) Ensure that both the java.exe and the mvn.bat folders are on your 
 binary PATH with the command
 	set PATH=%JAVA_HOME%\bin;%MAVEN_HOME%\bin;%PATH%
-8) Compile and run the jetty webcontainer with the maven command
+8) Ensure that it knows the database connection details
+	set DATABASE_URL=postgres://foodToGoUser:foodToGoPassword@localhost/testdb
+9) Compile and run the jetty webcontainer with the maven command
 	mvn -Djetty.port=8080 clean install jetty:run
 jetty will stay running on port until you kill it by entering Ctrl+c  
