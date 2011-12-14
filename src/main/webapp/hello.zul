@@ -8,7 +8,6 @@ And adaption of the test page from  http://books.zkoss.org/wiki/ZK_Installation_
 	<separator bar="true"/>
 	<button label="Hi" onClick="@command('toggle')"/>
 	<button label="Click Me" onClick="@command('append')"/>
-	<button label="Pause 3s" onClick="@command('pause')"/>
 	<label value="@bind(vm.message)"/>
     <window title="Hello" width="300px" height="200px" mode="modal" visible="@load(vm.visible)">
         <hbox align="center" pack="center" hflex="true" vflex="true">
@@ -16,6 +15,6 @@ And adaption of the test page from  http://books.zkoss.org/wiki/ZK_Installation_
             <button label="Close" onClick="@command('toggle')"/>
         </hbox>
     </window>
+<button label="Reload Page" onClick="Clients.evalJavaScript(&quot;window.location = window.location;&quot;)" /> 
 </window>
-<button label="Reload Page" onClick='Clients.evalJavaScript("window.location = window.location;")' /> 
 

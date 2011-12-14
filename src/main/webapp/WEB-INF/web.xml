@@ -5,7 +5,7 @@
 	<display-name>zktodo2</display-name>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:default.application-context.xml,classpath:default.datasource-context.xml</param-value>
+		<param-value>/WEB-INF/spring/application-context.xml,classpath:default.datasource-context.xml</param-value>
 	</context-param>
 	<!-- Spring -->
 	<listener>
@@ -29,10 +29,11 @@
 		<!-- 
 		Do not enabled the following unless you fully understand the documentation and implication at
 		http://books.zkoss.org/wiki/Small_Talks/2007/July/ZK_Using_Grinder_3.0#IdGenerator
-		<servlet-class>org.zkforge.zktodo2.loadtest.SimpleLoadTestIdGenerator</servlet-class> 
 		 -->
-		<servlet-class>org.zkoss.zk.ui.http.DHtmlLayoutServlet</servlet-class>
+		<servlet-class>org.zkforge.zktodo2.loadtest.SimpleLoadTestIdGenerator</servlet-class> 
 		
+<!-- 		<servlet-class>org.zkoss.zk.ui.http.DHtmlLayoutServlet</servlet-class>
+ -->		
 		<init-param>
 			<param-name>update-uri</param-name>
 			<param-value>/zkau</param-value>

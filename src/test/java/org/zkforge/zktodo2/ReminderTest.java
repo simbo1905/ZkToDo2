@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"classpath:dataSourceContext.xml","classpath:default.application-context.xml"})
+@ContextConfiguration(locations={"classpath:dataSourceContext.xml","file:src/main/webapp/WEB-INF/spring/application-context.xml"})
 @Transactional
 public class ReminderTest {
 
