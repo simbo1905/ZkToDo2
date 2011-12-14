@@ -1,11 +1,11 @@
 
-Linux install (their tools are ruby based)
+Heroku Cloud (see http://devcenter.heroku.com/articles/git): 
+
+Heroku Linux install (their tools are also ruby based)
 
 	sudo apt-get install ruby-full
 	http://toolbelt.heroku.com/linux/readme
-
-Heroku Cloud (see http://devcenter.heroku.com/articles/git): 
-
+	
 First build with the commandline.build.and.run.txt
 
 	#in the folder where you have the source and can compile the app

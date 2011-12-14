@@ -1,17 +1,39 @@
 
-	#steps to setup the cloud app instance as jbossas-70+mysql
+Openshift Linux install 
+
+First ensure that you can compile locally with commmandline.build.and.run.txt
+
+Install their toolbelt (their tools are also ruby based)
+
+	sudo apt-get install ruby-full
+	sudo apt-get install rubygems1.8
+	sudo gem install rhc
+	
+	#ensure that gems is on your PATH; look for EXECUTABLE DIRECTORY in following
+	gem environment 
+	#then ensure that PATH has that on it
+	PATH=$PATH:/your/gems/path/bin
+	export PATH
+	
+	# you need your domain on their cloud
 	rhc-create-domain -n zkdemo -l your@login.email -p 
+	
+	# if you get permission denied at your ~/.ssh/id_rsa.pub key 
+	# as your SSH PUBLIC KEY on openshift
+	
+	#setup the cloud app instance as jbossas-70+mysql
 	rhc-create-app -a zktd2 -t jbossas-7.0
-	rhc-ctl-app -a zktd2 -e add-mysql-5.1 -p 
+	rhc-ctl-app -a zktd2 -e add-mysql-5.1 -l your@login.email
 	cd zktd2/
 	#pull the sample code into the folder which is setup for your app
 	git remote add upstream https://simbo1905@github.com/simbo1905/ZkToDo2.git
 	git pull -s recursive -X theirs upstream master
+	git add
 	git commit -am 'import'
 	#once you have it working deploy your app as a sourcecode build/deploy
 	git push
 	#tail the logs in a new window
-	rhc-tail-files -a zktd2
+	rhc-tail-files -a zktd2 -l your@login.email
 	
 To develop locally on JBossAS7.0 & MySQL 5.x DB (not strictly necessary but can be helpful): 
 
