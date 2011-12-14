@@ -1,16 +1,20 @@
 
+Linux install (their tools are ruby based)
+
+	sudo apt-get install ruby-full
+	http://toolbelt.heroku.com/linux/readme
+
 Heroku Cloud (see http://devcenter.heroku.com/articles/git): 
 
+First build with the commandline.build.and.run.txt
+
+	#in the folder where you have the source and can compile the app
+	heroku login
 	heroku create --stack cedar
-	#other heroku setup setups for to create a blank app
-	...
-	
-	#pull the sample code into the folder which is setup for your app
-	git remote add upstream https://simbo1905@github.com/simbo1905/ZkToDo2.git
-	git pull -s recursive -X theirs upstream master
-	git commit -am 'import'
+	#this will give you the "http://APP_ID.herokuapp.com/" and 
+	#the heroku git repo address "git@heroku.com:APP_ID.git" 
 	#deploy as source code
-	git push
+	git push heroku master
 	heroku open
 
 Running locally with Heroku toolbelt & PostgreSQL DB
