@@ -3,7 +3,7 @@
 <?page title="ZkTodo2 - ZK Bind MVVM Example"?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver" ?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
-<window title="To Do List :: 'ZK Bind MVVM' Model-View-ViewModel" width="640px" border="normal" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init(toDoViewModel2)">
+<window title="To Do List :: 'ZK Bind MVVM' Model-View-ViewModel - hello zeeks!" width="640px" border="normal" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init(toDoViewModel2)">
 	<listbox id="list" multiple="true" rows="6" model="@load(vm.reminders)" selectedItem="@bind(vm.selectedReminder)">
 		<listhead>
 			<listheader label="Item" />
