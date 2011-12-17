@@ -8,6 +8,9 @@
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd
 	">
 
+	<!--
+	If you want a different database include a different properties file here. 
+	-->
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
@@ -18,14 +21,15 @@
 	</bean>
 
 	<!-- 
-	PostgreSQL DATABASE_URL should be set with a -DDATABASE_URL=postgres://user:password@hostname/path 
+	DATABASE_URL should be set with either "-DDATABASE_URL=postgres://user:password@hostname/dbname"
+	else with an environment variable. 
 	-->
 	<bean class="java.net.URI" id="dbUrl">
 		<constructor-arg value="${DATABASE_URL}" />
 	</bean>
 
 	<!-- 
-	Connection pool config will parse the properties held in DATABASE_URL and zktodo2.properties
+	Connection pool config will parse the properties held in DATABASE_URL and xyz.zktodo2.properties
 	 -->
 	<bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" id="dataSource">
 	    <property name="driverClassName" value="${database.driverClassName}"/>
@@ -37,7 +41,9 @@
 	<!-- 
 		The following spring entity manager configuration has:
 			* A datasource set directly. 
-			* Does _not_ use the magic filename "META-INF/persistence.xml"
+			* It does _not_ use the magic filename "META-INF/persistence.xml"
+		If you want to use a container datasource see the container.datasource-context.xml which
+		does use the magic file which specifies jndi for JBossAS7 and other containers. 
 	 -->
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"

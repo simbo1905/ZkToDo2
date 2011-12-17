@@ -1,22 +1,23 @@
 
 These instructions have been tested on Eclipse 3.7.1 "Indigo" 
 
-Eclipse Indigo now has official JGit/EGit and m2eclipse plug-ins support. . 
+Eclipse Indigo now has maven m2eclipse plug-ins baked in! 
 
-INSURE YOU HAVE THE PLUGINS AND THEIR CONNECTOR
+The default settings assume a postgresql database url and hibernate dialect. To switch to MySQL change 
+src/main/WEB-INF/classes/default.datasource-context.xml to refer to the other properties file. If you 
+get the code working with other databases let me know the settings which worked and I will commit them 
+for other folks. 
 
-	1) [The first step may not be required in later Inidgo versions] Confirm that Egit is 'on'. 
-	"Help > Install New Software.." chose from the dropdown "Eclipse Git Plugin Update Site". 
-	If it is not in the dropdown click 'Available Software Sites' link on 
-	that dialogue. Scroll down looking for the url 
-		'http://download.eclipse.org/egit/updates' 
-	and make sure it is enabled. Back in the original dialogue it should be in 
-	the dropdown. See if anything is installable and if so install it. 
+ENSURE YOU HAVE THE eGit PLUGIN AND m2e->eGit CONNECTOR
+
+	1) [The first step may not be required in later Inidgo versions] 
+	Confirm that Egit is 'on'. "Help > Eclipse Marketplace..." and search for
+	"EGit" and install the "EGit Team Provider". 
 	
 	2) Enable the Maven/EGit connector with these instructions
 		http://stackoverflow.com/questions/4542104/how-do-you-get-git-integration-working-with-m2eclipse
 
-CLONE THE REMOVE REPO AND IMPORT AS MAVEN
+CLONE THE REMOTE REPO AND IMPORT AS MAVEN
 
 	3) Switch to the "Window > Open Prespective > Git Repository" perspective. 
 	Copy the url following URL to the clipboard: 
@@ -28,21 +29,26 @@ CLONE THE REMOVE REPO AND IMPORT AS MAVEN
 	"Import Maven Projects...". 
 	
 	5) Switch to the Java perspective. Right click on the project and choose "Team > Share Project".
-	Select Git and on the next step tick the box "Use or create repository in parent folder of project". 
+	Select Git and on the next step tick the box "Use or create repository in parent folder of project"
+	then hit finish.
+ 
+You now have a local repo; when you commit you are committing locally not to the main server you cloned. 
+Drop me a line to get permissions to "git push origin master"
 
 COMPILE / RUN / DEBUG
 
-6) "Debug As... > Maven Build..." In the goals textbox enter "package jetty:run".
-Swith to the JRE tab and set a VM argument "-Djetty.port=8080" or whatever port 
-you wish to run on. Switch to the Environment tab and set a variable "DATABASE_URL" 
-to be your PostgreSQL server JDBC string e.g. 
-	"postgres://foodToGoUser:foodToGoPassword@localhost/testdb"
-
-7) Open a brower at "http://localhost:8080/
-
-8) Set a break point BasicDao.findAll method. Refresh the browser. It should stop and show you
-the "Source not found. Edit Source Lookup Path...". Click on that. Select "Add > Java Project" and 
-select the project. You should now be at your break point ready to explore the code. 
+	6) "Debug As... > Maven Build..." In the goals textbox enter "package jetty:run".
+	Swith to the JRE tab and set a VM argument "-Djetty.port=8888" or whatever port 
+	you wish to run on. Switch to the Environment tab and set a variable "DATABASE_URL" 
+	to be your JDBC URL e.g. 
+	
+		"postgres://foodToGoUser:foodToGoPassword@localhost/testdb"
+	
+	7) Open a browser at "http://localhost:8080/
+	
+	8) Set a break point BasicDao.findAll method. Refresh the browser. It should stop and show you
+	the "Source not found. Edit Source Lookup Path...". Click on that. Select "Add > Java Project" and 
+	select the zktodo2 project. It should now find the source line the next time you hit a breakpoint. 
 
 End. 
 
