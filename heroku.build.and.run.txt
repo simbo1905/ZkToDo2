@@ -13,6 +13,7 @@ First build with the instructions in commandline.build.and.run.txt
 	heroku create --stack cedar
 	#this will give you the "http://APP_ID.herokuapp.com/" and 
 	#the heroku git repo address "git@heroku.com:APP_ID.git" 
+	# (you can add this target to another copy of the code with "git remote add upstream git@heroku.com:glowing-light-1070.git")
 	#push the code up to heroku to compile/package/deploy/start 
 	git push heroku master
 	#the following command opens a browser at the correct app (very helpful when you have different dev,qa,prod instances)
