@@ -35,6 +35,9 @@ Install their toolbelt (their tools are ruby based)
 	#tail the logs in a new window
 	rhc-tail-files -a zktd2 -l your@login.email
 	
+If you are having git push issues on a fresh checkout you can explicitly "git remote add openshift ssh://XXX@YY.rhcloud.com/~/git/ZZZZ.git/"
+using the ssh url presented to you on your openshift console. Then "git push openshift master". 
+	
 Most of their commands let you add "-p your_password". Note also that eclipse lets you create 
 run command which are external scripts so you can no doubt set it up so that you can tail 
 the server logs from inside of eclipse with an eclipse run. 
