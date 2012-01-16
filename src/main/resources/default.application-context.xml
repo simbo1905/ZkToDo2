@@ -61,5 +61,9 @@
 	<!-- ZK6 MVVM version. Note that the following bean has prototype scope. -->
 	<bean id="toDoViewModel2" class="org.zkforge.zktodo2.ZkToDoViewModel"
 		p:reminderService-ref="reminderService" scope="desktop" />
+		
+	<!-- ZK6 MVVM version. Note that the following bean has prototype scope. -->
+	<bean id="toDoViewModel3" class="org.zkforge.zktodo2.ZkToDoValidationViewModel"
+		p:reminderService-ref="reminderService" scope="desktop" />
 
 </beans>
