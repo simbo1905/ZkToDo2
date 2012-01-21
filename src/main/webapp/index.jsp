@@ -1,5 +1,6 @@
 <html>
 <head>
+<title>ZkToDo2 :: ZK MVVM, Spring & JPA</title>
 <style type="text/css">
 
 #bigbuttons li {
