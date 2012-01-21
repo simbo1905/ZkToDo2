@@ -1,0 +1,4 @@
+
+See openshift.build.and.run.txt where it explains running locally on JBossAS7.
+
+End. 

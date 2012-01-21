@@ -1,9 +1,9 @@
 
-Openshift Linux install 
+Openshift Linux build & deploy 
 
 First ensure that you can compile locally with commmandline.build.and.run.txt
 
-Install their toolbelt (their tools are also ruby based)
+Install their toolbelt (their tools are ruby based)
 
 	sudo apt-get install ruby-full
 	sudo apt-get install rubygems1.8
@@ -15,11 +15,11 @@ Install their toolbelt (their tools are also ruby based)
 	PATH=$PATH:/your/gems/path/bin
 	export PATH
 	
-	# you need your domain on their cloud
+	# if you dont have one yet you need to your domain on their cloud
 	rhc-create-domain -n zkdemo -l your@login.email -p 
 	
-	# if you get permission denied at your ~/.ssh/id_rsa.pub key 
-	# as your SSH PUBLIC KEY on openshift
+	# if you get permission denied add your ~/.ssh/id_rsa.pub key 
+	# as your SSH PUBLIC KEY on openshift which will allow you to push code
 	
 	#setup the cloud app instance as jbossas-70+mysql
 	rhc-create-app -a zktd2 -t jbossas-7.0
@@ -35,8 +35,17 @@ Install their toolbelt (their tools are also ruby based)
 	#tail the logs in a new window
 	rhc-tail-files -a zktd2 -l your@login.email
 	
-To develop locally on JBossAS7.0 & MySQL 5.x DB (not strictly necessary but can be helpful): 
+If you are having git push issues on a fresh checkout you can explicitly "git remote add openshift ssh://XXX@YY.rhcloud.com/~/git/ZZZZ.git/"
+using the ssh url presented to you on your openshift console. Then "git push openshift master". 
+	
+Most of their commands let you add "-p your_password". Note also that eclipse lets you create 
+run command which are external scripts so you can no doubt set it up so that you can tail 
+the server logs from inside of eclipse with an eclipse run. 
+	
+To develop locally on JBossAS7.0 & MySQL 5.x DB (your gonna need it to do anything more serious 
+than the demo app): 
 
+	#use the versions they are currently using! 
 	unzip boss-as-web-7.0.x.Final.zip 
 	setup a local mysql database server
 	
@@ -59,7 +68,7 @@ To develop locally on JBossAS7.0 & MySQL 5.x DB (not strictly necessary but can 
 		mvn -Dmaven.test.skip=true -P openzone clean package
 		cp deployments/ROOT.war $JBOSSAS7_HOME/standalone/deployments
 		$JBOSSAS7_HOME/bin/standalone.sh
-		browse http://127.0.0.1:9999
+		# open a browser http://127.0.0.1:9999
 		
 Note
 
@@ -68,7 +77,12 @@ Note
 	hibernate generate the sql ddl script and use the local/openshift tools to manage your schema 
 	for a real app.
 
-Details about layout and deployment options on OpenShift
+Further details about layout and deployment options on OpenShift (you can put spectially named files
+into the deployments folder to tell it to restart the app and the like). 
+
+I don't have any tips for debugging as I always debug with embedded jetty:run with a local spring 
+setup then push to containers. Its always worth the hassle to set this up. 
+
 ==================
 There are two options for deploying content to the JBoss Application Server within OpenShift Express:
 

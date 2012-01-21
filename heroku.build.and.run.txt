@@ -1,20 +1,22 @@
 
 Heroku Cloud (see http://devcenter.heroku.com/articles/git): 
 
-Heroku Linux install (their tools are also ruby based)
+Heroku Linux install (their tools are ruby based)
 
 	sudo apt-get install ruby-full
 	http://toolbelt.heroku.com/linux/readme
 	
-First build with the commandline.build.and.run.txt
+First build with the instructions in commandline.build.and.run.txt
 
-	#in the folder where you have the source and can compile the app
+	#in the folder where you have the source and can compile build the app with commandline.build.and.run.txt
 	heroku login
 	heroku create --stack cedar
 	#this will give you the "http://APP_ID.herokuapp.com/" and 
 	#the heroku git repo address "git@heroku.com:APP_ID.git" 
-	#deploy as source code
+	# (you can add this target to another copy of the code with "git remote add upstream git@heroku.com:glowing-light-1070.git")
+	#push the code up to heroku to compile/package/deploy/start 
 	git push heroku master
+	#the following command opens a browser at the correct app (very helpful when you have different dev,qa,prod instances)
 	heroku open
 
 Running locally with Heroku toolbelt & PostgreSQL DB
@@ -27,6 +29,6 @@ Note
 
 	"hibernate.hbm2ddl.auto=update" in file src/main/webapp/WEB-INF/classes/postgresql.zktodo2.properties 
 	should create the required database table. Note that setting it to 'validate' 
-	is not something that Heroku db seems to like. Of course that setting is a bit lazy you can have 
+	is not something that Heroku db seems to like. Of course those setting is a bit lazy you can have 
 	hibernate generate the sql ddl script and use the local/heroku tools to manage your schema 
 	for a real app.

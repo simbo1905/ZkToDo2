@@ -15,7 +15,7 @@
 	</repositories>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<zk.version>6.0.0-RC2</zk.version>
+		<zk.version>6.0.0.FL.20111222</zk.version>
 		<zkel.version>1.0.2</zkel.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
 		<hsqldb.version>1.8.0.7</hsqldb.version>
@@ -34,6 +34,7 @@
 		<jetty.version>7.4.5.v20110725</jetty.version>
 		<postgresql.version>8.4-702.jdbc3</postgresql.version>
 		<commons-logging.version>1.0.4</commons-logging.version>
+		<dom4j.version>1.6.1</dom4j.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -294,7 +295,18 @@
 					<groupId>javax.transaction</groupId>
 					<artifactId>jta</artifactId>
 				</exclusion>
+				<exclusion>
+					<artifactId>dom4j</artifactId>
+					<groupId>dom4j</groupId>
+				</exclusion>
 			</exclusions>
+		</dependency>
+		<!--  manage dom4j explicity for JBossAS702 -->
+		<dependency>
+			<artifactId>dom4j</artifactId>
+			<groupId>dom4j</groupId>
+			<scope>runtime</scope>
+			<version>${dom4j.version}</version>
 		</dependency>
 		<!-- below are optional runtime database pool and drivers -->
 		<dependency>
@@ -386,6 +398,15 @@
 					</plugin>
 				</plugins>
 			</build>
+			<dependencies>
+				<!-- classloader issues on JBossAS702 to mark dom4j as provided -->
+				<dependency>
+					<artifactId>dom4j</artifactId>
+					<groupId>dom4j</groupId>
+					<scope>provided</scope>
+					<version>${dom4j.version}</version>
+				</dependency>
+			</dependencies>
 		</profile>
 	</profiles>
 </project>

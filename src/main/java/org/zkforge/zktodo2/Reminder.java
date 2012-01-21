@@ -14,7 +14,6 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.zkoss.bind.annotation.NotifyChange;
 
 @Entity
 @Table(name = "REMINDER")
@@ -61,14 +60,12 @@ public class Reminder {
 	public Date getDate() {
 		return date;
 	}
-	@NotifyChange
 	public void setDate(Date date) {
 		this.date = date;
 	}
 	public int getPriority() {
 		return priority;
 	}
-	@NotifyChange
 	public void setPriority(int priority) {
 		this.priority = priority;
 	}
@@ -81,7 +78,6 @@ public class Reminder {
 	public String getName() {
 		return name;
 	}
-	@NotifyChange
 	public void setName(String name) {
 		this.name = name;
 	}
