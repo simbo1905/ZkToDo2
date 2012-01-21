@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
-<label value="The exmample 'zktodo_c.zul' from the original dzone.com/javalobby.org article is deprecated. Take a look at the zktodo_d.zul example which uses the ZK6 RC2 'Zk Bind'."/>
+<label value="The example 'zktodo_c.zul' from the original dzone.com/javalobby.org article is deprecated. Take a look at the zktodo_d.zul example which uses the ZK6 'Zk Bind'."/>
 </zk>

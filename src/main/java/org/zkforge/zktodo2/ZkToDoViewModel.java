@@ -42,7 +42,7 @@ public class ZkToDoViewModel  {
 				this.reminderService.delete(selectedReminder);
 				this.selectedReminder = new Reminder();
 			} catch (EntityNotFoundException e) {
-				// no doubt someone else deleted it at the same time. noting to do. 
+				// no doubt someone else deleted it at the same time. nothing to do. 
 			}
 		}
 	}
@@ -56,16 +56,15 @@ public class ZkToDoViewModel  {
 			} catch (EntityNotFoundException e) {
 				e.printStackTrace(); // hum. some else deleted this. should really send this up to the user and ask them to reload the page. 
 			}
+		} else {
+			this.reminderService.persist(this.selectedReminder);
 		}
 	}
 	
 	@Command
 	@NotifyChange({"reminders","selectedReminder"})
-	public void add() {
-		if( this.selectedReminder.getId() == null ){
-			this.reminderService.persist(this.selectedReminder);
-			this.selectedReminder = new Reminder();
-		}
+	public void create() {
+		this.selectedReminder = new Reminder();
 	}
 
 }
