@@ -1,6 +1,8 @@
 <br/>
 Click <a href="zktodo_d.zul">here</a> for the MVVM (aka MVB) version adapted from <a href="http://books.zkoss.org/wiki/Small_Talks/2011/November/MVVM_in_ZK_6_-_Design_CRUD_page_by_MVVM_pattern">Design CRUD page by MVVM pattern</a>.
 <br/>
+Click <a href="zktodo_e.zul">here</a> for the MVVM (aka MVB) version with validation adapted from <a href="http://books.zkoss.org/wiki/Small_Talks/2011/November/MVVM_in_ZK_6_-_Design_CRUD_page_by_MVVM_pattern">Design CRUD page by MVVM pattern</a>.
+<br/>
 <br/>
 Click <a href="zktodo_b.zul">here</a> for the databindings MVC version of the zul with an explicit model class
 which was written up in the <a href="http://java.dzone.com/articles/using-desktop-model-view">Using Desktop MVC Patterns with ZK, Spring & JPA</a> 
