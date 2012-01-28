@@ -34,3 +34,4 @@ More documentation at:
 	./heroku.build.and.run.txt
 	./jboss.build.and.run.txt
 
+Test gs3cdi branch
