@@ -1,39 +1,19 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
-<web-app>
-	<display-name>zktodo2</display-name>
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/application-context.xml,classpath:default.datasource-context.xml</param-value>
-	</context-param>
-	<!-- Spring -->
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-	<listener>
-		<!-- The Spring RequestContextLister uses thread bound variables so to 
-		use this Spring freatures requires that we apply <disable-event-thread /> 
-		within zk.xml -->
-		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-	</listener>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
 	<!-- ZK -->
 	<listener>
-		<listener-class>
-			org.zkoss.zk.ui.http.HttpSessionListener
-		</listener-class>
+		<listener-class>org.zkoss.zk.ui.http.HttpSessionListener</listener-class>
 	</listener>
 	<servlet>
 		<servlet-name>zkLoader</servlet-name>
-		
-		<!-- 
-		Do not enabled the following unless you fully understand the documentation and implication at
-		http://books.zkoss.org/wiki/Small_Talks/2007/July/ZK_Using_Grinder_3.0#IdGenerator
-		 -->
-		<servlet-class>org.zkforge.zktodo2.loadtest.SimpleLoadTestIdGenerator</servlet-class> 
-		
-<!-- 		<servlet-class>org.zkoss.zk.ui.http.DHtmlLayoutServlet</servlet-class>
- -->		
+
+		<servlet-class>org.zkoss.zk.ui.http.DHtmlLayoutServlet</servlet-class>
+
 		<init-param>
 			<param-name>update-uri</param-name>
 			<param-value>/zkau</param-value>
@@ -42,9 +22,7 @@
 	</servlet>
 	<servlet>
 		<servlet-name>auEngine</servlet-name>
-		<servlet-class>
-			org.zkoss.zk.au.http.DHtmlUpdateServlet
-		</servlet-class>
+		<servlet-class>org.zkoss.zk.au.http.DHtmlUpdateServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>zkLoader</servlet-name>
@@ -62,4 +40,13 @@
 		<welcome-file>index.jsp</welcome-file>
 		<welcome-file>index.zul</welcome-file>
 	</welcome-file-list>
+	<servlet>
+		<servlet-name>health</servlet-name>
+		<jsp-file>/health.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>health</servlet-name>
+		<url-pattern>/health</url-pattern>
+	</servlet-mapping>
 </web-app>
+

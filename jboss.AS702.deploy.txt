@@ -1,0 +1,19 @@
+
+JBoss AS7.0.2 "Arc" Standalone Application Server setup with PostgresQL DB: 
+
+Create the postgresql database with the table in src/main/resources/reminder.sql
+
+1. Download JBoss AS7.0.2 from http://www.jboss.org/jbossas/downloads/
+2. Download the PostgreSQL JDBC4 driver (e.g. postgresql-9.1-901.jdbc4.jar) from http://jdbc.postgresql.org/download.html
+3. Copy the JDBC4 driver jar file into $JBOSS_HOME/standalone/deployment
+4. Start the server with $JBOSS_HOME/bin/standalone.sh
+5. Go to the web admin console by following the link at http://localhost:8080
+6. In the datasource section click 'Add':
+	- Name=PostgresqlDS 
+	- JNDI=PostgresqlDS
+	select the postsql driver
+	- Connection URL=jdbc:postgresql://localhost:5432/testdb
+	- Username=xxxx
+	- Password=xxxx
+7. Drop the war file into $JBOSS_HOME/standalone/deployment
+8. Open up http://localhost:8080/zktodo2cdi/

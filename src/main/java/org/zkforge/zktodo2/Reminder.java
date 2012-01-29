@@ -3,6 +3,7 @@ ZK.forge is distributed under Lesser GPL Version see also http://www.gnu.org/lic
  */
 package org.zkforge.zktodo2;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -17,7 +18,9 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 @Entity
 @Table(name = "REMINDER")
-public class Reminder {
+public class Reminder implements Serializable {
+	private static final long serialVersionUID = 1915994244159171039L;
+
 	@Override
 	public boolean equals(Object obj) {
 		   if (obj == null) { return false; }

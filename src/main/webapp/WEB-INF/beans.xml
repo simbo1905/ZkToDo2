@@ -1,0 +1,2 @@
+<!-- we require an empty beans file to kickstart CDI -->
+<beans></beans>

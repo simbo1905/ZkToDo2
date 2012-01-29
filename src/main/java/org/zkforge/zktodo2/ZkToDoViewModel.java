@@ -1,23 +1,33 @@
 package org.zkforge.zktodo2;
 
+import java.io.Serializable;
 import java.util.List;
+
+import javax.ejb.EJB;
+import javax.inject.Named;
 
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.cdi.context.DesktopScoped;
 import org.zkoss.zul.ListModelList;
 
-public class ZkToDoViewModel  {
+@DesktopScoped
+@Named("toDoViewModel3")
+public class ZkToDoViewModel implements Serializable {
 
-	protected ReminderService reminderService; 
-	
-	public void setReminderService(ReminderService reminderService) {
-		this.reminderService = reminderService;
+	private static final long serialVersionUID = -1053875875930621700L;
+
+	public ZkToDoViewModel() {
+		java.lang.System.out.println(">>> ZkToDoViewModel <<< ");
 	}
+	
+	@EJB
+	protected transient BasicDao reminderService;
 
 	protected ListModelList<Reminder> reminders = new ListModelList<Reminder>();
 	
 	public ListModelList<Reminder> getReminders() {
-		List<Reminder> rs = this.reminderService.findAll();
+		List<Reminder> rs = this.reminderService.findAll(Reminder.class);
 		this.reminders.clear();
 		this.reminders.addAll(rs);
 		return this.reminders;
@@ -51,11 +61,7 @@ public class ZkToDoViewModel  {
 	@NotifyChange({"reminders","selectedReminder"})
 	public void save() {
 		if( this.selectedReminder.getId() != null ){
-			try {
 				this.reminderService.merge(selectedReminder);
-			} catch (EntityNotFoundException e) {
-				e.printStackTrace(); // hum. some else deleted this. should really send this up to the user and ask them to reload the page. 
-			}
 		} else {
 			this.reminderService.persist(this.selectedReminder);
 		}

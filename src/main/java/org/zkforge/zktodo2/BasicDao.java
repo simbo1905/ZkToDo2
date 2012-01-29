@@ -20,27 +20,22 @@ package org.zkforge.zktodo2;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.springframework.stereotype.Repository;
-
 /**
  * Common persistence methods
  * @author icoloma
  */
-@Repository
-public class BasicDao {
-
-	private EntityManager entityManager;
-
+@Stateless
+public class BasicDao 
+{
 	@PersistenceContext
-	public void setEntityManager(EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
+	EntityManager entityManager;
 
 	/**
 	 * Retrieves a non-paged query. Use with care, this method could potentially
@@ -161,5 +156,9 @@ public class BasicDao {
 		Query query = entityManager.createQuery(queryString);
 		setParameters(query, params);
 		return query.executeUpdate();
+	}
+
+	public void delete(Reminder selectedReminder) throws EntityNotFoundException {
+		this.remove(Reminder.class, selectedReminder.getId());
 	}
 }
