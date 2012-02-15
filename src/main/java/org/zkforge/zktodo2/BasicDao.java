@@ -27,10 +27,6 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-/**
- * Common persistence methods
- * @author icoloma
- */
 @Stateless
 public class BasicDao 
 {

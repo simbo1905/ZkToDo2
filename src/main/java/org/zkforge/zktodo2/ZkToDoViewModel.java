@@ -3,15 +3,12 @@ package org.zkforge.zktodo2;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.inject.Named;
 
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.cdi.context.DesktopScoped;
 import org.zkoss.zul.ListModelList;
 
-@DesktopScoped
 @Named("toDoViewModel3")
 public class ZkToDoViewModel implements Serializable {
 
@@ -21,7 +18,7 @@ public class ZkToDoViewModel implements Serializable {
 		java.lang.System.out.println(">>> ZkToDoViewModel <<< ");
 	}
 	
-	@EJB
+	//@EJB
 	protected transient BasicDao reminderService;
 
 	protected ListModelList<Reminder> reminders = new ListModelList<Reminder>();
