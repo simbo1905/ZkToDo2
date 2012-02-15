@@ -148,9 +148,11 @@ public class ZkToDoControllerV1 extends GenericForwardComposer<Window> implement
 
 	protected SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy");
 	
-	public void render(Listitem listItem, Reminder reminder) throws Exception {
+	@Override
+	public void render(Listitem listItem, Reminder reminder, int index) throws Exception {
 		new Listcell(reminder.getName()).setParent(listItem);
 		new Listcell(reminder.getPriority()+"").setParent(listItem);
 		new Listcell(dateFormat.format(reminder.getDate())).setParent(listItem);
 	}
+
 }
