@@ -1,9 +1,20 @@
 
-Openshift Linux build & deploy 
+Openshift Express Linux/Mac 
 
-First ensure that you can compile locally with commmandline.build.and.run.txt
+First: 
 
-Install their toolbelt (their tools are ruby based)
+	Sign-up for Openshift Express and login to the web console. Add your ~/.ssh/id_rsa.pub 
+	key as your SSH PUBLIC KEY on openshift which will allow you to push code
+
+	Ensure that you can compile and run locally using the commmandline.build.and.run.txt
+	to know that your maven build is all working fully functional. 
+
+	Disclaimer: There are lots of steps here and so it is unlikely I can stay fully up to
+	date when they upgrade things. See the foot notes for where to find their docs. In 
+	short these steps worked for me once but your mileage may vary use their community 
+	documentation to troubleshoot. 
+
+Install their toolbelt (their tools are ruby based):
 
 	sudo apt-get install ruby-full
 	sudo apt-get install rubygems1.8
@@ -14,28 +25,59 @@ Install their toolbelt (their tools are ruby based)
 	#then ensure that PATH has that on it
 	PATH=$PATH:/your/gems/path/bin
 	export PATH
-	
-	# if you dont have one yet you need to your domain on their cloud
+
+Create Domain, Application and Database
+
+	Note this instructions create a new folder for your redhat cloud instance into which you will pull the demo 
+	sourcecode. So whilst you should try commmandline.build.and.run.txt to ensure maven is setup correctly 
+	you will need to work with a fresh folder to setup the server and will use git to pull the code into that folder
+
+	# if you don't have one yet you need to create a domain on their cloud
 	rhc-create-domain -n zkdemo -l your@login.email -p 
 	
+	#setup the cloud app instance as jbossas-7
+	rhc-create-app -a zktd2 -t jbossas-7
+	# details can be confirmed with by logging into the openshift web console
+	# your app is UUID@appname-namespace.rhcloud.com (e.g. 62f0ef4ab25b47de8702c9ed12bfdbaf@zktd2-zkdemo.rhcloud.com)
+	# you can login to your cloud instance with "ssh UUID@appname-namespace.rhcloud.com"
 	# if you get permission denied add your ~/.ssh/id_rsa.pub key 
-	# as your SSH PUBLIC KEY on openshift which will allow you to push code
+	# as your SSH PUBLIC KEY on the openshift console (required to push code)
 	
-	#setup the cloud app instance as jbossas-70+mysql
-	rhc-create-app -a zktd2 -t jbossas-7.0
-	rhc-ctl-app -a zktd2 -e add-mysql-5.1 -l your@login.email
+	# add a postregsql database to your instance
+	# important! note down the details of your database including password, db, url (which has host ip) as output by this command
+	rhc-ctl-app -a zktd2 -e add-postgresql-8.4 -l your@login.email
+	
+	#ssh to your cloud instance, connect to the database and run a test query
+	ssh UUID@appname-namespace.rhcloud.com
+	PGPASSWORD=xxxx psql -h 127.11.255.1 -U admin -d zktd2
+	select 1 as a, 2 as b, 3 as c;
+	\q
+	exit
+	
+	# go into the server folder and git pull in the demo source code into the server
 	cd zktd2/
-	#pull the sample code into the folder which is setup for your app
+	#add the demo code repo to the folder
 	git remote add upstream https://simbo1905@github.com/simbo1905/ZkToDo2.git
+	# in the next command just hit return if asked for a password for downloading the code
 	git pull -s recursive -X theirs upstream master
-	git add
-	git commit -am 'import'
-	#once you have it working deploy your app as a sourcecode build/deploy
+	# you can check that 'upstream' points to my demo code and 'origin' points to your server with 
+	git remote show upstream
+	git remote show origin
+	# insure the code build and deploys see commmandline.build.and.run.txt for full details
+	mvn package
+	#once you have it working 
 	git push
 	#tail the logs in a new window
 	rhc-tail-files -a zktd2 -l your@login.email
-	
-If you are having git push issues on a fresh checkout you can explicitly "git remote add openshift ssh://XXX@YY.rhcloud.com/~/git/ZZZZ.git/"
+
+Optional:
+
+	# the console shows you the ssh url of your server repository so you can add it with
+	git remote add openshift ssh://XXX@YY.rhcloud.com/~/git/ZZZZ.git/
+	# if your new to git see this persons problem and explaination http://stackoverflow.com/questions/277077/why-is-git-telling-me-your-branch-is-ahead-of-origin-master-by-11-commits-a
+	# e.g. if you have an existing checkout of the code that works you can change
+	# where 'origin' points at to be either your server or some other repo
+
 using the ssh url presented to you on your openshift console. Then "git push openshift master". 
 	
 Most of their commands let you add "-p your_password". Note also that eclipse lets you create 
@@ -77,140 +119,17 @@ Note
 	hibernate generate the sql ddl script and use the local/openshift tools to manage your schema 
 	for a real app.
 
-Further details about layout and deployment options on OpenShift (you can put spectially named files
-into the deployments folder to tell it to restart the app and the like). 
+Foot Notes
+==========
+
+Openshift started out only supporting MySQL but now also support postgresql.  
+
+There are some quickstart docs https://openshift.redhat.com/app/express#create_application
+
+Yet the full docs are at http://docs.redhat.com/ so try google "site:http://docs.redhat.com/ rhc-create-app"
+
+The instructions above do a source push (your code on their cloud) but you can also push only a WAR
+using a completely different set of commands. 
 
 I don't have any tips for debugging as I always debug with embedded jetty:run with a local spring 
 setup then push to containers. Its always worth the hassle to set this up. 
-
-==================
-There are two options for deploying content to the JBoss Application Server within OpenShift Express:
-
-1) (Preferred) You can upload your content in a Maven src structure as is this sample project and on 
-git push have the application built and deployed.  For this to work you'll need your pom.xml at the 
-root of your repository and a maven-war-plugin like in this sample to move the output from the build
-to the deployments directory.  By default the warName is ROOT within pom.xml.  This will cause the 
-webapp contents to be rendered at http://app_name-namespace.rhcloud.com/.  If you change the warName in 
-pom.xml to app_name, your base url would then become http://app_name-namespace.rhcloud.com/app_name.
-
-Note: If you are building locally you'll also want to add any output wars/ears under deployments 
-from the build to your .gitignore file.
-
-or
-
-2) You can git push prebuilt wars (with the corresponding .dodeploy file for exploded wars) into deployments/.  To do this
-with the default repo you'll want to first run 'git rm -r src/ pom.xml' from the root of your repo.
-
-Basic workflows for deploying prebuilt content (each operation will require associated git add/commit/push operations to take effect):
-
-A) Add new zipped content and deploy it:
-
-1. cp target/example.war deployments/
-
-B) Add new unzipped content and deploy it:
-
-1. cp -r target/example.war/ deployments/
-2. touch deployments/example.war.dodeploy
-
-C) Undeploy currently deployed content:
-
-1. git rm deployments/example.war.dodeploy deployments/example.war
-
-D) Replace currently deployed zipped content with a new version and deploy it:
-
-1. cp target/example.war deployments/
-
-E) Replace currently deployed unzipped content with a new version and deploy it:
-
-1. git rm -rf deployments/example.war/
-2. cp -r target/example.war/ deployments/
-3. touch deployments/example.war.dodeploy
-
-WARNING:  If you go with option 2) there are a couple issues to keep in mind with both prebuilt and exploded 
-wars.  With exploded wars the main issue is with committing binaries (class and jar files) can make merge 
-conflicts tedious. With prebuilt wars the main issue is each time you modify the war and git push, it 
-takes up the size of the war file away from your OpenShift file system quota.  One alternative to this 
-(other then using Maven from option 1) is to use rsync to push your war into the deployments folder.  You 
-would have to do this after each git push followed by 'rhc-ctl-app -a appname -c restart'.  Example:
-
-rsync -avz localdir/deployments/ app_uuid@appname-namespace.rhcloud.com:~/appname/repo/deployments/
-
-Note: You can get the information in the uri above from running 'rhc-user-info -a'
-
-If you have already committed large files to your git repo, you rewrite or reset the history of those files in git
-to an earlier point in time and then 'git push --force' to apply those changes on the remote OpenShift server.  A 
-git gc on the remote OpenShift repo can be forced with (Note: tidy also does other cleanup including clearing log
-files and tmp dirs):
-
-rhc-ctl-app -a appname -c tidy
-
-
-Whether you choose option 1) or 2) the end result will be the application 
-deployed into the deployments directory. The deployments directory in the 
-JBoss Application Server distribution is the location end users can place 
-their deployment content (e.g. war, ear, jar, sar files) to have it 
-automatically deployed into the server runtime.
-
-The filesystem deployment scanner in AS 7 and later works differently from 
-previous JBoss AS releases. The scanner will no longer attempt to directly 
-monitor the deployment content and decide if or when the end user wishes 
-the content to be deployed. Instead, the scanner relies on a system of marker 
-files, with the user's addition or removal of a marker file serving as a sort
-of command telling the scanner to deploy, undeploy or redeploy content.
-
-The marker files always have the same name as the deployment content to which
-they relate, but with an additional file suffix appended. For example, the 
-marker file to indicate the example.war should be deployed is named 
-example.war.dodeploy. Different marker file suffixes have different meanings.
-
-The relevant marker file types are:
-
-.dodeploy     -- Placed by the user to indicate that the given content should 
-                 be deployed into the runtime (or redeployed if already 
-                 deployed in the runtime.)
-
-.deploying    -- Placed by the deployment scanner service to indicate that it 
-                 has noticed a .dodeploy file and is in the process of 
-                 deploying the content. This marker file will be deleted when 
-                 the deployment process completes.
-              
-.deployed     -- Placed by the deployment scanner service to indicate that the 
-                 given content has been deployed into the runtime. If an end 
-                 user deletes this file, the content will be undeployed.
-               
-.faileddeploy -- Placed by the deployment scanner service to indicate that the 
-                 given content failed to deploy into the runtime. The content 
-                 of the file will include some information about the cause of 
-                 the failure.
-
-.undeploying  -- Placed by the deployment scanner service to indicate that it 
-                 has noticed a .deployed file has been deleted and the 
-                 content is being undeployed. This marker file will be deleted 
-                 when the undeployment process completes.
-              
-.undeployed   -- Placed by the deployment scanner service to indicate that the 
-                 given content has been undeployed from the runtime. If an end 
-                 user deletes this file, it has no impact.
-
-
-Environment Variables
-=====================
-
-OpenShift Express provides several environment variables to reference for ease
-of use.  The following list are some common variables but far from exhaustive:
-
-    System.getenv("OPENSHIFT_APP_NAME")  - Application name
-    System.getenv("OPENSHIFT_APP_DIR")   - Application dir
-    System.getenv("OPENSHIFT_DATA_DIR")  - For persistent storage (between pushes)
-    System.getenv("OPENSHIFT_TMP_DIR")   - Temp storage (unmodified files deleted after 10 days)
-
-When embedding a database using rhc-ctl-app, you can reference environment
-variables for username, host and password:
-
-    System.getenv("OPENSHIFT_DB_HOST")      - DB host
-    System.getenv("OPENSHIFT_DB_PORT")      - DB Port
-    System.getenv("OPENSHIFT_DB_USERNAME")  - DB Username
-    System.getenv("OPENSHIFT_DB_PASSWORD")  - DB Password
-
-To get a full list of environment variables, simply add a line in your
-.openshift/action_hooks/build script that says "export" and push.
