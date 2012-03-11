@@ -65,9 +65,9 @@ Create Domain, Application and Database
 	git remote show origin
 	# insure the code build and deploys see commmandline.build.and.run.txt for full details
 	mvn package
-	#once you have it working 
+	#once you have it working push it up to 'origin' which should be your server which will build it
 	git push
-	#tail the logs in a new window
+	#tail the logs in a second window
 	rhc-tail-files -a zktd2 -l your@login.email
 
 Optional:

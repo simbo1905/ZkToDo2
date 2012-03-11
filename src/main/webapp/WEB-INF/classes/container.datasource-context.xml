@@ -10,12 +10,13 @@
 
 	<!--
 	If you want a different database include a different properties file here. 
+	e.g. mysql.zktodo2.properties or postgresql.zktodo2.properties
 	-->
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>classpath:mysql.zktodo2.properties</value>
+				<value>classpath:postgresql.zktodo2.properties</value>
 			</list>
 		</property>
 	</bean>
