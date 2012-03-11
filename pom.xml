@@ -342,7 +342,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>zktodo2-${version}</finalName>
+		<finalName>zktodo2-${project.version}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>

@@ -1,5 +1,5 @@
 
-By default it requires a PostgreSQL db (source has examples of mysql)
+By default it requires a PostgreSQL db (source code has other working examples of mysql)
 This is picked up from a DATABASE_URL env variable such as
 
 	postgres://foodToGoUser:foodToGoPassword@localhost/testdb
@@ -9,12 +9,14 @@ to refer to the other properties file. If you get the code working with other
 databases let me know the settings which worked and I will commit them 
 for other folks. 
 
-
 Linux/Mac
 
 1) Obtain the maven3 tar.gz and extract into a folder such as /home/simon/maven
-2) Setup the environment variables for maven and the jdk and ensure that their bin
-folders are on your path
+2) Checkout the sourcecode from GitHub
+	git clone https://simbo1905@github.com/simbo1905/ZkToDo2.git
+3) cd ZkToDo2
+4) Setup the environment variables for maven and the jdk and ensure that their bin
+folders are on your path (see stackoverflow.com for where your JAVA_HOME will be)
 	MAVEN_HOME=/home/simon/maven
 	export MAVEN_HOME
 	JAVA_HOME=/home/simon/jdk1.6
@@ -22,12 +24,8 @@ folders are on your path
 	PATH=$JAVA_HOME\bin:$MAVEN_HOME\bin:$PATH
 	DATABASE_URL=postgres://foodToGoUser:foodToGoPassword@localhost/testdb
 	export DATABASE_URL
-3) Checkout the sourcecode from GitHub
-	git clone https://simbo1905@github.com/simbo1905/ZkToDo2.git
-4) Run it
-	cd ZkToDo2 
+5) Run it
 	mvn -Djetty.port=8080 package jetty:run
-
 
 Windows: 
 
