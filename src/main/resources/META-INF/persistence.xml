@@ -3,16 +3,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
 	version="1.0">
-	
-	<!--
-	The following persistence unit uses a jboss OpenShift JNDI datasource. The file
-	has to be given the name 'persistence.xml' to work in the container.
-	
-	Note: if you setup MySQL not PostgresQL then use java:jboss/datasources/MysqlDS
-	-->
-	<persistence-unit name="reminderDatabase" transaction-type="RESOURCE_LOCAL">
+
+	<!-- The following persistence unit uses a jboss OpenShift JNDI datasource. 
+		The file has to be given the name 'persistence.xml' to work in the container. 
+		Note: if you setup MySQL not PostgresQL then use java:jboss/datasources/MysqlDS -->
+	<persistence-unit name="reminderDatabase"
+		transaction-type="RESOURCE_LOCAL">
 		<jta-data-source>java:jboss/datasources/PostgreSQLDS</jta-data-source>
 		<class>org.zkforge.zktodo2.Reminder</class>
 	</persistence-unit>
-
 </persistence>

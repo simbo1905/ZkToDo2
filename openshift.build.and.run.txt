@@ -47,10 +47,11 @@ Create Domain, Application and Database
 	# important! note down the details of your database including password, db, url (which has host ip) as output by this command
 	rhc-ctl-app -a zktd2 -e add-postgresql-8.4 -l your@login.email
 	
-	#ssh to your cloud instance, connect to the database and run a test query
+	#ssh to your cloud instance, connect to the database and run a test query, create the table
 	ssh UUID@appname-namespace.rhcloud.com
 	PGPASSWORD=xxxx psql -h 127.11.255.1 -U admin -d zktd2
 	select 1 as a, 2 as b, 3 as c;
+	CREATE TABLE reminder ( reminder_id bigint NOT NULL, date timestamp without time zone, name character varying(255), priority integer, CONSTRAINT reminder_pkey PRIMARY KEY (reminder_id ));
 	\q
 	exit
 	

@@ -8,11 +8,14 @@
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd
 	">
 
+	<!-- 
+	use either mysql.zktodo2.properties or postgresql.zktodo2.properties
+	 -->
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>classpath:mysql.zktodo2.properties</value>
+				<value>classpath:postgresql.zktodo2.properties</value>
 			</list>
 		</property>
 	</bean>
