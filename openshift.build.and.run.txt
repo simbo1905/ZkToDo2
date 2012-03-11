@@ -70,12 +70,17 @@ Create Domain, Application and Database
 	git push
 	#tail the logs in a second window
 	rhc-tail-files -a zktd2 -l your@login.email
+	
+	Note: if your deployment does not go okay first time you may have to ssh into your server
+	and use "ps -ef" to find the java and postgresql processes and "kill -9" them. Then touch 
+	a source file and "git commit -a" followed by "git push" to rebuild and redeploy which 
+	should restart the database process. 
 
 Optional:
 
 	# the console shows you the ssh url of your server repository so you can add it with
 	git remote add openshift ssh://XXX@YY.rhcloud.com/~/git/ZZZZ.git/
-	# if your new to git see this persons problem and explaination http://stackoverflow.com/questions/277077/why-is-git-telling-me-your-branch-is-ahead-of-origin-master-by-11-commits-a
+	# if your new to git see this persons problem and explanation http://stackoverflow.com/questions/277077/why-is-git-telling-me-your-branch-is-ahead-of-origin-master-by-11-commits-a
 	# e.g. if you have an existing checkout of the code that works you can change
 	# where 'origin' points at to be either your server or some other repo
 
@@ -84,8 +89,23 @@ using the ssh url presented to you on your openshift console. Then "git push ope
 Most of their commands let you add "-p your_password". Note also that eclipse lets you create 
 run command which are external scripts so you can no doubt set it up so that you can tail 
 the server logs from inside of eclipse with an eclipse run. 
-	
-To develop locally on JBossAS7.0 & MySQL 5.x DB (your gonna need it to do anything more serious 
+
+Foot Notes
+==========
+
+Openshift started out only supporting MySQL but now also support postgresql.  
+
+There are some quickstart docs https://openshift.redhat.com/app/express#create_application
+
+Yet the full docs are at http://docs.redhat.com/ so try google "site:http://docs.redhat.com/ rhc-create-app"
+
+The instructions above do a source push (your code on their cloud) but you can also push only a WAR
+using a completely different set of commands. 
+
+I don't have any tips for debugging as I always debug with embedded jetty:run with a local spring 
+setup then push to containers. Its always worth the hassle to set this up. 
+
+Out of date: To develop locally on JBossAS7.0 & MySQL 5.x DB (your gonna need it to do anything more serious 
 than the demo app): 
 
 	#use the versions they are currently using! 
@@ -112,25 +132,3 @@ than the demo app):
 		cp deployments/ROOT.war $JBOSSAS7_HOME/standalone/deployments
 		$JBOSSAS7_HOME/bin/standalone.sh
 		# open a browser http://127.0.0.1:9999
-		
-Note
-
-	"hibernate.hbm2ddl.auto=update" in file src/main/webapp/WEB-INF/classes/mysql.zktodo2.properties 
-	should create the required database table. Of course that setting is a bit lazy you can have 
-	hibernate generate the sql ddl script and use the local/openshift tools to manage your schema 
-	for a real app.
-
-Foot Notes
-==========
-
-Openshift started out only supporting MySQL but now also support postgresql.  
-
-There are some quickstart docs https://openshift.redhat.com/app/express#create_application
-
-Yet the full docs are at http://docs.redhat.com/ so try google "site:http://docs.redhat.com/ rhc-create-app"
-
-The instructions above do a source push (your code on their cloud) but you can also push only a WAR
-using a completely different set of commands. 
-
-I don't have any tips for debugging as I always debug with embedded jetty:run with a local spring 
-setup then push to containers. Its always worth the hassle to set this up. 
