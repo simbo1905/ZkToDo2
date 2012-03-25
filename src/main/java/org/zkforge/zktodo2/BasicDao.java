@@ -20,6 +20,7 @@ package org.zkforge.zktodo2;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
@@ -32,6 +33,7 @@ import org.springframework.stereotype.Repository;
  * Common persistence methods
  * @author icoloma
  */
+@Named("basicDao")
 @Repository
 public class BasicDao {
 

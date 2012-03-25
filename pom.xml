@@ -4,8 +4,8 @@
 	<groupId>org.zkforge.zktodo2</groupId>
 	<artifactId>zktodo2</artifactId>
 	<packaging>war</packaging>
-	<version>1.6.0</version>
-	<name>zktodo2</name>
+	<version>1.6.1</version>
+	<name>zktodo2 developerworks</name>
 	<url>http://java.dzone.com/articles/using-desktop-model-view</url>
 	<repositories>
 		<repository>
@@ -35,8 +35,14 @@
 		<postgresql.version>8.4-702.jdbc3</postgresql.version>
 		<commons-logging.version>1.0.4</commons-logging.version>
 		<dom4j.version>1.6.1</dom4j.version>
+		<jsr330.version>1</jsr330.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>${jsr330.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
