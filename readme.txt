@@ -2,11 +2,12 @@
 This is the code for the "ZkToDo2" sample with ZK, JPA & Spring
 
 	http://www.slideshare.net/simbo1905/zk-mvvm-spring-jpa-on-two-paas-clouds-10610874
+	http://www.slideshare.net/simbo1905/design-patterns-in-zk-java-mvvm-as-modelviewbinder 
 
-See it running on the cloud (the apps may shutdown on idle so very slow on first request): 
+See it running on the cloud (the apps may shutdown on idle so slow on first request): 
 
-	http://zktd2-zkdemo.rhcloud.com/zktodo_d.zul (OpenShift PaaS Cloud)
-	http://glowing-light-1070.herokuapp.com/zktodo_d.zul (Heroku PaaS Cloud)
+	http://zktd2-zkdemo.rhcloud.com/ (OpenShift PaaS Cloud)
+	http://glowing-light-1070.herokuapp.com/ (Heroku PaaS Cloud)
 
 Getting the source:
 
