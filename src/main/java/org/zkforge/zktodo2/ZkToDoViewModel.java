@@ -1,5 +1,6 @@
 package org.zkforge.zktodo2;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,7 +9,6 @@ import javax.inject.Named;
 import org.springframework.context.annotation.Scope;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.zul.ListModelList;
 
 @Scope("desktop")
 @Named("toDoViewModel")
@@ -18,9 +18,9 @@ public class ZkToDoViewModel  {
 	@Named("reminderService")
 	protected ReminderService reminderService; 
 
-	protected ListModelList<Reminder> reminders = new ListModelList<Reminder>();
+	protected List<Reminder> reminders = new ArrayList<Reminder>();
 	
-	public ListModelList<Reminder> getReminders() {
+	public List<Reminder> getReminders() {
 		List<Reminder> rs = this.reminderService.findAll();
 		this.reminders.clear();
 		this.reminders.addAll(rs);
