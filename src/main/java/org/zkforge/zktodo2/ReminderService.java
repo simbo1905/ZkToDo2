@@ -5,9 +5,6 @@ import java.util.List;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-/*
-ZK.forge is distributed under Lesser GPL Version see also http://www.gnu.org/licenses/lgpl.html
- */
 public class ReminderService {
 	protected BasicDao basicDao;
 

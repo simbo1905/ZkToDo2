@@ -4,9 +4,9 @@
 	<groupId>org.zkforge.zktodo2</groupId>
 	<artifactId>zktodo2</artifactId>
 	<packaging>war</packaging>
-	<version>1.6.0</version>
+	<version>1.7.0</version>
 	<name>zktodo2</name>
-	<url>http://java.dzone.com/articles/using-desktop-model-view</url>
+	<url>http://www.slideshare.net/simbo1905/design-patterns-in-zk-java-mvvm-as-modelviewbinder</url>
 	<repositories>
 		<repository>
 			<id>zk repository</id>

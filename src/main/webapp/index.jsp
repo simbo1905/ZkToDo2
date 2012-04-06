@@ -77,11 +77,11 @@ text-align: right;
 	</style>
 </head>
 <body>
-<h2>Welcome To The ZkToDo2 Sample Application</h2>
+<h2>Welcome To The ZkToDo2 Patterns Demo Application (ZK6 Refresh)</h2>
 <ul id="bigbuttons">
 <li class="mvvm"> <a href="zktodo_e.zul">MVVM Demo Page (ZK6)</a> </li>
 <li class="mvc"> <a href="zktodo_b.zul">MVC Demo Page (ZK5+)</a> </li>
-<li class="mvp"> <a href="zktodo_a.zul">MVP Demo Page (ZK3.5+)</a> </li>
+<li class="mvp"> <a href="zktodo_passiveview.zul">"Passive View" Demo Page</a> </li>
 <li class="license"> <a href="http://www.apache.org/licenses/LICENSE-2.0">Opensource License</a> </li>
 <li class="doc"> <a href="http://books.zkoss.org/wiki/Small%20Talks/2011/November/Hello%20ZK%20MVVM">MVVM vs MVP Comparison Article</a> </li>
 <li class="cloud"> <a href="http://www.slideshare.net/simbo1905/zk-mvvm-spring-jpa-on-two-paas-clouds-10610874">MVVM PaaS Cloud Presentation</a> </li>

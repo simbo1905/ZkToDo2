@@ -9,10 +9,9 @@
 		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
 		-->
 		<disable-event-thread />
-		<!-- 
-		Do not enabled the following unless you fully understand the documentation and implication at
-		http://books.zkoss.org/wiki/Small_Talks/2007/July/ZK_Using_Grinder_3.0#IdGenerator
-		<id-generator-class>org.zkforge.zktodo2.loadtest.SimpleLoadTestIdGenerator</id-generator-class>
+		<!--
+		Patterns implies no beanshell script or other scripting in the zul so disable zscript 
 		 -->
+		<disable-zscript>true</disable-zscript>
 	</system-config>
 </zk>

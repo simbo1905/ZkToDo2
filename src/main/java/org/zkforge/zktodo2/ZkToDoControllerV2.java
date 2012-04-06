@@ -1,6 +1,4 @@
-/*
-ZK.forge is distributed under Lesser GPL Version see also http://www.gnu.org/licenses/lgpl.html
- */
+
 package org.zkforge.zktodo2;
 
 import static java.lang.System.out;

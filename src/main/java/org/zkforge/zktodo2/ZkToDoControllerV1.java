@@ -1,6 +1,3 @@
-/*
-ZK.forge is distributed under Lesser GPL Version see also http://www.gnu.org/licenses/lgpl.html
- */
 package org.zkforge.zktodo2;
 
 import static java.lang.System.out;
@@ -11,7 +8,11 @@ import java.util.List;
 
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zk.ui.util.GenericForwardComposer;
+import org.zkoss.zk.ui.select.SelectorComposer;
+import org.zkoss.zk.ui.select.annotation.Listen;
+import org.zkoss.zk.ui.select.annotation.VariableResolver;
+import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Intbox;
 import org.zkoss.zul.ListModelList;
@@ -23,32 +24,30 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 /**
- * This class demonstrates "Model-View-Presenter" pattern as the Composer is 
+ * This class demonstrates "Passive View" pattern as the Composer is 
  * doing all the explicit work of updating the UI. 
  * 
- * see http://martinfowler.com/eaaDev/uiArchs.html
- * 
- * also known as Supervising Controller and Passive View. 
+ * {@link http://martinfowler.com/eaaDev/PassiveScreen.html}
  */
-public class ZkToDoControllerV1 extends GenericForwardComposer<Window> implements
+@VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
+public class ZkToDoControllerV1 extends SelectorComposer<Window> implements
 		ListitemRenderer<Reminder> {
 
 	private static final long serialVersionUID = -3486059156312322420L;
 
+	@WireVariable ReminderService reminderService;
+
+	@Wire Textbox name;
+	@Wire Intbox priority;
+	@Wire Datebox date;
+	@Wire Listbox list;
+	
+	ListModelList<Reminder> listModelList;	
+	Reminder selectedReminder = null;
+	
 	public ZkToDoControllerV1() {
+		// no nothing
 	}
-
-	protected ReminderService reminderService;
-
-	public ReminderService getReminderService() {
-		return reminderService;
-	}
-
-	public void setReminderService(ReminderService reminderService) {
-		this.reminderService = reminderService;
-	}
-
-	protected Reminder selectedReminder = null;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
@@ -71,13 +70,8 @@ public class ZkToDoControllerV1 extends GenericForwardComposer<Window> implement
 			}});
 	}
 
-	protected Textbox name;
-	protected Intbox priority;
-	protected Datebox date;
-	protected Listbox list;
-	protected ListModelList<Reminder> listModelList;
-
-	public void onClick$add(Event e) {
+	@Listen("onClick = #add")
+	public void add(Event e) {
 		Date dateValue = date.getValue();
 		Integer priorityValue = priority.getValue();
 		String nameValue = name.getValue();
@@ -94,7 +88,8 @@ public class ZkToDoControllerV1 extends GenericForwardComposer<Window> implement
 		}
 	}
 
-	public void onClick$update(Event e) {
+	@Listen("onClick = #update")
+	public void update(Event e) {
 		if( selectedReminder != null ){
 			selectedReminder.setDate(date.getValue());
 			selectedReminder.setPriority(priority.getValue());
@@ -122,7 +117,8 @@ public class ZkToDoControllerV1 extends GenericForwardComposer<Window> implement
 		}
 	}
 
-	public void onClick$delete(Event e) {
+	@Listen("onClick = #delete")
+	public void delete(Event e) {
 		if( null != selectedReminder ){
 			int index = listModelList.indexOf(selectedReminder);
 			try {

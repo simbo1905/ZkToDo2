@@ -13,7 +13,7 @@
 	</listener>
 	<listener>
 		<!-- The Spring RequestContextLister uses thread bound variables so to 
-		use this Spring freatures requires that we apply <disable-event-thread /> 
+		use this Spring features requires that we apply <disable-event-thread /> 
 		within zk.xml -->
 		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
 	</listener>
@@ -25,15 +25,7 @@
 	</listener>
 	<servlet>
 		<servlet-name>zkLoader</servlet-name>
-		
-		<!-- 
-		Do not enabled the following unless you fully understand the documentation and implication at
-		http://books.zkoss.org/wiki/Small_Talks/2007/July/ZK_Using_Grinder_3.0#IdGenerator
-		 -->
-		<servlet-class>org.zkforge.zktodo2.loadtest.SimpleLoadTestIdGenerator</servlet-class> 
-		
-<!-- 		<servlet-class>org.zkoss.zk.ui.http.DHtmlLayoutServlet</servlet-class>
- -->		
+ 		<servlet-class>org.zkoss.zk.ui.http.DHtmlLayoutServlet</servlet-class>
 		<init-param>
 			<param-name>update-uri</param-name>
 			<param-value>/zkau</param-value>
