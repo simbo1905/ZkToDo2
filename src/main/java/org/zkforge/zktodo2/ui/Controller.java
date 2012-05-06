@@ -6,7 +6,6 @@ import static java.lang.System.out;
 import java.util.Date;
 import java.util.List;
 
-import org.zkforge.zktodo2.EntityNotFoundException;
 import org.zkforge.zktodo2.Model;
 import org.zkforge.zktodo2.Reminder;
 import org.zkoss.bind.Converter;
@@ -90,8 +89,8 @@ public class Controller {
 		if( selectedReminder != null ){
 			ListModelList<Object> listModelList = (ListModelList<Object>) this.list.getModel();
 			try {
-				this.model.mergeEvent(selectedReminder);
-			} catch (EntityNotFoundException exception){
+				this.model.persistEvent(selectedReminder);
+			} catch (Exception exception){
 				int index = list.getSelectedIndex();
 				listModelList.remove(index);
 				if( listModelList.size() > 0 ){
@@ -120,7 +119,7 @@ public class Controller {
 			int index = listModelList.indexOf(selectedReminder);
 			try {
 				this.model.deleteEvent(selectedReminder);
-			} catch (EntityNotFoundException exception ){
+			} catch (Exception exception ){
 				out.println("This is harmless as someone else has already deleted this item.");
 			}
 			listModelList.remove(selectedReminder);

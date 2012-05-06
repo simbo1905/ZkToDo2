@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.zkforge.zktodo2.EntityNotFoundException;
 import org.zkforge.zktodo2.Reminder;
 import org.zkforge.zktodo2.ReminderService;
 import org.zkoss.zk.ui.event.Event;
@@ -98,8 +97,8 @@ public class Presenter extends SelectorComposer<Window> implements
 			selectedReminder.setPriority(priority.getValue());
 			selectedReminder.setName(name.getValue());
 			try {
-				this.reminderService.merge(selectedReminder);
-			} catch (EntityNotFoundException exception){
+				this.reminderService.persist(selectedReminder);
+			} catch (Exception exception){
 				int index = list.getSelectedIndex();
 				listModelList.remove(index);
 				alert("Reminder "+selectedReminder.getName()+" has been deleted by another user.");
@@ -126,7 +125,7 @@ public class Presenter extends SelectorComposer<Window> implements
 			int index = listModelList.indexOf(selectedReminder);
 			try {
 				this.reminderService.delete(selectedReminder);
-			} catch (EntityNotFoundException exception ){
+			} catch (Exception exception ){
 				out.println("This is harmless as someone else has already deleted this item.");
 			}
 			listModelList.remove(selectedReminder);

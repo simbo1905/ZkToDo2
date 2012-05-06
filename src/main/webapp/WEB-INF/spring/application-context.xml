@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="
-	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
-	">
-
-	<!-- ZK-Spring support for "desktop" scoped beans which are cached in the 
-		ZK Desktop -->
-	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
-		<property name="scopes">
-			<map>
-				<entry key="desktop">
-					<bean class="org.zkoss.spring.web.context.request.DesktopScope" />
-				</entry>
-			</map>
-		</property>
-	</bean>
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:p="http://www.springframework.org/schema/p" 
+    xmlns:zksp="http://www.zkoss.org/2008/zkspring/core"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+            http://www.zkoss.org/2008/zkspring/core http://www.zkoss.org/2008/zkspring/core/zkspring-core.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+            http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+    ">
+ 
+ 	<jpa:repositories base-package="org.zkforge.zktodo2" />
+ 
+	<context:component-scan base-package="org.zkforge.zktodo2"/>
+	
+	<!-- Enables ZK custom scopes for Spring Beans -->
+    <zksp:zk-config/>
 
 	<!-- Spring TX with @Transactional annotations -->
 	<tx:annotation-driven />
@@ -28,28 +27,7 @@
 		p:entity-manager-factory-ref="entityManagerFactory" />
 
 	<!-- JPA config with @Repository annotations -->
-
 	<bean
 		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
-
-	<!-- JPA helpers. Everyone knows about DAOs so lets call it that but really 
-		an EntityManager<Reminder> would be more JPA -->
-
-	<bean id="basicDao" class="org.zkforge.zktodo2.BasicDao" />
-
-	<!-- This simple app has one service. A more complex app would have difference 
-		services which each used multiple JPA Helpers (e.g. clientDoa, productDao, 
-		orderDao) -->
-
-	<bean id="reminderService" class="org.zkforge.zktodo2.ReminderService"
-		p:basicDao-ref="basicDao" />
-
-	<!-- Note that the following bean has desktop scope. -->
-	<bean id="model" class="org.zkforge.zktodo2.Model"
-		p:reminderService-ref="reminderService" scope="desktop" />
-
-	<!-- Note that the following bean has desktop scope. -->
-	<bean id="toDoViewModel" class="org.zkforge.zktodo2.ui.ViewModel"
-		p:reminderService-ref="reminderService" scope="desktop" />
 
 </beans>
