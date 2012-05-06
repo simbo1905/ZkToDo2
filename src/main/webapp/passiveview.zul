@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?page title="ZkTodo2 - Passive View Example"?>
+<?page title="ZkTodo2 - Passive View"?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
-<window title="To Do List :: Passive View Pattern" width="640px" border="normal" apply="org.zkforge.zktodo2.ZkToDoControllerV1">
+<window title="ZkTodo2 - Passive View" width="640px" border="normal" apply="org.zkforge.zktodo2.ui.Presenter">
 <listbox id="list" multiple="true" rows="12">
   <listhead>
    <listheader label="Item" />
@@ -17,9 +17,11 @@
     </hbox>
     <hbox>
     <button id="add" label="Add" width="36px" height="24px"/>
-    <button id="update" label="Update" width="46px" height="24px"/>
-    <button id="delete" label="Delete" width="46px" height="24px"/>
+    <button id="delete" label="Delete" width="50px" height="24px"/>
+    <button id="update" label="Update" width="52px" height="24px"/>
     </hbox>
  </vbox> 
 </window>
+<button label="Reload Page"
+	onClick='Clients.evalJavaScript("window.location = window.location;")' />
 </zk>

@@ -14,6 +14,7 @@ width: 230px;
 background-image:url('images/48px-Network-transmit-receive.png');
 background-repeat: no-repeat;
 height: 60px;
+width: 240px;
 display: block;
 text-align: right;
 }
@@ -22,7 +23,7 @@ text-align: right;
 background-image:url('images/48px-Network-transmit.png');
 background-repeat: no-repeat;
 height: 60px;
-width: 220px;
+width: 250px;
 display: block;
 text-align: right;
 }
@@ -31,7 +32,7 @@ text-align: right;
 background-image:url('images/48px-Network-receive.png');
 background-repeat: no-repeat;
 height: 60px;
-width: 230px;
+width: 190px;
 display: block;
 text-align: right;
 }
@@ -79,9 +80,9 @@ text-align: right;
 <body>
 <h2>Welcome To The ZkToDo2 Patterns Demo Application (ZK6 Refresh)</h2>
 <ul id="bigbuttons">
-<li class="mvvm"> <a href="zktodo_e.zul">MVVM Demo Page (ZK6)</a> </li>
-<li class="mvc"> <a href="zktodo_b.zul">MVC Demo Page (ZK5+)</a> </li>
-<li class="mvp"> <a href="zktodo_passiveview.zul">"Passive View" Demo Page</a> </li>
+<li class="mvvm"> <a href="applicationmodel.zul">Application Model (MVVM)</a> </li>
+<li class="mvc"> <a href="supervisingcontroller.zul">Supervising Controller (MVC)</a> </li>
+<li class="mvp"> <a href="passiveview.zul">Passive View (MVP)</a> </li>
 <li class="license"> <a href="http://www.apache.org/licenses/LICENSE-2.0">Opensource License</a> </li>
 <li class="doc"> <a href="http://books.zkoss.org/wiki/Small%20Talks/2011/November/Hello%20ZK%20MVVM">MVVM vs MVP Comparison Article</a> </li>
 <li class="cloud"> <a href="http://www.slideshare.net/simbo1905/zk-mvvm-spring-jpa-on-two-paas-clouds-10610874">MVVM PaaS Cloud Presentation</a> </li>

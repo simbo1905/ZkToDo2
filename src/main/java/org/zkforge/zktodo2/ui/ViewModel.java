@@ -1,12 +1,16 @@
-package org.zkforge.zktodo2;
+package org.zkforge.zktodo2.ui;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.zkforge.zktodo2.EntityNotFoundException;
+import org.zkforge.zktodo2.Reminder;
+import org.zkforge.zktodo2.ReminderService;
+import org.zkoss.bind.Converter;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 
-public class ZkToDoViewModel  {
+public class ViewModel  {
 
 	protected ReminderService reminderService; 
 	
@@ -42,7 +46,7 @@ public class ZkToDoViewModel  {
 				this.reminderService.delete(selectedReminder);
 				this.selectedReminder = new Reminder();
 			} catch (EntityNotFoundException e) {
-				// no doubt someone else deleted it at the same time. nothing to do. 
+				e.printStackTrace(); // hum. some else deleted this. should really send this up to the user and ask them to reload the page. 
 			}
 		}
 	}
@@ -66,5 +70,11 @@ public class ZkToDoViewModel  {
 	public void create() {
 		this.selectedReminder = new Reminder();
 	}
+	
+	Converter dateConverter = new TimestampConverter();
+
+	public Converter getDateConverter() {
+		return dateConverter;
+	} 
 
 }

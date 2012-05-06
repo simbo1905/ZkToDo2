@@ -9,9 +9,5 @@
 		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
 		-->
 		<disable-event-thread />
-		<!--
-		Patterns implies no beanshell script or other scripting in the zul so disable zscript 
-		 -->
-		<disable-zscript>true</disable-zscript>
 	</system-config>
 </zk>

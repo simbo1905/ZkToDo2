@@ -1,4 +1,4 @@
-package org.zkforge.zktodo2;
+package org.zkforge.zktodo2.ui;
 
 import static java.lang.System.out;
 
@@ -6,6 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.zkforge.zktodo2.EntityNotFoundException;
+import org.zkforge.zktodo2.Reminder;
+import org.zkforge.zktodo2.ReminderService;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.SelectorComposer;
@@ -30,7 +33,7 @@ import org.zkoss.zul.Window;
  * {@link http://martinfowler.com/eaaDev/PassiveScreen.html}
  */
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
-public class ZkToDoControllerV1 extends SelectorComposer<Window> implements
+public class Presenter extends SelectorComposer<Window> implements
 		ListitemRenderer<Reminder> {
 
 	private static final long serialVersionUID = -3486059156312322420L;
@@ -43,10 +46,10 @@ public class ZkToDoControllerV1 extends SelectorComposer<Window> implements
 	@Wire Listbox list;
 	
 	ListModelList<Reminder> listModelList;	
-	Reminder selectedReminder = null;
+	Reminder selectedReminder = new Reminder();
 	
-	public ZkToDoControllerV1() {
-		// no nothing
+	public Presenter() {
+		// noop
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -130,7 +133,7 @@ public class ZkToDoControllerV1 extends SelectorComposer<Window> implements
 			if( index >= listModelList.size() ){
 				index = listModelList.size() - 1;
 			} 
-			if( listModelList.size() > 0 ){
+			if( listModelList.size() > 0 && index >= 0 ){
 				selectedReminder = (Reminder)listModelList.get(index);
 				list.setSelectedIndex(index);
 				name.setValue(selectedReminder.getName());
