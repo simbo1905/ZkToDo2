@@ -10,8 +10,8 @@ First:
 	to know that your maven build is all working fully functional. 
 
 	Disclaimer: There are lots of steps here and so it is unlikely I can stay fully up to
-	date when they upgrade things. See the foot notes for where to find their docs. In 
-	short these steps worked for me once but your mileage may vary use their community 
+	date when they upgrade things. See the footnotes for where to find their docs. In 
+	short these steps worked for me once but your mileage may vary; use their community 
 	documentation to troubleshoot. 
 
 Install their toolbelt (their tools are ruby based):
@@ -32,10 +32,10 @@ Create Domain, Application and Database
 	sourcecode. So whilst you should try commmandline.build.and.run.txt to ensure maven is setup correctly 
 	you will need to work with a fresh folder to setup the server and will use git to pull the code into that folder
 
-	# if you don't have one yet you need to create a domain on their cloud
+	# if you don't have one yet you need to create a domain on their cloud (pick your own name not 'zkdemo')
 	rhc-create-domain -n zkdemo -l your@login.email -p 
 	
-	#setup the cloud app instance as jbossas-7
+	#setup the cloud app instance as jbossas-7 (okay to set the app name to 'zktd2')
 	rhc-create-app -a zktd2 -t jbossas-7
 	# details can be confirmed with by logging into the openshift web console
 	# your app is UUID@appname-namespace.rhcloud.com (e.g. 62f0ef4ab25b47de8702c9ed12bfdbaf@zktd2-zkdemo.rhcloud.com)
@@ -47,15 +47,16 @@ Create Domain, Application and Database
 	# important! note down the details of your database including password, db, url (which has host ip) as output by this command
 	rhc-ctl-app -a zktd2 -e add-postgresql-8.4 -l your@login.email
 	
-	#ssh to your cloud instance, connect to the database and run a test query, create the table
-	ssh UUID@appname-namespace.rhcloud.com
+	#ssh to your cloud instance, connect to the database and run a test query, create the table (find the UUID on your web console and use your app-domain.rhcloud.com)
+	ssh 62f0ef4ab25b47de8702c9ed12bfdbaf@zktd2-zkdemo.rhcloud.com
+	# the password and ip to use were on the output of the create database command you ran as well as your database name
 	PGPASSWORD=xxxx psql -h 127.11.255.1 -U admin -d zktd2
 	select 1 as a, 2 as b, 3 as c;
 	CREATE TABLE reminder ( reminder_id bigint NOT NULL, date timestamp without time zone, name character varying(255), priority integer, CONSTRAINT reminder_pkey PRIMARY KEY (reminder_id ));
 	\q
 	exit
 	
-	# go into the server folder and git pull in the demo source code into the server
+	# go into the server folder on your workstation and git pull in the demo source code into the server
 	cd zktd2/
 	#add the demo code repo to the folder
 	git remote add upstream https://simbo1905@github.com/simbo1905/ZkToDo2.git
@@ -74,18 +75,15 @@ Create Domain, Application and Database
 	Note: if your deployment does not go okay first time you may have to ssh into your server
 	and use "ps -ef" to find the java and postgresql processes and "kill -9" them. Then touch 
 	a source file and "git commit -a" followed by "git push" to rebuild and redeploy which 
-	should restart the database process. 
+	should restart the database process. If you run into issues use the redhat forums. 
 
 Optional:
 
-	# the console shows you the ssh url of your server repository so you can add it with
+	# the console shows you the ssh url of your openshift server repository so you can add it a fresh clone of my code with
 	git remote add openshift ssh://XXX@YY.rhcloud.com/~/git/ZZZZ.git/
-	# if your new to git see this persons problem and explanation http://stackoverflow.com/questions/277077/why-is-git-telling-me-your-branch-is-ahead-of-origin-master-by-11-commits-a
-	# e.g. if you have an existing checkout of the code that works you can change
-	# where 'origin' points at to be either your server or some other repo
+	git push openshift master
+	# search statckoverflow.com if you have git issues
 
-using the ssh url presented to you on your openshift console. Then "git push openshift master". 
-	
 Most of their commands let you add "-p your_password". Note also that eclipse lets you create 
 run command which are external scripts so you can no doubt set it up so that you can tail 
 the server logs from inside of eclipse with an eclipse run. 
@@ -103,12 +101,15 @@ The instructions above do a source push (your code on their cloud) but you can a
 using a completely different set of commands. 
 
 I don't have any tips for debugging as I always debug with embedded jetty:run with a local spring 
-setup then push to containers. Its always worth the hassle to set this up. 
+setup then push to containers. Its always worth the overhead to set this up to debug locally without a full j2ee container. 
 
-Out of date: To develop locally on JBossAS7.0 & MySQL 5.x DB (your gonna need it to do anything more serious 
+Running Locally - (Not Kept Up To Date)
+=======================================
+
+To develop locally on JBossAS7.0 & MySQL 5.x DB (your gonna need it to do anything more serious 
 than the demo app): 
 
-	#use the versions they are currently using! 
+	#use the versions they are currently using when you created your openshift! 
 	unzip boss-as-web-7.0.x.Final.zip 
 	setup a local mysql database server
 	
@@ -132,3 +133,8 @@ than the demo app):
 		cp deployments/ROOT.war $JBOSSAS7_HOME/standalone/deployments
 		$JBOSSAS7_HOME/bin/standalone.sh
 		# open a browser http://127.0.0.1:9999
+		
+If you have issue don't ask me; use the JBoss forums and the opensift forums. 
+
+End. 
+

@@ -34,10 +34,10 @@ and extract into a folder that does not have spaces in the path
 e.g. C:\users\simon\apache\maven
 2) Checkout the sourcecode from GitHub
 	git clone https://simbo1905@github.com/simbo1905/ZkToDo2.git
-it is a good idea to check the code out into a folder that doex not have
+it is a good idea to check the code out into a folder that does not have
 spaces e.g. C:\users\simon\projects\zktodo2
 3) Open up a command shell (cmd.exe) either from Start > Run... > cmd.exe
-on XP or by searching for cmd on the start menu of vista.
+on XP or by searching for cmd on the start menu of Vista/WinowsWhatever.
 4) Change directories into the folder where the pom.xml file was checked 
 out from Subversion e.g. cd C:\users\simon\projects\zktodo2
 5) Within the cmd.exe configure the location of your jdk1.5 or above with

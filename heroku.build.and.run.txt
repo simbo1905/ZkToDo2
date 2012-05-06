@@ -3,7 +3,7 @@ Heroku Cloud (see http://devcenter.heroku.com/articles/git)
 
 Heroku Tools Linux/Mac Install Hint:
 
-	http://toolbelt.heroku.com/linux/readme
+	# http://toolbelt.heroku.com/linux/readme
 	sudo apt-get install ruby-full
 	
 First:
@@ -37,4 +37,4 @@ Foot Notes
 	hibernate generate the sql ddl script and use the local/heroku tools to manage your schema 
 	for a real app.
 	
-	Heroku started out only supporting postgresql but now also support mysql (cleardb). 
+	Heroku started out only supporting postgresql but now also support mysql ("cleardb"). 

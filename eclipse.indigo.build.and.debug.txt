@@ -1,7 +1,7 @@
 
 These instructions have been tested on Eclipse 3.7.1 "Indigo" 
 
-Eclipse Indigo now has maven m2eclipse plug-ins baked in! 
+Eclipse Indigo now has maven m2eclipse plug-ins baked-in! 
 
 The default settings assume a postgresql database url and hibernate dialect. To switch to MySQL change 
 src/main/WEB-INF/classes/default.datasource-context.xml to refer to the other properties file. If you 
@@ -33,7 +33,8 @@ CLONE THE REMOTE REPO AND IMPORT AS MAVEN
 	then hit finish.
  
 You now have a local repo; when you commit you are committing locally not to the main server you cloned. 
-Drop me a line to get permissions to "git push origin master"
+Drop me a line to get permissions to "git push origin master" or get setup on github and send me a pull
+request to merge your feature into my repo. 
 
 COMPILE / RUN / DEBUG
 
@@ -46,7 +47,7 @@ COMPILE / RUN / DEBUG
 	
 	7) Open a browser at "http://localhost:8080/
 	
-	8) Set a break point BasicDao.findAll method. Refresh the browser. It should stop and show you
+	8) Set a break point ReminderService.findAll method. Refresh the browser. It should stop and show you
 	the "Source not found. Edit Source Lookup Path...". Click on that. Select "Add > Java Project" and 
 	select the zktodo2 project. It should now find the source line the next time you hit a breakpoint. 
 
