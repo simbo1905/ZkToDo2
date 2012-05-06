@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="ZkTodo2 - Passive View"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+<window title="ZkTodo2 - Passive View" width="640px" border="normal" apply="org.zkforge.zktodo2.ui.Presenter">
+<listbox id="list" multiple="true" rows="12">
+  <listhead>
+   <listheader label="Item" />
+   <listheader label="Priority" width="80px" />
+   <listheader label="Opened" width="90px" />
+  </listhead>
+ </listbox>
+ <vbox>
+ 	<hbox>
+  	Item:<textbox id="name" cols="40" constraint="no empty"/>
+    Priority:<intbox id="priority" cols="1" constraint="no empty"/>
+    Date:<datebox id="date" cols="14" constraint="no empty"/>
+    </hbox>
+    <hbox>
+    <button id="add" label="Add" width="36px" height="24px"/>
+    <button id="delete" label="Delete" width="50px" height="24px"/>
+    <button id="update" label="Update" width="52px" height="24px"/>
+    </hbox>
+ </vbox> 
+</window>
+<button label="Reload Page"
+	onClick='Clients.evalJavaScript("window.location = window.location;")' />
+</zk>
