@@ -15,7 +15,8 @@
 	</repositories>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<zk.version>6.0.0</zk.version>
+		<zk.version>6.0.1</zk.version>
+		<zkutil.version>6.0.0</zkutil.version>
 		<zkel.version>1.0.2</zkel.version>
 		<zkspring.version>3.1</zkspring.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
@@ -109,18 +110,18 @@
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zkbind</artifactId>
-			<version>${zk.version}</version>
+			<version>${zkutil.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.zkoss.common</groupId>
 			<artifactId>zweb</artifactId>
-			<version>${zk.version}</version>
+			<version>${zkutil.version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zul</artifactId>
-			<version>${zk.version}</version>
+			<version>${zkutil.version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -132,7 +133,7 @@
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zkplus</artifactId>
-			<version>${zk.version}</version>
+			<version>${zkutil.version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
