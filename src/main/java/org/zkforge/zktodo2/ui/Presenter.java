@@ -10,6 +10,7 @@ import org.zkforge.zktodo2.Reminder;
 import org.zkforge.zktodo2.ReminderService;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.event.SelectEvent;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
@@ -51,25 +52,25 @@ public class Presenter extends SelectorComposer<Window> implements
 		// noop
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void doAfterCompose(Window comp) throws Exception {
 		super.doAfterCompose(comp);
-		listModelList = new ListModelList();
+		listModelList = new ListModelList<Reminder>();
 		List<Reminder> reminders = reminderService.findAll();
 		listModelList.addAll(reminders);
 		list.setModel(listModelList);
 		list.setItemRenderer(this);
-		list.addEventListener("onSelect", new EventListener(){
-			public void onEvent(Event e)
-					throws Exception {
-				int index = list.getSelectedIndex();
-				selectedReminder = (Reminder) listModelList.get(index);
+		list.addEventListener("onSelect", new EventListener<SelectEvent<Listitem, Reminder>>(){
+			@Override
+			public void onEvent(SelectEvent<Listitem, Reminder> event) throws Exception {
+				selectedReminder = event.getSelectedObjects().iterator().next();
 				date.setValue(selectedReminder.getDate());
 				priority.setValue(selectedReminder.getPriority());
 				name.setValue(selectedReminder.getName());
 				return;
-			}});
+			}
+		}
+		);
 	}
 
 	@Listen("onClick = #add")
