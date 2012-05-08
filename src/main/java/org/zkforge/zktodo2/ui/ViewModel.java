@@ -3,26 +3,34 @@ package org.zkforge.zktodo2.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import org.springframework.context.annotation.Scope;
 import org.zkforge.zktodo2.Reminder;
 import org.zkforge.zktodo2.ReminderService;
 import org.zkoss.bind.Converter;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.select.Selectors;
+import org.zkoss.zk.ui.select.annotation.VariableResolver;
+import org.zkoss.zk.ui.select.annotation.WireVariable;
 
-@Scope("desktop")
-@Named("toDoViewModel")
+@VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class) // wire with Spring
 public class ViewModel  {
-
-	@Inject
-	@Named("reminderService")
-	protected ReminderService reminderService; 
 	
+	// wired property
+	@WireVariable ReminderService reminderService = null;
+	
+	public ReminderService getReminderService() {
+		return reminderService;
+	}
+
 	public void setReminderService(ReminderService reminderService) {
 		this.reminderService = reminderService;
+	}
+
+	@Init
+	public void init(){
+		Selectors.wireVariables((Component)null, this, Selectors.newVariableResolvers(getClass(), null));
 	}
 
 	protected List<Reminder> reminders = new ArrayList<Reminder>();
