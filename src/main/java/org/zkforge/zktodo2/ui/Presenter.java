@@ -50,10 +50,6 @@ public class Presenter extends SelectorComposer<Window> implements
 	ListModelList<Reminder> listModelList;	
 	Reminder selectedReminder = new Reminder();
 	
-	public Presenter() {
-		// noop
-	}
-	
 	@Override
 	public void doAfterCompose(Window comp) throws Exception {
 		super.doAfterCompose(comp); // super method wires the components

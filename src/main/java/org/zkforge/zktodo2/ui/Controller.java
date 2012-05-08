@@ -31,10 +31,6 @@ import org.zkoss.zul.Textbox;
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class) // wire with Spring
 public class Controller {
 
-	public Controller(){
-		// noop
-	}
-
 	// wired components
 	@Wire Textbox name;
 	@Wire Intbox priority;
