@@ -6,7 +6,7 @@
 	viewModel="@id('c') @init('org.zkforge.zktodo2.ui.Controller')"
 	validationMessages="@id('vmsgs')">
 		<listbox id="list" multiple="true" rows="6"
-			model="@load(c.model.reminders)"
+			model="@load(c.model.reminders) @load(c.model.reminders, after={'create','save','delete'})"
 			selectedItem="@bind(c.model.selectedReminder)">
 			<listhead>
 				<listheader label="Item" />
@@ -22,30 +22,20 @@
 			</template>
 		</listbox>
 		<vlayout
-			form="@id('r') @load(c.model.selectedReminder) @save(c.model.selectedReminder, before='save') @load(c.model.newReminder, after='new') @validator('org.zkforge.zktodo2.ReminderValidator')">
+			form="@id('r') @load(c.model.selectedReminder) @save(c.model.selectedReminder, before='save') @load(c.model.selectedReminder, after='create') @validator('org.zkforge.zktodo2.ui.ReminderValidator')">
 			<hlayout>
-				Item:
-				<textbox cols="40" instant="true" id="name"
-					value="@bind(r.name)" />
-				Priority:
-				<intbox cols="2" instant="true" id="priority"
-					value="@bind(r.priority)" />
-				Date:
-				<datebox cols="14" instant="true" id="date"
-					value="@bind(r.date) @converter(c.dateConverter)" />
+				Item: <textbox cols="40" instant="true" id="name" value="@bind(r.name)" />
+				Priority: <intbox cols="2" instant="true" id="priority" value="@bind(r.priority)" />
+				Date: <datebox cols="14" instant="true" id="date" value="@bind(r.date) @converter(c.dateConverter)" />
 			</hlayout>
 			<hlayout>
-				<button id="new" label="New" width="36px" height="24px"
-					onClick="@command('create')" />
-				<button id="delete" label="Delete" width="46px"
-					height="24px" onClick="@command('delete')" />
-				<button id="save" label="Save" width="46px"
-					height="24px" onClick="@command('save')" />
+				<button label="New" width="36px" height="24px" onClick="@command('create')" />
+				<button label="Delete" width="46px" height="24px" onClick="@command('delete')" />
+				<button label="Save" width="46px" height="24px" onClick="@command('save')" />
 			</hlayout>
 			<hlayout>
 				<label style="color:red" value="@load(vmsgs['name'])" />
-				<label style="color:red"
-					value="@load(vmsgs['priority'])" />
+				<label style="color:red" value="@load(vmsgs['priority'])" />
 				<label style="color:red" value="@load(vmsgs['date'])" />
 			</hlayout>
 		</vlayout>

@@ -49,7 +49,9 @@ public class Reminder {
 	@Column(name = "DATE")
 	private Date date = new Date(System.currentTimeMillis());
 	
-	public Reminder(){}
+	public Reminder(){
+		//noop
+	}
 	public Reminder(String name,int priority,Date date){
 		this.name = name;
 		this.priority = priority;

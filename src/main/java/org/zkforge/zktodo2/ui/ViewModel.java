@@ -78,9 +78,9 @@ public class ViewModel  {
 		this.selectedReminder = new Reminder();
 	}
 	
-	Converter dateConverter = new TimestampConverter();
+	Converter<?,?,?> dateConverter = new TimestampConverter();
 
-	public Converter getDateConverter() {
+	public Converter<?,?,?> getDateConverter() {
 		return dateConverter;
 	} 
 

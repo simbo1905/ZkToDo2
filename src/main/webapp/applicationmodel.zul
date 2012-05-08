@@ -23,7 +23,7 @@
 			</template>
 		</listbox>
 		<vlayout
-			form="@id('r') @load(vm.selectedReminder) @save(vm.selectedReminder, before='save') @load(vm.newReminder, after='new') @validator('org.zkforge.zktodo2.ReminderValidator')">
+			form="@id('r') @load(vm.selectedReminder) @save(vm.selectedReminder, before='save') @load(vm.newReminder, after='new') @validator('org.zkforge.zktodo2.ui.ReminderValidator')">
 			<hlayout>
 				Item:
 				<textbox cols="40" instant="true"

@@ -37,13 +37,16 @@ public class Presenter extends SelectorComposer<Window> implements
 
 	private static final long serialVersionUID = -3486059156312322420L;
 
+	// service
 	@WireVariable ReminderService reminderService;
 
+	// components
 	@Wire Textbox name;
 	@Wire Intbox priority;
 	@Wire Datebox date;
 	@Wire Listbox list;
 	
+	// conversation state
 	ListModelList<Reminder> listModelList;	
 	Reminder selectedReminder = new Reminder();
 	
@@ -53,7 +56,8 @@ public class Presenter extends SelectorComposer<Window> implements
 	
 	@Override
 	public void doAfterCompose(Window comp) throws Exception {
-		super.doAfterCompose(comp);
+		super.doAfterCompose(comp); // super method wires the components
+		// load the data and bind to the list then set self as list renderer
 		listModelList = new ListModelList<Reminder>();
 		List<Reminder> reminders = reminderService.findAll();
 		listModelList.addAll(reminders);
@@ -113,7 +117,6 @@ public class Presenter extends SelectorComposer<Window> implements
 			List<Reminder> reminders = reminderService.findAll();
 			listModelList.clear();
 			listModelList.addAll(reminders);
-			
 		}
 	}
 
