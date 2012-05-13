@@ -29,7 +29,7 @@ Running locally with Heroku toolbelt & PostgreSQL DB
 	mvn package
 	foreman start
 
-Foot Notes
+Footnotes
 
 	"hibernate.hbm2ddl.auto=update" in file src/main/webapp/WEB-INF/classes/postgresql.zktodo2.properties 
 	should create the required database table. Note that setting it to 'validate' 
