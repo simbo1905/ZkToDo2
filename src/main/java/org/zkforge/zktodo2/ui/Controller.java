@@ -120,10 +120,5 @@ public class Controller {
 			reload();
 		}
 	}
-	
-	Converter<?,?,?> dateConverter = new TimestampConverter();
 
-	public Converter<?,?,?> getDateConverter() {
-		return dateConverter;
-	} 
 }

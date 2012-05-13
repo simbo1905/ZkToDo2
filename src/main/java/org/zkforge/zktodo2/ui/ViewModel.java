@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.zkforge.zktodo2.Reminder;
 import org.zkforge.zktodo2.ReminderService;
-import org.zkoss.bind.Converter;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
@@ -61,7 +60,7 @@ public class ViewModel  {
 				this.reminderService.delete(selectedReminder);
 				this.selectedReminder = new Reminder();
 			} catch (Exception e) {
-				e.printStackTrace(); // hum. some else deleted this. should really send this up to the user and ask them to reload the page. 
+				e.printStackTrace(); // hum. someone else deleted this. should really send this up to the user and ask them to reload the page. 
 			}
 		}
 	}
@@ -73,7 +72,7 @@ public class ViewModel  {
 			try {
 				this.reminderService.persist(selectedReminder);
 			} catch (Exception e) {
-				e.printStackTrace(); // hum. some else deleted this. should really send this up to the user and ask them to reload the page. 
+				e.printStackTrace(); // hum. someone else deleted this. should really send this up to the user and ask them to reload the page. 
 			}
 		} else {
 			this.reminderService.persist(this.selectedReminder);
@@ -85,11 +84,5 @@ public class ViewModel  {
 	public void create() {
 		this.selectedReminder = new Reminder();
 	}
-	
-	Converter<?,?,?> dateConverter = new TimestampConverter();
-
-	public Converter<?,?,?> getDateConverter() {
-		return dateConverter;
-	} 
 
 }

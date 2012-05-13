@@ -26,7 +26,7 @@
 			<hlayout>
 				Item: <textbox cols="40" instant="true" id="name" value="@bind(r.name)" />
 				Priority: <intbox cols="2" instant="true" id="priority" value="@bind(r.priority)" />
-				Date: <datebox cols="14" instant="true" id="date" value="@bind(r.date) @converter(controller.dateConverter)" />
+				Date: <datebox cols="14" instant="true" id="date" value="@bind(r.date) @converter('org.zkforge.zktodo2.ui.TimestampConverter')" />
 			</hlayout>
 			<hlayout>
 				<button label="New" width="36px" height="24px" onClick="@command('create')" />

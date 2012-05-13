@@ -32,7 +32,7 @@
 					value="@bind(r.priority)" />
 				Date:
 				<datebox cols="14" instant="true"
-					value="@bind(r.date) @converter(vm.dateConverter)" />
+					value="@bind(r.date) @converter('org.zkforge.zktodo2.ui.TimestampConverter')" />
 			</hlayout>
 			<hlayout>
 				<button label="New" width="36px" height="24px"
