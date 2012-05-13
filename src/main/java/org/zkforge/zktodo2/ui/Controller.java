@@ -7,7 +7,6 @@ import java.util.List;
 import org.zkforge.zktodo2.Model;
 import org.zkforge.zktodo2.Reminder;
 import org.zkforge.zktodo2.ReminderService;
-import org.zkoss.bind.Converter;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
