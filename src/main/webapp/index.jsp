@@ -80,7 +80,7 @@ text-align: right;
 <body>
 <h2>Welcome To The ZkToDo2 Patterns Demo Application (ZK6 Refresh)</h2>
 <ul id="bigbuttons">
-<li class="mvvm"> <a href="applicationmodel.zul">Application Model (MVVM)</a> </li>
+<li class="mvvm"> <a href="presentationmodel.zul">Presentation Model (MVVM)</a> </li>
 <li class="mvc"> <a href="supervisingcontroller.zul">Supervising Controller (MVC)</a> </li>
 <li class="mvp"> <a href="passiveview.zul">Passive View (MVP)</a> </li>
 <li class="license"> <a href="http://www.apache.org/licenses/LICENSE-2.0">Opensource License</a> </li>
