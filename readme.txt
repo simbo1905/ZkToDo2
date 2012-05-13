@@ -15,17 +15,14 @@ Getting the source:
 	
 Building and running with default settings a PostgreSQL database host/db/user/passwd:
 
-	mvn -Djetty.port=8080 -DDATABASE_URL=postgres://foodToGoUser:foodToGoPassword@localhost/testdb package jetty:run
+	mvn -Djetty.port=8080 -DDATABASE_URL=postgres://user:password@localhost/db package jetty:run
 
 within the source code there are config settings for running on mysql db, postgresql db and hsqldb see 
-the commandline.build.and.run.txt for more details on switching to MySQL database. 
+the commandline.build.and.run.txt for more details on switching to MySQL database.  
 
 Note
 
-	"hibernate.hbm2ddl.auto=update" in file src/main/webapp/WEB-INF/classes/postgresql.zktodo2.properties 
-	may or may not create the required database tables depending on your database setup. Of course that 
-	setting is a bit lazy you can have hibernate generate the sql ddl script and use the local tools to 
-	manage your schema for a real app.
+	"hibernate.hbm2ddl.auto=update" in file src/main/webapp/WEB-INF/classes/postgresql.zktodo2.properties may or may not create the required database tables depending on your database setup. Of course that setting is a bit lazy you can have hibernate generate the sql ddl script and use the local tools to manage your schema for a real app.
 
 More documentation at: 
 
