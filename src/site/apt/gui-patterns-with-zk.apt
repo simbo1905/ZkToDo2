@@ -1,0 +1,97 @@
+Introduction
+
+  ZK is a rich internet application (RIA) framework which invokes Java event handlers running at the server in response DOM events from the browser. This allows an application developer to choose rich GUI patterns normally applied within desktop programming environments. 
+
+   This article will explore three Event Driven GUI Patterns using the ZK framework; "Passive View", "Supervising Controller" and "Presentation Model". The patterns are presented in the context a simple screen implemented three times using the approach outlined by each pattern.
+
+Rich Client GUI Patterns
+
+  GUI patterns address the subject of how to organise code to make best use of GUI frameworks. ZK has an asynchronous, stateful, event-driven programming model known as a "rich client system". This article will contrast three rich client GUI architectural patterns as described by {{{http://martinfowler.com/eaaDev/}Martin Fowler}}: 
+
+  - Passive View: A screen of components with all application specific behaviour extracted into a dominant controller such that the GUI widgets have their state controlled entirely by the controller.  
+
+  - Supervising Controller: Factor the UI into a view and a controller where the view handles simple mapping to the underlying model and the controller handles input response and complex view logic. 
+
+  - Presentation Model: Represent the state and behaviour of the presentation independently of the GUI widgets used within the interface. 
+
+  It should be noted that each approach has its own opportunities and challenges. The optimal approach depends on the context of the application; both the organisation of the screens and of the business logic. 
+
+ZK Event Driven Programming
+
+  ZK is an event-driven, component-based framework which gives the illusion of painting the serverside "Desktop" of Java GUI widgets as HTML into the browser screen. This  makes it easier to write complex data driven GUIs using a Java rich client GUI API on the server. This section will provide an overview of the framework runtime which archives this effect.
+
+  Figure 1 taken from the ZK Developer Guide shows an outline of a running ZK application. A browser request causes the ZK Loader to render ZUML (ZUL/XHTML) pages as a desktop of Java GUI widget (Components) which are held within the users HTTP Session. This desktop of serverside Java components is rendered to the browser as DHTML. Browser DOM events are dispatched by the ZK Client Engine (Javascript/jQuery) over AJAX to the ZK Asynchronous Update "AU" Engine (Java/Servlet). The ZK AU Engine then runs the serverside event handler of the corresponding Java GUI Component. 
+
+[http://books.zkoss.org/images/f/f5/Architecture-s.png] ZK Architecture Overview
+
+  Serverside Java event handlers attached to the desktop components then invoke the application business logic. Any modifications to the Java GUI Widgets made by the application event handlers are asynchronously returned to the browser in the AJAX response. The ZK Client Engine dynamically redraws the corresponding parts of the browser DOM in response to the asynchronous update.
+
+  ZK provides a databinding framework "ZK Bind" which removes the necessity of writing boilerplate code to move data between screen state (the GUI Widgets) and session state (the unsaved business entities). Attributes within the page configure the databinding of the screen components onto serverside object properties. Attributes may also configure "commandbindings" of screen event handlers onto serverside object methods. This capability allows developers to choose between the full gambit of MVP, MVC, MVVM and MVVMP patterns. 
+
+The Example Screen
+
+  The example user interface is the simple CRUD screen backed by a single database table shown below: 
+
+[http://docs.zkoss.org/images/3/3c/Zktodo2.png] Sample Screen
+
+  The sample code accompanying this article has the same screen implemented three times using the three GUI patterns. The simple backend of the screen is a JPA entity and a transactional service for performing persistance operations. The sourcecode is available on github.com under the Apache2 opensource licence. 
+
+  A detailed walk-through of the ZK features used in these screens is given in a near identical example within the official {{{http://books.zkoss.org/wiki/ZK_Getting_Started/Creating_a_Database-driven_Application}ZK documentation}}. The reader is encouraged to refer to that documented example to supplement the descriptions below. 
+
+The Passive View Implementation  
+
+  The "Passive View" implementation is shown within the file {{{https://github.com/simbo1905/ZkToDo2/blob/master/src/main/webapp/passiveview.zul}passiveview.zul}} and the accompanying {{{https://github.com/simbo1905/ZkToDo2/blob/master/src/main/java/org/zkforge/zktodo2/ui/Presenter.java}Presenter.java}} class. The name of the Java class refers to the pattern moniker "Model-View-Presenter (MVP)".
+
+  The ZUL page provides only the static layout of the screen. No display logic nor databindings are configured within the markup. The application logic is added into the page by the "apply" attribute in line {?}. This names the Presenter class as the composer for this screen. 
+
+  Annotations within the Java class automatic wire screen components and event handlers into the Presenter object.  The @Wire annotations from line {?} cause the screen GUI Components defined by the ZUL file to be injected. The @VariableResolver and @WireVariable cause the domain services to be obtained from Spring. @Listen annotations on the methods specify selectors to bind the Java methods onto the GUI widget event handlers.
+
+  The Presenter class is a GUI heavy component. At line {?} it implements ListitemRenderer and supplies the rendering logic for the Listbox on screen at line {?}. At line {?} the class populates the screen after it has been initialised by loading the entities from the service (line {?}). It then sets itself as the render of the list model (line {?}). These details are absent from the other examples which offload such work to the framework Binder which is configured by additional markup within the page. 
+
+The Supervising Controller Implementation 
+
+  The "Supervising Controller" approach is shown within the file {{{https://github.com/simbo1905/ZkToDo2/blob/master/src/main/webapp/supervisingcontroller.zul}supervisingcontroller.zul}}, the accompanying {{{https://github.com/simbo1905/ZkToDo2/blob/master/src/main/java/org/zkforge/zktodo2/ui/Controller.java}Controller.java}} and {{{https://github.com/simbo1905/ZkToDo2/blob/master/src/main/java/org/zkforge/zktodo2/Model.java}Model.java}} classes. The names of the Java class refers to the pattern moniker "Model-View-Controller (MVC)". 
+
+  At line {?} the framework BindComposer is applied to the screen. This introduces databindings and commandbindings to map both screen state and screen events onto the serverside objects. The bindings are in the form of EL expressions within "@annotation" attributes. 
+
+  At line {?} an instance of the Controller object is assigned to the viewModel attribute of the window. This sets it as the target of the @command bindings which maps the button onClick event handles to serverside methods. The Controller object is assigned the EL variable name 'controller'. 
+
+  The Controller object has a property 'controller.model' which is referenced in the databindings throughout the page. This property is an instance of class Model which represents the users session state with the application business logic. The effect of the databindings within the page is that the ZK framework Binder observes the server model and updates the GUI widgets accordingly. 
+
+  (name list model binding)
+
+  The salient feature of this implementation is the segregation of UI event processing and application conversational state. The responsibility of the controller object is to respond to screen events. The responsibility of the model is to represent the business state displayed on the screen. An instance of the Model is the target of the screen databindings; is the "bindmodel".
+
+  Within the sample code the Model object is passive and has no references to the business services. The Controller mediates the business services and "pushes" entities into the bindmodel. An alternative approach is to have the Model class have the references to the services rather than the Controller class. Then the Controller could "pull" entities through methods of an active bindmodel.  
+
+The Presentation Model Implementation
+
+  The "Presentation Model" implementation is shown within the file {{{https://github.com/simbo1905/ZkToDo2/blob/master/src/main/webapp/presentationmodel.zul}presentationmodel.zul}} and the accompanying accompanying {{{https://github.com/simbo1905/ZkToDo2/blob/master/src/main/java/org/zkforge/zktodo2/ui/ViewModel.java}ViewModel.java}} class. The name of the Java refers to the moniker "Model-View-ViewModel (MVVM)". The ZUL file is similar to the supervising controller screen using databindings and commandbindings so will not be described again here. The difference is in the organisation of the Java code. 
+
+  Annotations within the Java class initialise the instantiated ViewModel object.  The @VariableResolver, @WireVariable and @Init annotations cause the domain services to be obtained from Spring. @Command annotations on the methods mark them as commandbinding methods for the framework binder. The @NotifyChange annotations on the methods indicate which state will be updated in response to commands. This indicates to the binder which properties should be reloaded into the screen after executing commands.  
+
+  The ViewModel class does not have references to GUI widgets nor GUI events. It's responsibility is to be the screen independent model of the users interaction with the application. In addition to holding session state the ViewModel is the mediator of the domain services. 
+
+  In contrast to the Model class of the Supervising Controller example the ViewModel is an active rather than a passive bindmodel. The client of the ViewModel is the framework Binder which updates the GUI widgets. The user is interacting with the active bindmodel through screens animated by the framework Binder. 
+
+Pattern Selection
+
+  An architectural pattern is an abstract concept; any implementation is an interpretation of an outline. The implementation has a context (framework, existing code, skills, requirements, process) which moderates the approach. The sample screen presented in this article application is trivial in nature. It would be ill advised to extrapolate the simple implementations as presented to a full scale system. Instead the examples serve only to encourage discussion as to the paths open to developers when using the ZK Framework; they are not a map but a suggestion of possible routes. 
+
+  The imperative rather than declarative nature of the Presenter within the Passive View example is it both its strength and its weakness. The display logic is very explicit making debugging simple. By explicitly handing all the display logic the code has fine grained control; yet is verbose and screen specific. It requires developer discipline to keep screen logic separated from the business logic. 
+
+  Such fine grained control of display logic is useful for creating re-usable screen fragments. As such it is compatible with the other approaches to build macro-widgets and standardised dialogue screens. Large scale screen persenters may be brittle as late feedback as to the layout and organisation of a screen could force a significant rewrite. JUnit testing of custom screen logic can be brittle and tedious.  
+
+  The declarative nature of the screen within the Presentation Model is both it's strength and it's weakness. The display logic is offloaded to the framework binder using the observer pattern. This may make debugging screen update problems difficult and can lead to excessive observer updates. On the other hand rendering is configured rather than programmed which should reduce time to market. The absence of custom display code should make JUnit tests less brittle. 
+
+  The absence of GUI Widget references and GUI Events within ViewModel class used with Presentation Model encourages a clear segregation of display logic from business logic. This requires expertise in configuring the framework Binder to drive the screen by observing the ViewModel. In return for this investment different screen may be used to "skin" a ViewModel. A "ZK Touch" screen (jQuery Mobile) can render the ViewModel for a phone in addition regular pages rendering the same ViewModel for a traditional mouse driven screen. 
+
+  The flexibility of the Supervising Controller approach is both it's strength and it's weakness. A blend of the two other approaches may be taken. Databinding can be supplemented by direct GUI Widget updates from the controller as seen in the Passive View example. The model which the screen is bound to can be a passive bindmodel (state only) or have methods which mediate business services like the Presentation Model example. It may aim to get the best of the other two approaches; but without care may achieve only their weaknesses.
+
+  The segregation of UI action processing from business session state seen in Supervising Controller approach is a traditional web application approach within. Yet separation of state and behaviour can lead to brittle procedural logic rather than a supple object model. Business logic easily bleed into procedural controllers making maintenance and reuse harder. On the other hand if the business logic is procedural or external in nature then the logic will naturally fall into a controller which mediates the business methods which then pushes the results into a passive bindmodel. 
+
+Summary 
+
+  This article has presented an overview of the implementation of three rich client GUI patterns using ZK. The definition of the patterns given by Martin Fowler provides a clear statement of intent; they are strategies to organize rich GUI code. 
+
+  To ask the question "which is the best strategy?" may be asking the question "who is first amongst equals?". Each pattern is an outline approach which has emerged in a response to real world experiences; they are each distilled wisdom taken from real world experience. (incomplete)
