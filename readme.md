@@ -8,8 +8,8 @@
 
 The apps may shutdown on idle and so may be slow on first request 
 
-	[OpenShift PaaS Cloud](http://zktd2-zkdemo.rhcloud.com/ "OpenShift PaaS Cloud") 
-	[Heroku PaaS Cloud](http://glowing-light-1070.herokuapp.com/ "Heroku PaaS Cloud") 
+[OpenShift PaaS Cloud](http://zktd2-zkdemo.rhcloud.com/ "OpenShift PaaS Cloud") 
+[Heroku PaaS Cloud](http://glowing-light-1070.herokuapp.com/ "Heroku PaaS Cloud") 
 
 #### Getting the source:
 
