@@ -1,8 +1,9 @@
 
 #### This is the code for the "ZkToDo2" sample with ZK, JPA & Spring
 
-	http://www.slideshare.net/simbo1905/zk-mvvm-spring-jpa-on-two-paas-clouds-10610874
-	http://www.slideshare.net/simbo1905/design-patterns-in-zk-java-mvvm-as-modelviewbinder 
+[Here](http://www.slideshare.net/simbo1905/zk-mvvm-spring-jpa-on-two-paas-clouds-10610874) is the presentation given to the 2011 London ZK Users group. 
+
+[Here](http://www.slideshare.net/simbo1905/design-patterns-in-zk-java-mvvm-as-modelviewbinder) is the presentation of the idea of ZK MVVM given to the 2010 London ZK Users group.  
 
 #### See it in the clouds
 
