@@ -4,12 +4,13 @@
 	http://www.slideshare.net/simbo1905/zk-mvvm-spring-jpa-on-two-paas-clouds-10610874
 	http://www.slideshare.net/simbo1905/design-patterns-in-zk-java-mvvm-as-modelviewbinder 
 
-#### See it running on the cloud 
+#### See it in the clouds
 
-The apps may shutdown on idle and so may be slow on first request 
+Running on the [OpenShift PaaS Cloud](http://zktd2-zkdemo.rhcloud.com/ "OpenShift PaaS Cloud") 
 
-[OpenShift PaaS Cloud](http://zktd2-zkdemo.rhcloud.com/ "OpenShift PaaS Cloud") 
-[Heroku PaaS Cloud](http://glowing-light-1070.herokuapp.com/ "Heroku PaaS Cloud") 
+Running on the [Heroku PaaS Cloud](http://glowing-light-1070.herokuapp.com/ "Heroku PaaS Cloud") 
+
+The apps may shutdown on idle and so may be slow on first request. 
 
 #### Getting the source:
 
