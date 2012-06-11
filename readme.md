@@ -1,5 +1,5 @@
 
-#### This is the code for the "ZkToDo2" sample with ZK, JPA & Spring
+#### This is the code for the "ZkToDo2" sample application with ZK, JPA & Spring
 
 [Here](http://www.slideshare.net/simbo1905/zk-mvvm-spring-jpa-on-two-paas-clouds-10610874) is the presentation given to the 2011 London ZK Users group. 
 
