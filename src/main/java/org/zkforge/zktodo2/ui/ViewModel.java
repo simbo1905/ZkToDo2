@@ -6,17 +6,14 @@ import java.util.List;
 import org.zkforge.zktodo2.Reminder;
 import org.zkforge.zktodo2.ReminderService;
 import org.zkoss.bind.annotation.Command;
-import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class) // wire with Spring
 public class ViewModel  {
 	
-	// wired property
+	// auto-wired property
 	@WireVariable ReminderService reminderService = null;
 	
 	public ReminderService getReminderService() {
@@ -25,11 +22,6 @@ public class ViewModel  {
 
 	public void setReminderService(ReminderService reminderService) {
 		this.reminderService = reminderService;
-	}
-
-	@Init
-	public void init(){
-		Selectors.wireVariables((Component)null, this, Selectors.newVariableResolvers(getClass(), null));
 	}
 
 	protected List<Reminder> reminders = new ArrayList<Reminder>();
