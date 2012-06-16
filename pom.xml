@@ -31,7 +31,7 @@
 		<junit.version>4.7</junit.version>
 		<concurrent.version>1.3.4</concurrent.version>
 		<commons-lang.version>2.5</commons-lang.version>
-		<jetty.version>7.4.5.v20110725</jetty.version>
+		<jetty.version>7.6.4.v20120524</jetty.version>
 		<postgresql.version>8.4-702.jdbc3</postgresql.version>
 		<commons-logging.version>1.0.4</commons-logging.version>
 		<dom4j.version>1.6.1</dom4j.version>
@@ -133,6 +133,10 @@
 					<artifactId>slf4j-api</artifactId>
 					<groupId>org.slf4j</groupId>
 				</exclusion>
+				<exclusion>
+					<artifactId>logback-classic</artifactId>
+					<groupId>ch.qos.logback</groupId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -199,6 +203,10 @@
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>${jetty.version}</version>
+				<configuration>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<jettyConfig>src/etc/jetty-jmx.xml</jettyConfig>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -218,8 +226,36 @@
 									<version>${jetty.version}</version>
 									<destFileName>jetty-runner.jar</destFileName>
 								</artifactItem>
+								<artifactItem>
+									<groupId>org.eclipse.jetty</groupId>
+									<artifactId>jetty-jmx</artifactId>
+									<version>${jetty.version}</version>
+									<destFileName>jetty-jmx.jar</destFileName>
+								</artifactItem>
 							</artifactItems>
 						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<configuration>
+							<tasks>
+								<jar destfile="${project.build.directory}/jetty-runner-jmx.jar">
+									<zipfileset src="${project.build.directory}/dependency/jetty-jmx.jar" />
+									<zipfileset src="${project.build.directory}/dependency/jetty-runner.jar" />
+									<manifest>
+										<attribute name="Main-Class" value="org.mortbay.jetty.runner.Runner" />
+									</manifest>
+								</jar>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>

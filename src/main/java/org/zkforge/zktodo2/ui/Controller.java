@@ -63,6 +63,12 @@ public class Controller {
 		Selectors.wireComponents(view, this, false);
 		reload();
 	}
+	
+	protected void reload() {
+		List<Reminder> reminders = this.reminderService.findAll();
+		this.model.getReminders().clear();
+		this.model.getReminders().addAll(reminders);
+	}
 
 	/**
 	 * @param e The event is unused but is here to indicated that the have access to the screen context
@@ -79,12 +85,6 @@ public class Controller {
 			reload();
 		}
 		return;
-	}
-
-	protected void reload() {
-		List<Reminder> reminders = this.reminderService.findAll();
-		this.model.getReminders().clear();
-		this.model.getReminders().addAll(reminders);
 	}
 
 	/**

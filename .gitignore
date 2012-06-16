@@ -9,3 +9,4 @@ zktodo2test.dat.properties
 /.settings
 /.openshift
 /zktodo2test.dat.script
+/nohup.out

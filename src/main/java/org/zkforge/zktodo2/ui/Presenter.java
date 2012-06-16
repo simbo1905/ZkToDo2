@@ -37,7 +37,7 @@ public class Presenter extends SelectorComposer<Window> implements
 
 	private static final long serialVersionUID = -3486059156312322420L;
 
-	// service
+	// auto-wired property
 	@WireVariable ReminderService reminderService;
 
 	// components
