@@ -199,6 +199,7 @@
 	<build>
 		<finalName>zktodo2-${project.version}</finalName>
 		<plugins>
+			<!-- run jetty from eclipse or commandline with jmx enable for jconsole or StopJettyJmx.jar clean shutdown -->
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
@@ -208,6 +209,7 @@
 					<jettyConfig>src/etc/jetty-jmx.xml</jettyConfig>
 				</configuration>
 			</plugin>
+			<!-- we wish to run the project war with a jetty-runner which is jmx enabled so copy the required jars to the build output folder -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
@@ -237,6 +239,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- jetty-runner is not jmx enabled by default so repackage the jar with the required dependency -->
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
