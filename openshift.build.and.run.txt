@@ -86,6 +86,9 @@ Optional:
 	git remote add openshift ssh://XXX@YY.rhcloud.com/~/git/ZZZZ.git/
 	git push openshift master
 	# search statckoverflow.com if you have git issues
+	
+	To get at the database using tools take a look at port forwarding:
+	https://openshift.redhat.com/community/blogs/getting-started-with-port-forwarding-on-openshift
 
 Most of their commands let you add "-p your_password". Note also that eclipse lets you create 
 run command which are external scripts so you can no doubt set it up so that you can tail 
