@@ -1,0 +1,12 @@
+#!/bin/bash
+# This is a simple build script and will be executed on your CI system if 
+# available.  Otherwise it will execute while your application is stopped
+# before the deploy step.  This script gets executed directly, so it
+# could be python, php, ruby, etc.
+#
+# cannot write to ~/.m2 so we configure mvn to have a local jar cache elsewhere
+mkdir -p ${OPENSHIFT_DATA_DIR}/m2/repository
+echo -e "<settings><localRepository>${OPENSHIFT_DATA_DIR}m2/repository</localRepository>\n</settings>\n" > ${OPENSHIFT_DATA_DIR}/settings.xml
+#
+cd ${OPENSHIFT_REPO_DIR}
+mvn -Dmaven.test.skip=true -s ${OPENSHIFT_DATA_DIR}settings.xml package

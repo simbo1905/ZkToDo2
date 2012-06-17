@@ -35,13 +35,14 @@ Create Domain, Application and Database
 	# if you don't have one yet you need to create a domain on their cloud (pick your own name not 'zkdemo')
 	rhc-create-domain -n zkdemo -l your@login.email -p 
 	
-	#setup the cloud app instance as jbossas-7 (okay to set the app name to 'zktd2')
-	rhc-create-app -a zktd2 -t jbossas-7
+	#setup the cloud app instance as DIY type (okay to set the app name to 'zktd2')
+	rhc-create-app -a zktd2 -t diy-0.1 -p 
+	
 	# details can be confirmed with by logging into the openshift web console
 	# your app is UUID@appname-namespace.rhcloud.com (e.g. 62f0ef4ab25b47de8702c9ed12bfdbaf@zktd2-zkdemo.rhcloud.com)
-	# you can login to your cloud instance with "ssh UUID@appname-namespace.rhcloud.com"
-	# if you get permission denied add your ~/.ssh/id_rsa.pub key 
-	# as your SSH PUBLIC KEY on the openshift console (required to push code)
+	# ensure you can login to your cloud instance with "ssh UUID@appname-namespace.rhcloud.com"
+	# if you get permission denied add your local ~/.ssh/id_rsa.pub key 
+	# as your SSH PUBLIC KEY on your openshift console (this required to push code to the server)
 	
 	# add a postregsql database to your instance
 	# important! note down the details of your database including password, db, url (which has host ip) as output by this command
@@ -50,7 +51,7 @@ Create Domain, Application and Database
 	#ssh to your cloud instance, connect to the database and run a test query, create the table (find the UUID on your web console and use your app-domain.rhcloud.com)
 	ssh 62f0ef4ab25b47de8702c9ed12bfdbaf@zktd2-zkdemo.rhcloud.com
 	# the password and ip to use were on the output of the create database command you ran as well as your database name
-	PGPASSWORD=xxxx psql -h 127.11.255.1 -U admin -d zktd2
+	PGPASSWORD=${OPENSHIFT_DB_PASSWORD} psql -h ${OPENSHIFT_DB_HOST} -U ${OPENSHIFT_DB_USERNAME} -d zktd2
 	select 1 as a, 2 as b, 3 as c;
 	CREATE TABLE reminder ( reminder_id bigint NOT NULL, date timestamp without time zone, name character varying(255), priority integer, CONSTRAINT reminder_pkey PRIMARY KEY (reminder_id ));
 	\q
@@ -58,6 +59,8 @@ Create Domain, Application and Database
 	
 	# go into the server folder on your workstation and git pull in the demo source code into the server
 	cd zktd2/
+	# backup the readme file as it has interesting infomation about your app
+	cp README ..
 	#add the demo code repo to the folder
 	git remote add upstream https://simbo1905@github.com/simbo1905/ZkToDo2.git
 	# in the next command just hit return if asked for a password for downloading the code
@@ -102,39 +105,6 @@ using a completely different set of commands.
 
 I don't have any tips for debugging as I always debug with embedded jetty:run with a local spring 
 setup then push to containers. Its always worth the overhead to set this up to debug locally without a full j2ee container. 
-
-Running Locally - (Not Kept Up To Date)
-=======================================
-
-To develop locally on JBossAS7.0 & MySQL 5.x DB (your gonna need it to do anything more serious 
-than the demo app): 
-
-	#use the versions they are currently using when you created your openshift! 
-	unzip boss-as-web-7.0.x.Final.zip 
-	setup a local mysql database server
-	
-	create com.mysql JDBC driver for your local JBossAS7.0 standalone config
-		http://community.jboss.org/wiki/DataSourceConfigurationInAS7
-			step "Installing a JDBC driver as a module" @ that page		
-			step "Defining the DataSource itself" @ that page
-			
-	your openshift app will deploy as ROOT.war so you need to disable the JBossAS7.0 welcome page
-		in $JBOSS_HOME/standalone/configuration/standalone.xml set "enable-welcome-root=false"
-	
-	ensure that you have your local db settings as environment variables before you run the code
-		export OPENSHIFT_DB_HOST=localhost
-		export OPENSHIFT_DB_PORT=3306
-	    export OPENSHIFT_DB_USERNAME=zk_db_user
-	    export OPENSHIFT_DB_PASSWORD=zk_db_passwd
-	
-	build the app setting the profile 'openzone' to package the mysql settings and deploy to local server
-	
-		mvn -Dmaven.test.skip=true -P openzone clean package
-		cp deployments/ROOT.war $JBOSSAS7_HOME/standalone/deployments
-		$JBOSSAS7_HOME/bin/standalone.sh
-		# open a browser http://127.0.0.1:9999
-		
-If you have issue don't ask me; use the JBoss forums and the opensift forums. 
 
 End. 
 

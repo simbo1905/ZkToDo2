@@ -197,7 +197,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>zktodo2-${project.version}</finalName>
+		<finalName>zktodo2</finalName>
 		<plugins>
 			<!-- run jetty from eclipse or commandline with jmx enable for jconsole or StopJettyJmx.jar clean shutdown -->
 			<plugin>

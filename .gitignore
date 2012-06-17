@@ -7,6 +7,5 @@ zktodo2test.dat.properties
 /.project
 /.classpath
 /.settings
-/.openshift
 /zktodo2test.dat.script
 /nohup.out
