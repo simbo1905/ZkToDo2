@@ -106,8 +106,5 @@ Yet the full docs are at http://docs.redhat.com/ so try google "site:http://docs
 The instructions above do a source push (your code on their cloud) but you can also push only a WAR
 using a completely different set of commands. 
 
-I don't have any tips for debugging as I always debug with embedded jetty:run with a local spring 
-setup then push to containers. Its always worth the overhead to set this up to debug locally without a full j2ee container. 
-
 End. 
 
