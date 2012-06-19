@@ -87,15 +87,29 @@ Optional:
 	git push openshift master
 	# search statckoverflow.com if you have git issues
 	
-	To get at the database using tools take a look at port forwarding:
+	To get at the database using workstation tools take a look at port forwarding:
 	https://openshift.redhat.com/community/blogs/getting-started-with-port-forwarding-on-openshift
+
+	I am using OSX so I did the following as per the instructions at that link to make my workstation accept on my server ip of "127.6.171.129"
+
+	sudo ifconfig lo0 alias 127.6.171.129
+	
+	The tool only portforwards the known services, e.g. http on 8080 and postgresql. 
+	
+	To explicitly port forward the highport which JMX is running on :
+
+	ssh -N -v -L 127.6.171.129:15001:127.6.171.129:15001 c0cb210e032b4fbc8c06208c3236ed8c@myapp.rhcloud.com 
+
+	Then finally I could connect jconsole with a connection to
+
+	service:jmx:rmi://127.6.171.129:15001/jndi/rmi://127.6.171.129:15001/jmxrmi
+
+Foot Notes
+==========
 
 Most of their commands let you add "-p your_password". Note also that eclipse lets you create 
 run command which are external scripts so you can no doubt set it up so that you can tail 
 the server logs from inside of eclipse with an eclipse run. 
-
-Foot Notes
-==========
 
 Openshift started out only supporting MySQL but now also support postgresql.  
 
