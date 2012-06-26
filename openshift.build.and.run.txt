@@ -87,7 +87,7 @@ Optional:
 	git push openshift master
 	# search statckoverflow.com if you have git issues
 	
-	To get at the database using workstation tools take a look at port forwarding:
+	To connect to the cloud database server using local workstation tools take a look at port forwarding:
 	https://openshift.redhat.com/community/blogs/getting-started-with-port-forwarding-on-openshift
 
 	I am using OSX so I did the following as per the instructions at that link to make my workstation accept on my server ip of "127.6.171.129"

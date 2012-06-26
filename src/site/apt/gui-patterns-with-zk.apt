@@ -2,7 +2,7 @@ Introduction
 
   ZK is a rich internet application (RIA) framework which invokes Java event handlers running at the server in response DOM events from the browser. This allows an application developer to choose rich GUI patterns normally applied within desktop programming environments. 
 
-   This article will explore three Event Driven GUI Patterns using the ZK framework; "Passive View", "Supervising Controller" and "Presentation Model". The patterns are presented in the context a simple screen implemented three times using the approach outlined by each pattern.
+  This article will explore three Event Driven GUI Patterns using the ZK framework; "Passive View", "Supervising Controller" and "Presentation Model". The patterns are presented in the context a simple screen implemented three times using the approach outlined by each pattern.
 
 Rich Client GUI Patterns
 
