@@ -1,4 +1,4 @@
-package org.zkforge.zktodo2;
+package org.zkforge.zktodo2.ui;
 
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.validator.AbstractValidator;

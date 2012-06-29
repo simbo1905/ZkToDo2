@@ -13,7 +13,7 @@
 	</listener>
 	<listener>
 		<!-- The Spring RequestContextLister uses thread bound variables so to 
-		use this Spring freatures requires that we apply <disable-event-thread /> 
+		use this Spring features requires that we apply <disable-event-thread /> 
 		within zk.xml -->
 		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
 	</listener>
@@ -41,6 +41,10 @@
 	<servlet-mapping>
 		<servlet-name>zkLoader</servlet-name>
 		<url-pattern>*.zul</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>zkLoader</servlet-name>
+		<url-pattern>*.zhtml</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>auEngine</servlet-name>

@@ -25,7 +25,7 @@ public class ReminderTest {
 	protected DataSource dataSource;
 
 	@Autowired
-	protected BasicDao basicDao;
+	protected ReminderRepository reminderRepository;
 
 	@Autowired
 	protected ReminderService reminderService;
@@ -33,26 +33,26 @@ public class ReminderTest {
 	@Test
 	public void testConfig() throws Exception {
 		assertNotNull(dataSource);
-		assertNotNull(basicDao);
+		assertNotNull(reminderRepository);
 		assertNotNull(reminderService);
 	}
 
 	@Test
-	public void testBasicDao() throws Exception {
+	public void testReminderRespository() throws Exception {
 		Calendar calender = Calendar.getInstance();
 		calender.set(1975, 5, 19);
 		Reminder reminder = new Reminder("My Birthday", 2, calender.getTime());
-		basicDao.persist(reminder);
+		reminderRepository.save(reminder);
 		assertNotNull(reminder.getId());
-		Reminder event2 = (Reminder)basicDao.findSingle("from Reminder where name = ?", "My Birthday");
+		Reminder event2 = reminderRepository.findByName("My Birthday");
 		assertEquals(reminder, event2);
 		calender.set(1979, 4, 8);
 		Reminder event3 = new Reminder("My Ladies Birthday", 1, calender.getTime());
-		basicDao.persist(event3);
+		reminderRepository.save(event3);
 		assertNotNull(event3.getId());
-		Reminder event4 = (Reminder)basicDao.findSingle("from Reminder where name = ?", "My Ladies Birthday");
+		Reminder event4 = reminderRepository.findByName("My Ladies Birthday");
 		assertEquals(event3, event4);
-		List<Reminder> reminders = (List<Reminder>)basicDao.findAll(Reminder.class);
+		List<Reminder> reminders = reminderRepository.findAll();
 		assertEquals(2, reminders.size());
 		boolean foundMyDay = false;
 		boolean foundHerDay = false;
@@ -68,14 +68,14 @@ public class ReminderTest {
 	}
 
 	@Test
-	public void testEventModel() throws Exception {
+	public void testReminderService() throws Exception {
 		Calendar calender = Calendar.getInstance();
 		calender.set(1975, 5, 19);
-		Reminder reminder = new Reminder("My Birthday", 2, calender.getTime());
+		Reminder reminder = new Reminder("My Birthday 2", 3, calender.getTime());
 		reminderService.persist(reminder);
 		assertNotNull(reminder.getId());
 		calender.set(1979, 4, 8);
-		Reminder event2 = new Reminder("My Ladies Birthday", 1, calender.getTime());
+		Reminder event2 = new Reminder("My Ladies Birthday 2", 4, calender.getTime());
 		reminderService.persist(event2);
 		assertNotNull(event2.getId());
 		List<Reminder> reminders = reminderService.findAll();
@@ -83,9 +83,9 @@ public class ReminderTest {
 		boolean foundMyDay = false;
 		boolean foundHerDay = false;
 		for( Reminder e : reminders ){
-			if( e.getName().equals("My Birthday")){
+			if( e.getName().equals("My Birthday 2")){
 				foundMyDay = true;
-			} else if ( e.getName().equals("My Ladies Birthday") ){
+			} else if ( e.getName().equals("My Ladies Birthday 2") ){
 				foundHerDay = true;
 			}
 		}

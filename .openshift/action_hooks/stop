@@ -1,0 +1,6 @@
+#!/bin/bash
+# The logic to stop your application should be put in this script.
+#
+# Here we do a polite SIGTERM which both the jvm and jetty respond to (post deploy we will do a hard kill in case it stays hung)
+ps -ef | grep zktodo2.war | grep -v grep | awk '{ print $2 }' | xargs kill -SIGTERM > /dev/null 2>&1
+exit 0

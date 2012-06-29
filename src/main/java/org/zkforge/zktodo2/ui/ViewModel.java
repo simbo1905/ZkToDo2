@@ -3,24 +3,26 @@ package org.zkforge.zktodo2.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import org.springframework.context.annotation.Scope;
-import org.zkforge.zktodo2.EntityNotFoundException;
 import org.zkforge.zktodo2.Reminder;
 import org.zkforge.zktodo2.ReminderService;
-import org.zkoss.bind.Converter;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.zk.ui.select.annotation.VariableResolver;
+import org.zkoss.zk.ui.select.annotation.WireVariable;
 
-@Scope("desktop")
-@Named("toDoViewModel")
+@VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class) // wire with Spring
 public class ViewModel  {
+	
+	// auto-wired property
+	@WireVariable ReminderService reminderService = null;
+	
+	public ReminderService getReminderService() {
+		return reminderService;
+	}
 
-	@Inject
-	@Named("reminderService")
-	protected ReminderService reminderService; 
+	public void setReminderService(ReminderService reminderService) {
+		this.reminderService = reminderService;
+	}
 
 	protected List<Reminder> reminders = new ArrayList<Reminder>();
 	
@@ -49,8 +51,8 @@ public class ViewModel  {
 			try {
 				this.reminderService.delete(selectedReminder);
 				this.selectedReminder = new Reminder();
-			} catch (EntityNotFoundException e) {
-				// no doubt someone else deleted it at the same time. nothing to do. 
+			} catch (Exception e) {
+				e.printStackTrace(); // hum. someone else deleted this. should really send this up to the user and ask them to reload the page. 
 			}
 		}
 	}
@@ -60,9 +62,9 @@ public class ViewModel  {
 	public void save() {
 		if( this.selectedReminder.getId() != null ){
 			try {
-				this.reminderService.merge(selectedReminder);
-			} catch (EntityNotFoundException e) {
-				e.printStackTrace(); // hum. some else deleted this. should really send this up to the user and ask them to reload the page. 
+				this.reminderService.persist(selectedReminder);
+			} catch (Exception e) {
+				e.printStackTrace(); // hum. someone else deleted this. should really send this up to the user and ask them to reload the page. 
 			}
 		} else {
 			this.reminderService.persist(this.selectedReminder);
@@ -74,12 +76,5 @@ public class ViewModel  {
 	public void create() {
 		this.selectedReminder = new Reminder();
 	}
-	
-	Converter dateConverter = new TimestampConverter();
-
-	public Converter getDateConverter() {
-		return dateConverter;
-	} 
-
 
 }

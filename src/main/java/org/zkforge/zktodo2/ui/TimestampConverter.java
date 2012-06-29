@@ -6,7 +6,13 @@ import org.zkoss.bind.BindContext;
 import org.zkoss.bind.Converter;
 import org.zkoss.zk.ui.Component;
 
-final class TimestampConverter implements Converter {
+@SuppressWarnings("rawtypes")
+public final class TimestampConverter implements Converter {
+	
+	public TimestampConverter(){
+		//noop
+	}
+	
 	@Override
 	public Object coerceToUi(Object val, Component c, BindContext b) {
 		return val;

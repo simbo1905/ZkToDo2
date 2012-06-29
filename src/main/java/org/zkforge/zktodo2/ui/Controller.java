@@ -1,21 +1,16 @@
 
 package org.zkforge.zktodo2.ui;
 
-import static java.lang.System.out;
-
 import java.util.Date;
 import java.util.List;
 
-import org.zkforge.zktodo2.EntityNotFoundException;
 import org.zkforge.zktodo2.Model;
 import org.zkforge.zktodo2.Reminder;
-import org.zkoss.bind.Converter;
-import org.zkoss.bind.annotation.BindingParam;
+import org.zkforge.zktodo2.ReminderService;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Init;
-import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.Selectors;
@@ -24,36 +19,26 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Intbox;
-import org.zkoss.zul.ListModel;
-import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Textbox;
 
 /**
- * This class demonstrates "Supervising Presenter" pattern as the Composer is 
- * not doing all the explicit work of updating the UI. 
+ * This class demonstrates "Supervising Presenter" pattern. 
  * 
  * {@link http://martinfowler.com/eaaDev/SupervisingPresenter.html}
  */
-@VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
+@VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class) // wire with Spring
 public class Controller {
 
+	// wired components
 	@Wire Textbox name;
 	@Wire Intbox priority;
 	@Wire Datebox date;
 	@Wire Listbox list;
 
-	public Controller(){
-		// noop
-	}
-	
-	@Init
-	public void init(@ContextParam(ContextType.VIEW) Component view){
-	    Selectors.wireComponents(view, this, false);
-	}
-	
+	// wired property 	
 	@WireVariable Model model = null; 
-
+	
 	public void setModel(Model model) {
 		this.model = model;
 	}
@@ -61,87 +46,78 @@ public class Controller {
 	public Model getModel() {
 		return model;
 	}
+	
+	// wired property
+	@WireVariable ReminderService reminderService = null;
+	
+	public ReminderService getReminderService() {
+		return reminderService;
+	}
 
+	public void setReminderService(ReminderService reminderService) {
+		this.reminderService = reminderService;
+	}
+
+	@Init
+	public void init(@ContextParam(ContextType.VIEW) Component view){
+		Selectors.wireComponents(view, this, false);
+		reload();
+	}
+	
+	protected void reload() {
+		List<Reminder> reminders = this.reminderService.findAll();
+		this.model.getReminders().clear();
+		this.model.getReminders().addAll(reminders);
+	}
+
+	/**
+	 * @param e The event is unused but is here to indicated that the have access to the screen context
+	 */
 	@Command
-	@NotifyChange({"reminders","selectedReminder"})
-	public void create() {
+	public void create(@ContextParam(ContextType.TRIGGER_EVENT) Event e) {
 		Date dateValue = date.getValue();
 		Integer priorityValue = priority.getValue();
 		String nameValue = name.getValue();
 		if( dateValue != null && priorityValue != null && nameValue != null ){
-			Reminder reminder = new Reminder();
-			reminder.setDate(date.getValue());
-			reminder.setName(name.getValue());
-			reminder.setPriority(priority.getValue());
-			this.model.persistEvent(reminder);
-			List<Reminder> reminders = this.model.findAll();
-			ListModel<Reminder> listModel = this.list.getModel();
-			ListModelList<Reminder> listModelList = (ListModelList<Reminder>)listModel;
-			listModelList.clear();
-			listModelList.addAll(reminders);
+			Reminder reminder = new Reminder(nameValue, priorityValue, dateValue);
+			this.reminderService.persist(reminder);
+			this.model.setSelectedReminder(reminder);
+			reload();
 		}
 		return;
 	}
 
+	/**
+	 * @param e The event is unused but is here to indicated that the have access to the screen context
+	 */
 	@Command
-	@NotifyChange({"reminders","selectedReminder"})
-	public void save() {
+	public void save(@ContextParam(ContextType.TRIGGER_EVENT) Event e) {
 		Reminder selectedReminder = this.model.getSelectedReminder();
 		if( selectedReminder != null ){
-			ListModelList<Object> listModelList = (ListModelList<Object>) this.list.getModel();
 			try {
-				this.model.mergeEvent(selectedReminder);
-			} catch (EntityNotFoundException exception){
-				int index = list.getSelectedIndex();
-				listModelList.remove(index);
-				if( listModelList.size() > 0 ){
-					selectedReminder = (Reminder)listModelList.get(0);
-					list.setSelectedIndex(0);
-					name.setValue(selectedReminder.getName());
-					date.setValue(selectedReminder.getDate());
-					priority.setValue(selectedReminder.getPriority());
-				} else {
-					selectedReminder = null;
-				}
+				this.reminderService.persist(selectedReminder);
+			} catch (Exception exception){
+				// not implemented
 			}
-			List<Reminder> reminders = model.findAll();
-			listModelList.clear();
-			listModelList.addAll(reminders);
+			reload();
 		}
 	}
 
+	/**
+	 * @param e The event is unused but is here to indicated that the have access to the screen context
+	 */
 	@Command
-	@NotifyChange({"reminders","selectedReminder"})
-	public void delete(@BindingParam("e") Event e) {
+	public void delete(@ContextParam(ContextType.TRIGGER_EVENT) Event e) {
 		Reminder selectedReminder = this.model.getSelectedReminder();
 		if( null != selectedReminder ){
-			ListModel<Reminder> listModel = this.list.getModel();
-			ListModelList<Reminder> listModelList = (ListModelList<Reminder>)listModel;
-			int index = listModelList.indexOf(selectedReminder);
 			try {
-				this.model.deleteEvent(selectedReminder);
-			} catch (EntityNotFoundException exception ){
-				out.println("This is harmless as someone else has already deleted this item.");
+				this.reminderService.delete(selectedReminder);
+			} catch (Exception exception ){
+				// not implemented
 			}
-			listModelList.remove(selectedReminder);
-			if( index >= listModelList.size() ){
-				index = listModelList.size() - 1;
-			} 
-			if( listModelList.size() > 0 && index >= 0 ){
-				selectedReminder = (Reminder)listModelList.get(index);
-				list.setSelectedIndex(index);
-				name.setValue(selectedReminder.getName());
-				date.setValue(selectedReminder.getDate());
-				priority.setValue(selectedReminder.getPriority());
-			} else {
-				selectedReminder = null;
-			}
+			this.model.setSelectedReminder(null);
+			reload();
 		}
 	}
-	
-	Converter dateConverter = new TimestampConverter();
 
-	public Converter getDateConverter() {
-		return dateConverter;
-	} 
 }
