@@ -34,7 +34,7 @@ The Example Screen
 
 [./images/screen.png] Sample Screen
 
-  The sample code accompanying this article has the same screen implemented three times using the three GUI patterns. The simple backend of the screen is a JPA entity and a transactional service for performing persistance operations. The sourcecode is available on github.com under the Apache2 opensource licence. 
+  The sample code accompanying this article has the same screen implemented three times using the three GUI patterns. The simple backend of the screen is a JPA entity and a transactional service for performing persistence operations. The sourcecode is available on github.com under the Apache2 opensource licence. 
 
   A detailed walk-through of the ZK features used in these screens is given in a near identical example within the official {{{http://books.zkoss.org/wiki/ZK_Getting_Started/Creating_a_Database-driven_Application}ZK documentation}}. The reader is encouraged to refer to that documented example to supplement the descriptions below. 
 
@@ -452,7 +452,7 @@ Pattern Comparison
 
   The imperative rather than declarative nature of the Presenter within the Passive View example is it both its strength and its weakness. The display logic is very explicit making debugging simple. By explicitly handing all the display logic the code has fine grained control; yet is verbose and screen specific. It requires developer discipline to keep screen logic separated from the business logic. 
 
-  Such fine grained control of display logic is useful for creating re-usable screen fragments. As such it is compatible with the other approaches to build macro-widgets and standardised dialogue screens. Large scale screen persenters may be brittle as late feedback as to the layout and organisation of a screen could force a significant rewrite. JUnit testing of custom screen logic can be brittle and tedious.  
+  Such fine grained control of display logic is useful for creating re-usable screen fragments. As such it is compatible with the other approaches to build macro-widgets and standardised dialogue screens. Large scale screen presenters may be brittle as late feedback as to the layout and organisation of a screen could force a significant rewrite. JUnit testing of custom screen logic can be brittle and tedious.  
 
   The declarative nature of the screen within the Presentation Model is both it's strength and it's weakness. The display logic is offloaded to the framework binder using the observer pattern. This may make debugging screen update problems difficult and can lead to excessive observer updates if care is not taken. On the other hand rendering is configured rather than programmed which should reduce development time. The absence of custom display code should make JUnit tests less brittle. 
 
