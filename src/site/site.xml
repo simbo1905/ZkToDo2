@@ -20,7 +20,6 @@
 		</fluidoSkin>
 	</custom>
 
-
 	<body>
 		<links>
 			<item name="simbo1905" href="https://github.com/simbo1905" />
@@ -30,6 +29,5 @@
 			<item name="Patterns" href="gui-patterns-with-zk.html" />
 		</menu>
 
-		<menu ref="reports" />
 	</body>
 </project>
