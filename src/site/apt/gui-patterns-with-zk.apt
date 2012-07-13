@@ -4,6 +4,8 @@ Introduction
 
   This article will explore three Event Driven GUI Patterns using the ZK framework; "Passive View", "Supervising Controller" and "Presentation Model". The patterns are presented in the context a simple screen implemented three times using the approach outlined by each pattern.
 
+  The sourcecode for the article is available on GitHub at the {{{https://github.com/simbo1905/ZkToDo2/}ZkToDo2}} project. 
+
 Rich Client GUI Patterns
 
   GUI patterns address the subject of how to organise code to make best use of GUI frameworks. ZK has an asynchronous, stateful, event-driven programming model known as a "rich client system". This article will contrast three rich client GUI architectural patterns as described by {{{http://martinfowler.com/eaaDev/}Martin Fowler}}: 
@@ -164,7 +166,7 @@ The Passive View Implementation
 
 The Presentation Model Implementation
 
-  The "Presentation Model" implementation is shown within the file {{{https://github.com/simbo1905/ZkToDo2/blob/developerworks/src/main/webapp/presentationmodel.zul}presentationmodel.zul}} and the accompanying accompanying {{{https://github.com/simbo1905/ZkToDo2/blob/developerworks/src/main/java/org/zkforge/zktodo2/ui/ViewModel.java}ViewModel.java}} class. The name of the Java refers to the moniker "Model-View-ViewModel (MVVM)". Here is the whole ZUL screen: 
+  The "Presentation Model" implementation is shown within the file {{{https://github.com/simbo1905/ZkToDo2/blob/developerworks/src/main/webapp/presentationmodel.zul}presentationmodel.zul}} and the accompanying {{{https://github.com/simbo1905/ZkToDo2/blob/developerworks/src/main/java/org/zkforge/zktodo2/ui/ViewModel.java}ViewModel.java}} class. The name of the Java refers to the moniker "Model-View-ViewModel (MVVM)". Here is the whole ZUL screen: 
   
 +--------------------------
         <?xml version="1.0" encoding="UTF-8"?>
@@ -346,7 +348,7 @@ The Supervising Controller Implementation
    45 : </zk>
 +--------------------------
 
-  At line 5 the framework BindComposer is applied to the screen. At line 6 an instance of the Controller is made the target of the framework Binder. Much of the ZUL file is similar to the presentation model screen using databindings and commandbindings. The main difference is in the organisation of the Java code. The Controller object has a property 'controller.model' which is referenced in the databindings throughout the page. This property is an instance of class Model which represents the users session state with the application business logic. 
+  At line 5 the framework BindComposer is applied to the screen. At line 6 an instance of the Controller is made the target of the framework Binder. Much of the ZUL file is similar to the presentation model screen using databindings and commandbindings. The main difference is in the organisation of the Java code. The Controller object has a property 'controller.model' which is referenced in the databindings throughout the page. This property is an instance of class Model that represents the users session state with the application business logic. 
   
   Here are extracts from the Model class: 
 
@@ -450,9 +452,9 @@ The Supervising Controller Implementation
 
 Pattern Comparison
 
-  The imperative rather than declarative nature of the Presenter within the Passive View example is it both its strength and its weakness. The display logic is very explicit making debugging simple. By explicitly handing all the display logic the code has fine grained control; yet is verbose and screen specific. It requires developer discipline to keep screen logic separated from the business logic. 
+  The imperative rather than declarative nature of the Presenter within the Passive View example is it both its strength and its weakness. The display logic is very explicit making debugging simple. By explicitly handing all the display logic the code has fine-grained control; yet is verbose and screen specific. It requires developer discipline to keep screen logic separated from the business logic. 
 
-  Such fine grained control of display logic is useful for creating re-usable screen fragments. As such it is compatible with the other approaches to build macro-widgets and standardised dialogue screens. Large scale screen presenters may be brittle as late feedback as to the layout and organisation of a screen could force a significant rewrite. JUnit testing of custom screen logic can be brittle and tedious.  
+  Such fine-grained control of display logic is useful for creating re-usable screen fragments. As such it is compatible with the other approaches to build macro-widgets and standardised dialogue screens. Large scale screen presenters may be brittle as late feedback as to the layout and organisation of a screen could force a significant rewrite. JUnit testing of custom screen logic can be brittle and tedious.  
 
   The declarative nature of the screen within the Presentation Model is both it's strength and it's weakness. The display logic is offloaded to the framework binder using the observer pattern. This may make debugging screen update problems difficult and can lead to excessive observer updates if care is not taken. On the other hand rendering is configured rather than programmed which should reduce development time. The absence of custom display code should make JUnit tests less brittle. 
 
@@ -466,4 +468,4 @@ Summary
 
   This article has presented an overview of the implementation of three rich client GUI patterns using ZK. The definition of the patterns given by Martin Fowler provides a clear statement of intent; they are strategies to organize rich GUI code. 
 
-  An architectural pattern is an abstract concept; any implementation is an interpretation of an outline. The implementation has a context (framework, existing code, skills, requirements, process) which moderates the approach. The sample screen presented in this article application is trivial in nature. It would be ill advised to extrapolate the simple implementations as presented to a full scale system. Instead the examples serve only to encourage discussion as to the paths open to developers when using the ZK Framework; they are not a map but a suggestion of possible routes. To ask the question "which is the best strategy?" may be asking the question "who is first amongst equals?". Each pattern is an outline approach which has emerged in a response to real world experiences; they are each distilled wisdom taken from real world experience. 
+  An architectural pattern is an abstract concept; any implementation is an interpretation of an outline. The implementation has a context (framework, existing code, skills, requirements, process) which moderates the approach. The sample screen presented in this article application is trivial in nature. It would be ill advised to extrapolate the simple implementations as presented to a full scale system. Instead the examples serve only to encourage discussion as to the paths open to developers when using the ZK Framework; they are not a map but a suggestion of possible routes. To ask the question "which is the best strategy?" may be asking the question "who is first amongst equals?". Each pattern is an outline approach that has emerged in a response to real world experiences; they are each distilled wisdom taken from real world experience. 
