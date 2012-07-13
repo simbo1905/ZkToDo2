@@ -296,7 +296,7 @@ The Presentation Model Implementation
 
 The Supervising Controller Implementation 
 
-  The "Supervising Controller" approach is shown within the file {{{https://github.com/simbo1905/ZkToDo2/blob/developerworks/src/main/webapp/supervisingcontroller.zul}supervisingcontroller.zul}}, the accompanying {{{https://github.com/simbo1905/ZkToDo2/blob/developerworks/src/main/java/org/zkforge/zktodo2/ui/Controller.java}Controller.java}} and {{{https://github.com/simbo1905/ZkToDo2/blob/developerworks/src/main/java/org/zkforge/zktodo2/Model.java}Model.java}} classes. The names of the Java class refers to the pattern moniker "Model-View-Controller (MVC)". 
+  The "Supervising Controller" approach is shown within the file {{{https://github.com/simbo1905/ZkToDo2/blob/developerworks/src/main/webapp/supervisingcontroller.zul}supervisingcontroller.zul}}, the accompanying {{{https://github.com/simbo1905/ZkToDo2/blob/developerworks/src/main/java/org/zkforge/zktodo2/ui/Controller.java}Controller.java}} and {{{https://github.com/simbo1905/ZkToDo2/blob/developerworks/src/main/java/org/zkforge/zktodo2/Model.java}Model.java}} classes. The names of the Java classes refer to the pattern moniker "Model-View-Controller (MVC)". 
 
   Here is the ZUL screen file: 
   
