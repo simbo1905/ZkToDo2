@@ -12,6 +12,10 @@
 			<id>zk repository</id>
 			<url>http://mavensync.zkoss.org/maven2</url>
 		</repository>
+        <repository>
+            <id>intalio.org</id>
+            <url>http://www.intalio.org/public/maven2</url>
+        </repository>
 	</repositories>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -164,7 +168,7 @@
 			<scope>runtime</scope>
 			<version>${dom4j.version}</version>
 		</dependency>
-		<!-- cloudfoundry dependency -->
+		<!-- cloudfoundry dependency. found in intalio.org repo -->
 		<dependency>
 			<groupId>org.intalio.cloudfoundry</groupId>
 			<artifactId>vcapservices</artifactId>
