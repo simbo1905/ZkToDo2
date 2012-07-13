@@ -20,7 +20,7 @@ Rich Client GUI Patterns
 
 ZK Event Driven Programming
 
-  ZK is an event-driven, component-based framework which gives the illusion of painting the serverside "Desktop" of Java GUI widgets as HTML into the browser screen. This  makes it easier to write complex data driven GUIs using a Java rich client GUI API on the server. This section will provide an overview of the framework runtime which archives this effect.
+  ZK is an event-driven, component-based framework that gives the illusion of painting the serverside "Desktop" of Java GUI widgets as HTML into the browser screen. This  makes it easier to write complex data driven GUIs using a Java rich client GUI API on the server. This section will provide an overview of the framework runtime which archives this effect.
 
   Figure 1 taken from the ZK Developer Guide shows an outline of a running ZK application. A browser request causes the ZK Loader to render ZUML (ZUL/XHTML) pages as a desktop of Java GUI widget (Components) which are held within the users HTTP Session. This desktop of serverside Java components is rendered to the browser as DHTML. Browser DOM events are dispatched by the ZK Client Engine (Javascript/jQuery) over AJAX to the ZK Asynchronous Update "AU" Engine (Java/Servlet). The ZK AU Engine then runs the serverside event handler of the corresponding Java GUI Component. 
 
@@ -228,7 +228,7 @@ The Presentation Model Implementation
   
   At line 5 of the zul file the framework BindComposer is applied to the screen. This introduces databindings and commandbindings to map both screen state and screen events onto the serverside objects. The bindings are in the form of EL expressions within "@annotation" attributes. For example lines 18-20 have XML have @load attributes which load the name, priority and date of the Reminder objects into Listcell components. 
   
-  At line 6 an instance of the ViewModel class is assigned to the viewModel attribute of the window. This sets it as the target of the @command bindings which maps the button onClick event handles to serverside methods (java lines 39, 41, 43). The ViewModel object is assigned the EL variable name 'vm'. 
+  At line 6 an instance of the ViewModel class is assigned to the viewModel attribute of the window. This sets it as the target of the @command bindings that maps the button onClick event handles to serverside methods (java lines 39, 41, 43). The ViewModel object is assigned the EL variable name 'vm'. 
   
   Here are extracts from the ViewModel java class: 
 
