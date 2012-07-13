@@ -22,10 +22,23 @@
 
 	<!-- 
 	DATABASE_URL should be set with either "-DDATABASE_URL=postgres://user:password@hostname/dbname"
-	else with an environment variable. 
+	else with an environment variable.
+	
+	If we are in cloudfoundry, the environment variable VCAP_SERVICES
+	contains the database connection in JSON.
+	
+	The factory will part VCAP_SERVICES when it exists and create from the first
+	postgres.* service the database connection URL.
+	If it does not exist, the factory will simply use the value of
+	the system property as usual.
 	-->
-	<bean class="java.net.URI" id="dbUrl">
-		<constructor-arg value="${DATABASE_URL}" />
+	<bean id="vcapservices" class="org.intalio.cloudfoundry.vcapservices.impl.VCapServices"/>
+	<bean id="dbUrl"
+	      factory-bean="vcapservices"
+          factory-method="getConnectionAsURI">
+		<constructor-arg value="DATABASE_URL" />
+		<constructor-arg value="postgresql" />
+		<constructor-arg value="/^postgres.*/" />
 	</bean>
 
 	<!-- 

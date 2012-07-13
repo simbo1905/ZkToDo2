@@ -13,6 +13,8 @@ Running on the [Heroku PaaS Cloud](http://glowing-light-1070.herokuapp.com/ "Her
 
 The apps may shutdown on idle and so may be slow on first request. 
 
+Running on the [Cloudfoundry PaaS Cloud](http://zktodo2.cloudfoundry.com/ "Cloudfoundry PaaS Cloud") 
+
 #### Getting the source:
 
 	git clone https://simbo1905@github.com/simbo1905/ZkToDo2.git
