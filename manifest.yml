@@ -1,0 +1,19 @@
+---
+applications:
+  zktodo2-cf.zip:
+    name: zktodo2
+    framework:
+      name: standalone
+      info:
+        mem: 512M
+        description: Standalone Application
+        exec: 
+    runtime: java7
+    command: java -Djava.io.tmpdir=. -Dorg.apache.jasper.compiler.disablejsr199=true
+      -Xmx512M -jar jetty-runner-jmx.jar --port ${VCAP_APP_PORT} zktodo2.war
+    url: zktodo2.cloudfoundry.com
+    mem: 512M
+    instances: 1
+    services:
+      pg_zktodo2:
+        type: postgresql

@@ -1,0 +1,22 @@
+
+Cloudfoundry Cloud (see http://cloudfoundry.com/)
+
+Cloudfoundry vmc Tools Linux/Mac Install Hint:
+
+	# install rvm https://rvm.io/rvm/install/
+	curl -L https://get.rvm.io | bash -s stable --ruby
+	rvm use vmc --create
+	
+First:
+
+	Build with the instructions in commandline.build.and.run.txt to ensure you have maven working fine
+
+Then:
+
+	Edit the manifest.yml file and change the URL:
+	    url: my-zktodo2.cloudfoundry.com
+
+Deploy:
+
+    vmc push
+
