@@ -11,8 +11,6 @@ Running on the [OpenShift PaaS Cloud](http://zktd2-zkdemo.rhcloud.com/ "OpenShif
 
 Running on the [Heroku PaaS Cloud](http://glowing-light-1070.herokuapp.com/ "Heroku PaaS Cloud") 
 
-The apps may shutdown on idle and so may be slow on first request. 
-
 Running on the [Cloudfoundry PaaS Cloud](http://zktodo2.cloudfoundry.com/ "Cloudfoundry PaaS Cloud") 
 
 #### Getting the source:
@@ -44,6 +42,6 @@ may or may not create the required database tables depending on your database se
 	./eclipse.indigo.build.and.debug.txt
 	./opensshift.build.and.run.txt
 	./heroku.build.and.run.txt
-	./jboss.build.and.run.txt
+	./cloudfoundry.build.and.run.txt
 
 
