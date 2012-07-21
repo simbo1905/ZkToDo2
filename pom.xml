@@ -12,6 +12,10 @@
 			<id>zk repository</id>
 			<url>http://mavensync.zkoss.org/maven2</url>
 		</repository>
+        <repository>
+            <id>intalio.org</id>
+            <url>http://www.intalio.org/public/maven2</url>
+        </repository>
 	</repositories>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,6 +23,7 @@
 		<zkel.version>1.0.2</zkel.version>
 		<zkspring.version>3.1</zkspring.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
+		<vcapservices.version>1.0.0.001</vcapservices.version>
 		<hsqldb.version>1.8.0.7</hsqldb.version>
 		<hibernate-entitymanager.version>3.6.10.Final</hibernate-entitymanager.version>
 		<commons-dbcp.version>1.2.2</commons-dbcp.version>
@@ -163,6 +168,13 @@
 			<scope>runtime</scope>
 			<version>${dom4j.version}</version>
 		</dependency>
+		<!-- cloudfoundry dependency. found in intalio.org repo -->
+		<dependency>
+			<groupId>org.intalio.cloudfoundry</groupId>
+			<artifactId>vcapservices</artifactId>
+			<version>${vcapservices.version}</version>
+			<scope>compile</scope>
+		</dependency>
 		<!-- below are optional runtime database pool and drivers -->
 		<dependency>
 			<groupId>hsqldb</groupId>
@@ -254,12 +266,31 @@
 										<attribute name="Main-Class" value="org.mortbay.jetty.runner.Runner" />
 									</manifest>
 								</jar>
+								<zip destfile="${basedir}/zktodo2-cf.zip"
+										basedir="${project.build.directory}"
+										includes="jetty-runner-jmx.jar,zktodo2.war">
+								</zip>
 							</tasks>
 						</configuration>
 						<goals>
 							<goal>run</goal>
 						</goals>
 					</execution>
+					<execution>
+	                    <id>clean</id>
+	                    <configuration>
+	                        <task>
+	                            <echo>Cleaning cloudfoundry zip in the root folder</echo>
+	                        </task>
+	                        <tasks>
+	                            <delete file="${basedir}/zktodo2-cf.zip"/>
+	                        </tasks>
+	                    </configuration>
+	                    <phase>clean</phase>
+	                    <goals>
+	                        <goal>run</goal>
+	                    </goals>
+	                </execution>
 				</executions>
 			</plugin>
 			<plugin>
