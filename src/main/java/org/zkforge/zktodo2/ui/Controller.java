@@ -13,6 +13,7 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
@@ -59,6 +60,7 @@ public class Controller {
 
 	@Init
 	public void init(@ContextParam(ContextType.VIEW) Component view){
+		Selectors.wireComponents(view, this, false);
 		reload();
 	}
 	
