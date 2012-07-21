@@ -4,7 +4,7 @@
 	<groupId>org.zkforge.zktodo2</groupId>
 	<artifactId>zktodo2</artifactId>
 	<packaging>war</packaging>
-	<version>1.8.0</version>
+	<version>1.8.1</version>
 	<name>zktodo2</name>
 	<url>http://www.slideshare.net/simbo1905/design-patterns-in-zk-java-mvvm-as-modelviewbinder</url>
 	<repositories>
@@ -12,10 +12,10 @@
 			<id>zk repository</id>
 			<url>http://mavensync.zkoss.org/maven2</url>
 		</repository>
-        <repository>
-            <id>intalio.org</id>
-            <url>http://www.intalio.org/public/maven2</url>
-        </repository>
+		<repository>
+			<id>intalio.org</id>
+			<url>http://www.intalio.org/public/maven2</url>
+		</repository>
 	</repositories>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -168,13 +168,6 @@
 			<scope>runtime</scope>
 			<version>${dom4j.version}</version>
 		</dependency>
-		<!-- cloudfoundry dependency. found in intalio.org repo -->
-		<dependency>
-			<groupId>org.intalio.cloudfoundry</groupId>
-			<artifactId>vcapservices</artifactId>
-			<version>${vcapservices.version}</version>
-			<scope>compile</scope>
-		</dependency>
 		<!-- below are optional runtime database pool and drivers -->
 		<dependency>
 			<groupId>hsqldb</groupId>
@@ -266,31 +259,12 @@
 										<attribute name="Main-Class" value="org.mortbay.jetty.runner.Runner" />
 									</manifest>
 								</jar>
-								<zip destfile="${basedir}/zktodo2-cf.zip"
-										basedir="${project.build.directory}"
-										includes="jetty-runner-jmx.jar,zktodo2.war">
-								</zip>
 							</tasks>
 						</configuration>
 						<goals>
 							<goal>run</goal>
 						</goals>
 					</execution>
-					<execution>
-	                    <id>clean</id>
-	                    <configuration>
-	                        <task>
-	                            <echo>Cleaning cloudfoundry zip in the root folder</echo>
-	                        </task>
-	                        <tasks>
-	                            <delete file="${basedir}/zktodo2-cf.zip"/>
-	                        </tasks>
-	                    </configuration>
-	                    <phase>clean</phase>
-	                    <goals>
-	                        <goal>run</goal>
-	                    </goals>
-	                </execution>
 				</executions>
 			</plugin>
 			<plugin>
@@ -321,27 +295,71 @@
 	</build>
 	<profiles>
 		<profile>
-			<id>openshift</id>
+			<id>cloudforge</id>
 			<build>
 				<plugins>
 					<plugin>
 						<artifactId>maven-war-plugin</artifactId>
 						<version>2.1.1</version>
 						<configuration>
-							<outputDirectory>deployments</outputDirectory>
-							<warName>ROOT</warName>
-							<webXml>src/main/webapp/WEB-INF/openshift.web.xml</webXml>
+							<webResources>
+								<resource>
+									<directory>${basedir}/cloudforge</directory>
+									<targetPath>WEB-INF/classes</targetPath>
+								</resource>
+							</webResources>
 						</configuration>
+					</plugin>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<configuration>
+									<tasks>
+										<jar destfile="${project.build.directory}/jetty-runner-jmx.jar">
+											<zipfileset src="${project.build.directory}/dependency/jetty-jmx.jar" />
+											<zipfileset src="${project.build.directory}/dependency/jetty-runner.jar" />
+											<manifest>
+												<attribute name="Main-Class" value="org.mortbay.jetty.runner.Runner" />
+											</manifest>
+										</jar>
+										<zip destfile="${basedir}/zktodo2-cf.zip"
+												basedir="${project.build.directory}"
+												includes="jetty-runner-jmx.jar,zktodo2.war">
+										</zip>
+									</tasks>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>clean</id>
+								<configuration>
+									<task>
+										<echo>Cleaning cloudfoundry zip in the root folder</echo>
+									</task>
+									<tasks>
+										<delete file="${basedir}/zktodo2-cf.zip" />
+									</tasks>
+								</configuration>
+								<phase>clean</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 				</plugins>
 			</build>
 			<dependencies>
-				<!-- classloader issues on JBossAS702 to mark dom4j as provided -->
+				<!-- cloudfoundry dependency. found in intalio.org repo -->
 				<dependency>
-					<artifactId>dom4j</artifactId>
-					<groupId>dom4j</groupId>
-					<scope>provided</scope>
-					<version>${dom4j.version}</version>
+					<groupId>org.intalio.cloudfoundry</groupId>
+					<artifactId>vcapservices</artifactId>
+					<version>${vcapservices.version}</version>
+					<scope>compile</scope>
 				</dependency>
 			</dependencies>
 		</profile>

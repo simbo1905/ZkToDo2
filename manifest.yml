@@ -1,7 +1,7 @@
 ---
 applications:
   zktodo2-cf.zip:
-    name: zktodo2
+    name: simbo1905
     framework:
       name: standalone
       info:
@@ -11,7 +11,7 @@ applications:
     runtime: java7
     command: java -Djava.io.tmpdir=. -Dorg.apache.jasper.compiler.disablejsr199=true
       -Xmx512M -jar jetty-runner-jmx.jar --port ${VCAP_APP_PORT} zktodo2.war
-    url: zktodo2.cloudfoundry.com
+    url: simbo1905.cloudfoundry.com
     mem: 512M
     instances: 1
     services:

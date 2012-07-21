@@ -13,10 +13,25 @@ First:
 
 Then:
 
-	Edit the manifest.yml file and change the URL:
-	    url: my-zktodo2.cloudfoundry.com
+	Edit the manifest.yml file and change both the "name" entry and the "url" entry:
+	
+		name: my-zktodo2
+	
+		url: my-zktodo2.cloudfoundry.com
+	
+Build:
 
-Deploy:
+	Use the cloudforge maven profile to include the necessary utility jars into the final war:
+	
+		mvn -P cloudforge clean install
 
-    vmc push
+Deploy first time:
+
+	vmc push
+
+Update after changes:
+
+	vmc update
+	
+End.
 

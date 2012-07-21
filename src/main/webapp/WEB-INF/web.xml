@@ -5,7 +5,7 @@
 	<display-name>zktodo2</display-name>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/application-context.xml,classpath:default.datasource-context.xml</param-value>
+		<param-value>/WEB-INF/spring/application-context.xml,classpath:default.datasource-context.xml,classpath:dburl-context.xml</param-value>
 	</context-param>
 	<!-- Spring -->
 	<listener>
