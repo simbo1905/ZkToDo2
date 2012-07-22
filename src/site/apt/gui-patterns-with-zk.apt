@@ -1,3 +1,7 @@
+	------
+	GUI Patterns With ZK
+	------
+
 Introduction
 
   ZK is a rich internet application (RIA) framework which invokes Java event handlers running at the server in response DOM events from the browser. This allows an application developer to choose rich GUI patterns normally applied within desktop programming environments. 
@@ -20,9 +24,9 @@ Rich Client GUI Patterns
 
 ZK Event Driven Programming
 
-  ZK is an event-driven, component-based framework that gives the illusion of painting the serverside "Desktop" of Java GUI widgets as HTML into the browser screen. This  makes it easier to write complex data driven GUIs using a Java rich client GUI API on the server. This section will provide an overview of the framework runtime which archives this effect.
+  ZK is an event-driven, component-based framework that gives the illusion of painting the serverside "Desktop" of Java GUI widgets as HTML into the browser screen. This  makes it easier to write complex data driven GUIs using a Java rich client GUI API on the server. This section will provide an overview of the framework runtime which achieves this effect.
 
-  Figure 1 taken from the ZK Developer Guide shows an outline of a running ZK application. A browser request causes the ZK Loader to render ZUML (ZUL/XHTML) pages as a desktop of Java GUI widget (Components) which are held within the users HTTP Session. This desktop of serverside Java components is rendered to the browser as DHTML. Browser DOM events are dispatched by the ZK Client Engine (Javascript/jQuery) over AJAX to the ZK Asynchronous Update "AU" Engine (Java/Servlet). The ZK AU Engine then runs the serverside event handler of the corresponding Java GUI Component. 
+  Figure 1 taken from the ZK Developer Guide shows an outline of a running ZK application. A browser request causes the ZK Loader to render ZUML (ZUL/XHTML) pages as a desktop of Java GUI widgets (Components) which are held within the HTTP Session. This desktop of serverside Java components is rendered to the browser as DHTML. Browser DOM events are dispatched by the ZK Client Engine (Javascript/jQuery) over AJAX to the ZK Asynchronous Update "AU" Engine (Java/Servlet). The ZK AU Engine then runs the serverside event handler of the corresponding Java GUI Component. 
 
 [http://books.zkoss.org/images/f/f5/Architecture-s.png] ZK Architecture Overview
 
@@ -162,7 +166,7 @@ The Passive View Implementation
 
   Annotations within the Java class automatic wire screen components and event handlers into the Presenter object. The @VariableResolver (line 34) and @WireVariable (line 41) cause the domain services to be obtained from Spring. The @Wire annotations (lines 44-47) cause the screen GUI Components defined by the ZUL file to be injected. The @Listen annotations on the methods specify selectors to bind the Java methods onto the GUI widget event handlers.
 
-  The Presenter class is a GUI heavy component. The class implements ListitemRenderer and supplies the Listbox rendering method at line 147. The doAfterCompose method (line 54) populates the screen after it has been initialised by loading the entities from the service (line 58). It then sets itself as the render of the list model (line 61). Such details are absent from the other examples which offload such work to the framework Binder which is configured by additional markup within the page. 
+  The Presenter class is a GUI heavy component. The class implements ListitemRenderer and supplies the Listbox rendering method at line 147. The doAfterCompose method (line 54) populates the screen after it has been initialised by loading the entities from the service (line 58). It then sets itself as the render of the list model (line 61). These details are absent from the other examples which offload this work to the framework Binder which is configured by additional markup within the page. 
 
 The Presentation Model Implementation
 
@@ -226,9 +230,9 @@ The Presentation Model Implementation
    55 : </zk>
 +--------------------------
   
-  At line 5 of the zul file the framework BindComposer is applied to the screen. This introduces databindings and commandbindings to map both screen state and screen events onto the serverside objects. The bindings are in the form of EL expressions within "@annotation" attributes. For example lines 18-20 have XML have @load attributes which load the name, priority and date of the Reminder objects into Listcell components. 
+  At line 5 of the zul file the framework BindComposer is applied to the screen. This introduces databindings and commandbindings to map both screen state and screen events onto the serverside objects. The bindings are in the form of EL expressions within "@annotation" attributes. For example lines 18-20 have XML @load attributes which load the name, priority and date of the Reminder objects into Listcell components. 
   
-  At line 6 an instance of the ViewModel class is assigned to the viewModel attribute of the window. This sets it as the target of the @command bindings that maps the button onClick event handles to serverside methods (java lines 39, 41, 43). The ViewModel object is assigned the EL variable name 'vm'. 
+  At line 6 an instance of the ViewModel class is assigned to the viewModel attribute of the window. This sets it as the target of the @command bindings that maps the button onClick event handles to serverside methods (lines 39, 41, 43). The ViewModel object is assigned the EL variable name 'vm'. 
   
   Here are extracts from the ViewModel java class: 
 
@@ -448,7 +452,7 @@ The Supervising Controller Implementation
   
   The salient feature of this implementation is the segregation of UI event processing and application conversational state. The responsibility of the controller object is to respond to screen events. The responsibility of the model is to represent the business state displayed on the screen. 
 
-  Within the sample code the Model object is passive and has no references to the business services. The Controller mediates the business services and "pushes" entities into the passive bindmodel. An alternative approach is to have the Model class have the references to the services rather than the Controller class. Then the Controller could "pull" entities through methods of an active bindmodel. 
+  Within the sample code the Model object is passive and has no references to the business services. The Controller mediates the business services and "pushes" entities into the passive bindmodel. An alternative approach is to have the Model class have the references to the services rather than the Controller class. Then the Controller could then "pull" entities through the methods of an active bindmodel. 
 
 Pattern Comparison
 
@@ -462,10 +466,10 @@ Pattern Comparison
 
   The flexibility of the Supervising Controller approach is both it's strength and it's weakness. A blend of the two other approaches may be taken. Databinding can be supplemented by direct GUI Widget updates from the controller as seen in the Passive View example. The model to which the screen is bound to can be a passive bindmodel (state only) or have methods which mediate business services like the Presentation Model example. It may aim to get the best of the other two approaches; but without care may achieve only their combined weaknesses.
 
-  The segregation of UI action processing from business session state seen in Supervising Controller approach is a traditional web application approach within. Yet separation of state and behaviour can lead to brittle procedural logic rather than a supple object model. Business logic easily bleed into procedural controllers making maintenance and reuse harder. On the other hand if the business logic is procedural or external in nature then the logic will naturally fall into a controller which mediates the business methods which then pushes the results into a passive bindmodel. 
+  The segregation of UI action processing from business session state seen in the Supervising Controller code is a traditional web application approach. Yet separation of state and behaviour can lead to brittle procedural logic rather than a supple object model. Business logic easily bleed into procedural controllers making maintenance and reuse harder. On the other hand if the business logic is procedural or external in nature then the logic may naturally fall into a controller which mediates the business methods which then pushes the results into a passive bindmodel. 
 
 Summary 
 
   This article has presented an overview of the implementation of three rich client GUI patterns using ZK. The definition of the patterns given by Martin Fowler provides a clear statement of intent; they are strategies to organize rich GUI code. 
 
-  An architectural pattern is an abstract concept; any implementation is an interpretation of an outline. The implementation has a context (framework, existing code, skills, requirements, process) which moderates the approach. The sample screen presented in this article application is trivial in nature. It would be ill advised to extrapolate the simple implementations as presented to a full scale system. Instead the examples serve only to encourage discussion as to the paths open to developers when using the ZK Framework; they are not a map but a suggestion of possible routes. To ask the question "which is the best strategy?" may be asking the question "who is first amongst equals?". Each pattern is an outline approach that has emerged in a response to real world experiences; they are each distilled wisdom taken from real world experience. 
+  An architectural pattern is an abstract concept; any implementation is an interpretation of an outline. The implementation has a context (framework, existing code, skills, requirements, process) which moderates the approach. The sample screen presented in this article application is trivial in nature. It would be ill advised to extrapolate the simple implementations as presented to a full scale system. Instead the examples serve only to encourage discussion as to the paths open to developers when using the ZK Framework; they are not a map but a suggestion of possible routes. To ask the question "which is the best strategy?" may be asking the question "who is first amongst equals?". Each pattern is an outline approach that has emerged in a response to real world experiences; as such they are each distilled wisdom. 
