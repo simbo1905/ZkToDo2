@@ -9,8 +9,7 @@ applications:
         description: Standalone Application
         exec: 
     runtime: java7
-    command: java -Djava.io.tmpdir=. -Dorg.apache.jasper.compiler.disablejsr199=true
-      -Xmx512M -jar jetty-runner-jmx.jar --port ${VCAP_APP_PORT} zktodo2.war
+    command: java $JAVA_OPTS jetty-runner-jmx.jar --port ${VCAP_APP_PORT} zktodo2.war
     url: simbo1905.cloudfoundry.com
     mem: 512M
     instances: 1
