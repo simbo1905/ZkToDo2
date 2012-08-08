@@ -294,7 +294,7 @@ The Presentation Model Implementation
 
   Annotations within the Java class initialise the ViewModel object.  The @VariableResolver (line 13) and @WireVariable (line 17) annotations cause the domain services to be obtained from Spring. @Command annotations on the Java methods mark them as commandbinding methods for the framework binder. The @NotifyChange annotations on the Java methods indicate which state will be updated in response to commands. This indicates to the binder which properties should be reloaded into the screen after executing commands.  
 
-  The ViewModel class does not have references to GUI widgets nor GUI events. It's responsibility is to be the screen independent model of the users interaction with the application. It holds the session state in the properties 'reminders' (line 17) and 'selectedReminder' (line 36). The ViewModel is the mediator of the domain service 'reminderService' (line 17). 
+  The ViewModel class does not have references to GUI widgets nor GUI events. It's responsibility is to be the screen independent model of the users interaction with the application. It holds the session state in the properties 'reminders' (line 27) and 'selectedReminder' (line 36). The ViewModel is the mediator of the domain service 'reminderService' (line 17). 
 
   An instance of the ViewModel is the target of the screen databindings; is the "bindmodel". The salient feature of the Presentation Model example is that the ViewModel is active and mediates the business services. The client of the ViewModel is the framework Binder which updates the GUI widgets. The user is interacting with the active bindmodel through screens animated by the framework Binder. 
 
@@ -466,7 +466,7 @@ Pattern Comparison
 
   The flexibility of the Supervising Controller approach is both it's strength and it's weakness. A blend of the two other approaches may be taken. Databinding can be supplemented by direct GUI Widget updates from the controller as seen in the Passive View example. The model to which the screen is bound to can be a passive bindmodel (state only) or have methods which mediate business services like the Presentation Model example. It may aim to get the best of the other two approaches; but without care may achieve only their combined weaknesses.
 
-  The segregation of UI action processing from business session state seen in the Supervising Controller code is a traditional web application approach. Yet separation of state and behaviour can lead to brittle procedural logic rather than a supple object model. Business logic easily bleed into procedural controllers making maintenance and reuse harder. On the other hand if the business logic is procedural or external in nature then the logic may naturally fall into a controller which mediates the business methods which then pushes the results into a passive bindmodel. 
+  The segregation of UI action processing from business session state seen in the Supervising Controller code is a traditional web application approach. Yet separation of state and behaviour can lead to brittle procedural logic rather than a supple object model. Business logic easily bleeds into procedural controllers making maintenance and reuse harder. On the other hand if the business logic is procedural or external in nature then the logic may naturally fall into a controller which mediates the business methods which then pushes the results into a passive bindmodel. 
 
 Summary 
 
