@@ -25,6 +25,10 @@ Install their toolbelt (their tools are ruby based):
 	#then ensure that PATH has that on it
 	PATH=$PATH:/your/gems/path/bin
 	export PATH
+	
+	# then login to openshift with
+	rhc setup
+	# life is easier if you have it upload your ssh public key to the server when it asks for that. 
 
 Create Domain, Application and Database
 
@@ -36,7 +40,7 @@ Create Domain, Application and Database
 	rhc-create-domain -n zkdemo -l your@login.email -p 
 	
 	#setup the cloud app instance as DIY type (okay to set the app name to 'zktd2')
-	rhc-create-app -a zktd2 -t diy-0.1 -p 
+	rhc-create-app -a zktd2 -t diy-0.1  
 	
 	# details can be confirmed with by logging into the openshift web console
 	# your app is UUID@appname-namespace.rhcloud.com (e.g. 62f0ef4ab25b47de8702c9ed12bfdbaf@zktd2-zkdemo.rhcloud.com)
@@ -46,7 +50,7 @@ Create Domain, Application and Database
 	
 	# add a postregsql database to your instance
 	# important! note down the details of your database including password, db, url (which has host ip) as output by this command
-	rhc-ctl-app -a zktd2 -e add-postgresql-8.4 -l your@login.email
+	rhc-ctl-app -a zktd2 -e add-postgresql-8.4 
 	
 	#ssh to your cloud instance, connect to the database and run a test query, create the table (find the UUID on your web console and use your app-domain.rhcloud.com)
 	ssh 62f0ef4ab25b47de8702c9ed12bfdbaf@zktd2-zkdemo.rhcloud.com
@@ -70,10 +74,10 @@ Create Domain, Application and Database
 	git remote show origin
 	# insure the code build and deploys see commmandline.build.and.run.txt for full details
 	mvn package
-	#once you have it working push it up to 'origin' which should be your server which will build it
+	#once you have it working push it up to 'origin' which should be your server which will build it and start the app
 	git push
 	#tail the logs in a second window
-	rhc-tail-files -a zktd2 -l your@login.email
+	rhc-tail-files -a zktd2 
 	
 	Note: if your deployment does not go okay first time you may have to ssh into your server
 	and use "ps -ef" to find the java and postgresql processes and "kill -9" them. Then touch 
