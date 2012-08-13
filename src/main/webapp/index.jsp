@@ -51,7 +51,7 @@ text-align: right;
 background-image:url('images/48px-New_text_document.png');
 background-repeat: no-repeat;
 height: 60px;
-width: 290px;
+width: 200px;
 display: block;
 text-align: right;
 }
@@ -83,9 +83,9 @@ text-align: right;
 <li class="mvvm"> <a href="presentationmodel.zul">Presentation Model (MVVM)</a> </li>
 <li class="mvc"> <a href="supervisingcontroller.zul">Supervising Controller (MVC)</a> </li>
 <li class="mvp"> <a href="passiveview.zul">Passive View (MVP)</a> </li>
-<li class="license"> <a href="http://www.apache.org/licenses/LICENSE-2.0">Opensource License</a> </li>
-<li class="doc"> <a href="http://books.zkoss.org/wiki/Small%20Talks/2011/November/Hello%20ZK%20MVVM">MVVM vs MVP Comparison Article</a> </li>
+<li class="doc"> <a href="http://www.ibm.com/developerworks/websphere/zones/portal/proddoc/zkjavaajax/">ZK GUI patterns paper</a> </li>
 <li class="cloud"> <a href="http://www.slideshare.net/simbo1905/zk-mvvm-spring-jpa-on-two-paas-clouds-10610874">MVVM PaaS Cloud Presentation</a> </li>
+<li class="license"> <a href="http://www.apache.org/licenses/LICENSE-2.0">Opensource License</a> </li>
 <li class="src"> <a href="https://github.com/simbo1905/ZkToDo2/">Get The Source</a> </li>
 </ul>
 

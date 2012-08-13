@@ -166,7 +166,7 @@ The Passive View Implementation
 
   Annotations within the Java class automatic wire screen components and event handlers into the Presenter object. The @VariableResolver (line 34) and @WireVariable (line 41) cause the domain services to be obtained from Spring. The @Wire annotations (lines 44-47) cause the screen GUI Components defined by the ZUL file to be injected. The @Listen annotations on the methods specify selectors to bind the Java methods onto the GUI widget event handlers.
 
-  The Presenter class is a GUI heavy component. The class implements ListitemRenderer and supplies the Listbox rendering method at line 147. The doAfterCompose method (line 54) populates the screen after it has been initialised by loading the entities from the service (line 58). It then sets itself as the render of the list model (line 61). These details are absent from the other examples which offload this work to the framework Binder which is configured by additional markup within the page. 
+  The Presenter class is a GUI heavy class. The class implements ListitemRenderer and supplies the Listbox rendering method at line 147. The doAfterCompose method (line 54) populates the screen after it has been initialised by loading the entities from the service (line 58). It then sets itself as the render of the list model (line 61). These details are absent from the other examples which offload this work to the framework Binder which is configured by additional markup within the page. 
 
 The Presentation Model Implementation
 
