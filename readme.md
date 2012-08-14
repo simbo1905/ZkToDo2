@@ -1,6 +1,8 @@
 
 #### This is the code for the "ZkToDo2" sample application with ZK, JPA & Spring
 
+[Here](http://www.ibm.com/developerworks/websphere/zones/portal/proddoc/zkjavaajax/) is the IBM developerWorks article 'Implementing event-driven GUI patterns using the ZK Java AJAX framework'. 
+
 [Here](http://www.slideshare.net/simbo1905/zk-mvvm-spring-jpa-on-two-paas-clouds-10610874) is the presentation given to the 2011 London ZK Users group. 
 
 [Here](http://www.slideshare.net/simbo1905/design-patterns-in-zk-java-mvvm-as-modelviewbinder) is the presentation of the idea of ZK MVVM given to the 2010 London ZK Users group.  
