@@ -30,9 +30,9 @@ Then:
 	
 Build:
 
-	Use the cloudforge maven profile to include the necessary utility jars into the final war:
+	Use the cloudfoundry maven profile to include the necessary utility jars into the final war:
 	
-		mvn -P cloudforge clean install
+		mvn -P cloudfoundry clean install
 
 Deploy first time:
 

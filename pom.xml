@@ -296,7 +296,7 @@
 	</build>
 	<profiles>
 		<profile>
-			<id>cloudforge</id>
+			<id>cloudfoundry</id>
 			<build>
 				<plugins>
 					<plugin>
@@ -305,7 +305,7 @@
 						<configuration>
 							<webResources>
 								<resource>
-									<directory>${basedir}/cloudforge</directory>
+									<directory>${basedir}/cloudfoundry</directory>
 									<targetPath>WEB-INF/classes</targetPath>
 								</resource>
 							</webResources>
