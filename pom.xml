@@ -19,7 +19,7 @@
 	</repositories>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<zk.version>6.0.1</zk.version>
+		<zk.version>6.0.2</zk.version>
 		<zkel.version>1.0.2</zkel.version>
 		<zkspring.version>3.1</zkspring.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
