@@ -7,6 +7,7 @@ import java.util.List;
 import org.zkforge.zktodo2.Model;
 import org.zkforge.zktodo2.Reminder;
 import org.zkforge.zktodo2.ReminderService;
+import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
@@ -58,8 +59,8 @@ public class Controller {
 		this.reminderService = reminderService;
 	}
 
-	@Init
-	public void init(@ContextParam(ContextType.VIEW) Component view){
+	@AfterCompose
+	public void afterCompose(@ContextParam(ContextType.VIEW) Component view){
 		Selectors.wireComponents(view, this, false);
 		reload();
 	}
