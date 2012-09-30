@@ -19,7 +19,7 @@ Running on the [Cloudfoundry PaaS Cloud](http://zktodo2.cloudfoundry.com/ "Cloud
 
 	git clone https://simbo1905@github.com/simbo1905/ZkToDo2.git
 	
-#### Building and running with default settings a PostgreSQL database host/db/user/passwd:
+#### Building and running with default settings of a PostgreSQL database:
 
 	mvn -Djetty.port=8080 -DDATABASE_URL=postgres://user:password@localhost/db package jetty:run
 
@@ -36,7 +36,7 @@ in file
 
 	src/main/webapp/WEB-INF/classes/postgresql.zktodo2.properties 
 
-may or may not create the required database tables depending on your database setup. Of course that setting is a bit lazy you can have hibernate generate the sql ddl script and use the local tools to manage your schema for a real app.
+may or may not create the required database table depending on your database setup. Of course that setting is a bit lazy you can have hibernate generate the sql ddl script and use the local tools to manage your schema for a real app.
 
 #### More documentation at: 
 

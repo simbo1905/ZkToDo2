@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?page title="ZkTodo2 - Application Model"?>
+<?page title="ZkTodo2 - Presentation Model"?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
 	<window title="ZkTodo2 - Application Model"
 		width="640px" border="normal" apply="org.zkoss.bind.BindComposer"
