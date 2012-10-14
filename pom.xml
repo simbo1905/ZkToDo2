@@ -6,7 +6,7 @@
 	<packaging>war</packaging>
 	<version>1.8.1</version>
 	<name>zktodo2</name>
-	<url>http://www.slideshare.net/simbo1905/design-patterns-in-zk-java-mvvm-as-modelviewbinder</url>
+	<url>http://www.ibm.com/developerworks/websphere/zones/portal/proddoc/zkjavaajax/</url>
 	<repositories>
 		<repository>
 			<id>zk repository</id>
