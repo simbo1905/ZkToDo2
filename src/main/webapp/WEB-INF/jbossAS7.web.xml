@@ -5,10 +5,18 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	metadata-complete="false">
 
+	<!-- 
+	JBoss AS7 Solution: 
+	Note that this solution is no longer keep up to date as upgraded to jetty on openshift. 
+	All that is different is that it references jbossAS7.datasource-context.xml and that 
+	references persistence.xml which uses a JNDI datasource which you have to setup inside 
+	of JBoss AS7 (either by web gui else editing the standalone.xml server file)
+	 -->
+
 	<!-- Spring -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/application-context.xml,/WEB-INF/spring/container.datasource-context.xml</param-value>
+		<param-value>/WEB-INF/spring/application-context.xml,/WEB-INF/spring/jbossAS7.datasource-context.xml</param-value>
 	</context-param>
 
 	<listener>

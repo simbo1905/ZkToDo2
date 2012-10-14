@@ -4,9 +4,15 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
 	version="1.0">
 
-	<!-- The following persistence unit uses a jboss OpenShift JNDI datasource. 
-		The file has to be given the name 'persistence.xml' to work in the container. 
-		Note: if you setup MySQL not PostgresQL then use java:jboss/datasources/MysqlDS -->
+	<!-- 
+		JBoss AS7 Solution: 
+		The file has to be given the name 'persistence.xml' to work in a J2EE container. 
+		The following sample persistence unit uses a JBoss Application JNDI datasource. 
+		This file is not in use anymore as all the demo apps run as jetty+spring which 
+		uses the default.persistence.xml to setup the datasource.  
+		Note: If you setup MySQL not PostgresQL then use java:jboss/datasources/MysqlDS 
+		Note: If your using a different J2EE container read their documentation. 
+		-->
 	<persistence-unit name="reminderDatabase"
 		transaction-type="RESOURCE_LOCAL">
 		<jta-data-source>java:jboss/datasources/PostgreSQLDS</jta-data-source>

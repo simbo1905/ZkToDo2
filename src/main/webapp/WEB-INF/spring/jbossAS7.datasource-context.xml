@@ -7,9 +7,13 @@
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd
 	">
+	
+	<!-- 
+	JBoss AS7 Solution: Note that this solution is no longer keep up to date as upgraded to jetty on openshift. 
+	 -->
 
 	<!-- 
-	use either mysql.zktodo2.properties or postgresql.zktodo2.properties
+	Try either mysql.zktodo2.properties or postgresql.zktodo2.properties on openshift AS7
 	 -->
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
