@@ -13,6 +13,10 @@ import org.springframework.context.annotation.Scope;
  * the system services and pushes entities into the Model. The Model therefore 
  * holds the users conversational state with the system. 
  * 
+ * There may not be a one-to-one relationship between controllers and model 
+ * so the model object is given spring-zk "desktop" scope so that any controllers 
+ * within the same desktop will be given the same model object to update. 
+ * 
  * {@see supervisingcontroller.zul}
  * {@see org.zkforge.zktodo2.ui.Controller}
  */
