@@ -13,21 +13,30 @@
             http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
     ">
  
- 	<jpa:repositories base-package="org.zkforge.zktodo2" />
- 
+	<!-- 
+	Spring Data setup of ReminderRepository queries by scanning the classes of a given package.. 
+	 -->
+	<jpa:repositories base-package="org.zkforge.zktodo2" />
+
+	<!--
+	Spring setup of ReminderService and Model class by scanning the classes of a given package. 
+	 -->
 	<context:component-scan base-package="org.zkforge.zktodo2"/>
 	
-	<!-- Enables ZK custom scopes for Spring Beans -->
-    <zksp:zk-config/>
+	<!-- 
+	Enables ZK custom scopes for Spring Beans as seen on Model class. 
+	-->
+	<zksp:zk-config/>
 
-	<!-- Spring TX with @Transactional annotations -->
+	<!-- 
+	Spring TX with @Transactional annotations as seen on ReminderService class. 
+	-->
 	<tx:annotation-driven />
 
+	<!-- 
+	@Transactional annotations on the ReminderService will interact with a JpaTransactionManager.
+	-->
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
 		p:entity-manager-factory-ref="entityManagerFactory" />
-
-	<!-- JPA config with @Repository annotations -->
-	<bean
-		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
 </beans>

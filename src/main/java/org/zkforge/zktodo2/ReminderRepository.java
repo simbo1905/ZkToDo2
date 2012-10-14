@@ -4,7 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 /**
- * Here we use spring-data for all the helper logic of working with queries.  
+ * Here we use spring-data for all the helper logic of working with queries. We 
+ * don't provide an implementation of this class as the runtime behaviour is 
+ * all provided by spring-data-jpa. 
  * 
  * We should really use a PagingAndSortingRepository but to keep the example simple
  * we will not. 
