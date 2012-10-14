@@ -23,8 +23,13 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Textbox;
 
 /**
- * This class demonstrates "Supervising Presenter" pattern. 
+ * This class demonstrates "Supervising Presenter" pattern. The state of the 
+ * user's interaction with the system is held in a separate Model class. The 
+ * binder is binding to the model. This class mediates the system services 
+ * then pushes to the Model class which is observed by the binder which then 
+ * updates the screen. 
  * 
+ * {@see supervisingcontroller.zul}
  * {@link http://martinfowler.com/eaaDev/SupervisingPresenter.html}
  */
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class) // wire with Spring

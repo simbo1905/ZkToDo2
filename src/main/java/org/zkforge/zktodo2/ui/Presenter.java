@@ -29,6 +29,7 @@ import org.zkoss.zul.Window;
  * This class demonstrates "Passive View" pattern as the Composer is 
  * doing all the explicit work of updating the UI. 
  * 
+ * {@see passiveview.zul}
  * {@link http://martinfowler.com/eaaDev/PassiveScreen.html}
  */
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)

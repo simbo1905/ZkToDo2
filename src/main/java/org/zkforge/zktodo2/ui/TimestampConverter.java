@@ -5,7 +5,10 @@ import java.util.Date;
 import org.zkoss.bind.BindContext;
 import org.zkoss.bind.Converter;
 import org.zkoss.zk.ui.Component;
-
+/**
+ * This class converts the java.sql type to java.util type for a datebox
+ * @author simbo
+ */
 @SuppressWarnings("rawtypes")
 public final class TimestampConverter implements Converter {
 	

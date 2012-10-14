@@ -10,6 +10,16 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 
+/**
+ * This class demonstrates "Presentation Model" pattern as the binder is 
+ * pulling data through this class which holds the current user state of
+ * interaction with the system services. This class also mediates the view's 
+ * interaction the system services. 
+ * 
+ * {@see persentationmodel.zul}
+ * 
+ * {@link http://martinfowler.com/eaaDev/PresentationModel.html}
+ */
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class) // wire with Spring
 public class ViewModel  {
 	

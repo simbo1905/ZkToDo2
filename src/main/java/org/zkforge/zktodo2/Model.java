@@ -7,6 +7,15 @@ import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
+/**
+ * This class is used by the SupervisingController example. The Model is 
+ * observed by the binder which updates the screen. The Controller mediates 
+ * the system services and pushes entities into the Model. The Model therefore 
+ * holds the users conversational state with the system. 
+ * 
+ * {@see supervisingcontroller.zul}
+ * {@see org.zkforge.zktodo2.ui.Controller}
+ */
 @Scope("desktop")
 @Named("model")
 public class Model {

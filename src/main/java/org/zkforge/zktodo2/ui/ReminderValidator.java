@@ -3,6 +3,10 @@ package org.zkforge.zktodo2.ui;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.validator.AbstractValidator;
 
+/**
+ * This class provides multi-field validation in the view which is executed by the 
+ * binder. 
+ */
 public class ReminderValidator extends AbstractValidator {
 
 	public void validate(ValidationContext ctx) {

@@ -9,6 +9,12 @@
 	">
 
 	<!-- 
+	This spring context snippet simply pulls a db url out of the system properties. 
+	See default.datasource-context.xml which uses that to setup a connection pool. 
+	A different fragment coudl get the string out of jndi or some special file on the 
+	server (hiding the password from developers). The web.xml puts the spring 
+	snippets together. 
+	
 	DATABASE_URL should be set with either "-DDATABASE_URL=postgres://user:password@hostname/dbname"
 	else with an environment variable. 
 	-->

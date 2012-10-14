@@ -7,7 +7,10 @@ import javax.inject.Named;
 
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
+/**
+ * A trivial transactional business service. In a real app a service may use 
+ * many repositories (DAOs) and may use many helper services.  
+ */
 @Named("reminderService")
 public class ReminderService {
 	@Inject

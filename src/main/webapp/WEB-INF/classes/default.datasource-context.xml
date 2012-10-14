@@ -7,6 +7,12 @@
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd
 	">
+	
+	<!-- 
+	This spring context snippet uses a dbUrl bean defined in another snippet 
+	to setup a connection pool which is given to a JPA entity manager factory. 
+	The web.xml puts the spring snippets together.
+	 -->
 
 	<!--
 	If you want a different database include a different properties file here. 
