@@ -2,7 +2,7 @@
 By default it requires a PostgreSQL db (source code has other working examples of mysql)
 This is picked up from a DATABASE_URL env variable such as
 
-	postgres://foodToGoUser:foodToGoPassword@localhost/testdb
+	postgresql://foodToGoUser:foodToGoPassword@localhost/testdb
 
 To switch to MySQL change src/main/WEB-INF/classes/default.datasource-context.xml 
 to refer to the other properties file. If you get the code working with other 
@@ -22,7 +22,7 @@ folders are on your path (see stackoverflow.com for where your JAVA_HOME will be
 	JAVA_HOME=/home/simon/jdk1.6
 	export JAVA_HOME
 	PATH=$JAVA_HOME\bin:$MAVEN_HOME\bin:$PATH
-	DATABASE_URL=postgres://foodToGoUser:foodToGoPassword@localhost/testdb
+	DATABASE_URL=postgresql://foodToGoUser:foodToGoPassword@localhost/testdb
 	export DATABASE_URL
 5) Run it
 	mvn -Djetty.port=8080 package jetty:run
@@ -48,7 +48,7 @@ out from Subversion e.g. cd C:\users\simon\projects\zktodo2
 binary PATH with the command
 	set PATH=%JAVA_HOME%\bin;%MAVEN_HOME%\bin;%PATH%
 8) Ensure that it knows the database connection details
-	set DATABASE_URL=postgres://foodToGoUser:foodToGoPassword@localhost/testdb
+	set DATABASE_URL=postgresql://foodToGoUser:foodToGoPassword@localhost/testdb
 9) Compile and run the jetty webcontainer with the maven command
 	mvn -Djetty.port=8080 clean install jetty:run
 jetty will stay running on port until you kill it by entering Ctrl+c  
