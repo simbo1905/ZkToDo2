@@ -5,10 +5,6 @@ Tested against Java8, ZK 7.0.1, Spring 3.2.8 and Hiberante 3.6.10
 
 [Here](http://www.ibm.com/developerworks/websphere/zones/portal/proddoc/zkjavaajax/) is the IBM developerWorks article 'Implementing event-driven GUI patterns using the ZK Java AJAX framework'. 
 
-[Here](http://www.slideshare.net/simbo1905/zk-mvvm-spring-jpa-on-two-paas-clouds-10610874) is the presentation given to the 2011 London ZK Users group. 
-
-[Here](http://www.slideshare.net/simbo1905/design-patterns-in-zk-java-mvvm-as-modelviewbinder) is the presentation of the idea of ZK MVVM given to the 2010 London ZK Users group.  
-
 #### See it in the clouds
 
 Running on the [OpenShift PaaS Cloud](http://zktd2-zkdemo.rhcloud.com/ "OpenShift PaaS Cloud") 
