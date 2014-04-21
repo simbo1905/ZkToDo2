@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<project name="Maven" xmlns="http://maven.apache.org/DECORATION/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd">
+	<bannerLeft>
+		<name>ZkToDo2</name>
+		<src>https://secure.gravatar.com/avatar/92ab9af5b2597efeee9eab0f0d782409</src>
+		<href>https://github.com/simbo1905</href>
+	</bannerLeft>
+
+	<skin>
+		<groupId>org.apache.maven.skins</groupId>
+		<artifactId>maven-fluido-skin</artifactId>
+		<version>1.2.1</version>
+	</skin>
+	<custom>
+		<fluidoSkin>
+			<sideBarEnabled>false</sideBarEnabled>
+		</fluidoSkin>
+	</custom>
+
+	<body>
+		<links>
+			<item name="simbo1905" href="https://github.com/simbo1905" />
+		</links>
+
+		<menu name="Regular Web Site">
+			<item name="Patterns" href="gui-patterns-with-zk.html" />
+		</menu>
+
+	</body>
+</project>

@@ -1,0 +1,129 @@
+
+Openshift Express Linux/Mac 
+
+First: 
+
+	Sign-up for Openshift Express and login to the web console. Add your ~/.ssh/id_rsa.pub 
+	key as your SSH PUBLIC KEY on openshift which will allow you to push code
+
+	Ensure that you can compile and run locally using the commmandline.build.and.run.txt
+	to know that your maven build is all working fully functional. 
+
+	Disclaimer: There are lots of steps here and so it is unlikely I can stay fully up to
+	date when they upgrade things. See the footnotes for where to find their docs. In 
+	short these steps worked for me once but your mileage may vary; use their community 
+	documentation to troubleshoot. 
+
+Install their toolbelt (their tools are ruby based):
+
+	sudo apt-get install ruby-full
+	sudo apt-get install rubygems1.8
+	sudo gem install rhc
+	
+	#ensure that gems is on your PATH; look for EXECUTABLE DIRECTORY in following
+	gem environment 
+	#then ensure that PATH has that on it
+	PATH=$PATH:/your/gems/path/bin
+	export PATH
+	
+	# then login to openshift with
+	rhc setup
+	# life is easier if you have it upload your ssh public key to the server when it asks for that. 
+
+Create Domain, Application and Database
+
+	Note this instructions create a new folder for your redhat cloud instance into which you will pull the demo 
+	sourcecode. So whilst you should try commmandline.build.and.run.txt to ensure maven is setup correctly 
+	you will need to work with a fresh folder to setup the server and will use git to pull the code into that folder
+
+	# if you don't have one yet you need to create a domain on their cloud (pick your own name not 'zkdemo')
+	rhc-create-domain -n zkdemo -l your@login.email -p 
+	
+	#setup the cloud app instance as DIY type (okay to set the app name to 'zktd2')
+	rhc app create -l your@login.email -pXXXXX -a zktd2 -t diy 
+
+	# details can be confirmed with by logging into the openshift web console
+	# your app is UUID@appname-namespace.rhcloud.com (e.g. 62f0ef4ab25b47de8702c9ed12bfdbaf@zktd2-zkdemo.rhcloud.com)
+	# ensure you can login to your cloud instance with "ssh UUID@appname-namespace.rhcloud.com"
+	# if you get permission denied add your local ~/.ssh/id_rsa.pub key 
+	# as your SSH PUBLIC KEY on your openshift console (this required to push code to the server)
+	
+	# add a postregsql database to your instance
+	# important! note down the details of your database including password, db, url (which has host ip) as output by this command
+	rhc cartridge add postgresql-9.2 --app zktd2 
+	
+	#ssh to your cloud instance, connect to the database and run a test query, create the table (find the UUID on your web console and use your app-domain.rhcloud.com)
+	#you may have to add your local ssh public key to your account using the web console. 
+	ssh 62f0ef4ab25b47de8702c9ed12bfdbaf@zktd2-zkdemo.rhcloud.com
+	# the password and ip to use were on the output of the create database command you ran as well as your database name
+	PGPASSWORD=${OPENSHIFT_POSTGRESQL_DB_PASSWORD} psql -h ${OPENSHIFT_POSTGRESQL_DB_HOST} -U ${OPENSHIFT_POSTGRESQL_DB_USERNAME} -d ${OPENSHIFT_GEAR_NAME}
+	select 1 as a, 2 as b, 3 as c;
+	CREATE TABLE reminder ( reminder_id bigint NOT NULL, date timestamp without time zone, name character varying(255), priority integer, CONSTRAINT reminder_pkey PRIMARY KEY (reminder_id ));
+	\q
+	exit
+	
+	# go into the server folder on your workstation and git pull in the demo source code into the server
+	cd zktd2/
+	# backup the readme file as it has interesting infomation about your app
+	cp README ..
+	#add the demo code repo to the folder
+	git remote add upstream https://simbo1905@github.com/simbo1905/ZkToDo2.git
+	# in the next command just hit return if asked for a password for downloading the code
+	git pull -s recursive -X theirs upstream master
+	# you can check that 'upstream' points to my demo code and 'origin' points to your server with 
+	git remote show upstream
+	git remote show origin
+	# insure the code build and deploys see commmandline.build.and.run.txt for full details
+	mvn package
+	#once you have it working push it up to 'origin' which should be your server which will build it and start the app
+	git push
+	#tail the logs in a second window
+	rhc-tail-files -a zktd2 
+	
+	Note: if your deployment does not go okay first time you may have to ssh into your server
+	and use "ps -ef" to find the java and postgresql processes and "kill -9" them. Then touch 
+	a source file and "git commit -a" followed by "git push" to rebuild and redeploy which 
+	should restart the database process. If you run into issues use the redhat forums. 
+
+Optional:
+
+	# the console shows you the ssh url of your openshift server repository so you can add it a fresh clone of my code with
+	git remote add openshift ssh://XXX@YY.rhcloud.com/~/git/ZZZZ.git/
+	git push openshift master
+	# search statckoverflow.com if you have git issues
+	
+	To connect to the cloud database server using local workstation tools take a look at port forwarding:
+	https://openshift.redhat.com/community/blogs/getting-started-with-port-forwarding-on-openshift
+
+	I am using OSX so I did the following as per the instructions at that link to make my workstation accept on my server ip of "127.6.171.129"
+
+	sudo ifconfig lo0 alias 127.6.171.129
+	
+	The tool only portforwards the known services, e.g. http on 8080 and postgresql. 
+	
+	To explicitly port forward the highport which JMX is running on :
+
+	ssh -N -v -L 127.6.171.129:15001:127.6.171.129:15001 c0cb210e032b4fbc8c06208c3236ed8c@myapp.rhcloud.com 
+
+	Then finally I could connect jconsole with a connection to
+
+	service:jmx:rmi://127.6.171.129:15001/jndi/rmi://127.6.171.129:15001/jmxrmi
+
+Foot Notes
+==========
+
+Most of their commands let you add "-p your_password". Note also that eclipse lets you create 
+run command which are external scripts so you can no doubt set it up so that you can tail 
+the server logs from inside of eclipse with an eclipse run. 
+
+Openshift started out only supporting MySQL but now also support postgresql.  
+
+There are some quickstart docs https://openshift.redhat.com/app/express#create_application
+
+Yet the full docs are at http://docs.redhat.com/ so try google "site:http://docs.redhat.com/ rhc-create-app"
+
+The instructions above do a source push (your code on their cloud) but you can also push only a WAR
+using a completely different set of commands. 
+
+End. 
+

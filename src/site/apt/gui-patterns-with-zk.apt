@@ -1,0 +1,475 @@
+	------
+	GUI Patterns With ZK
+	------
+
+Introduction
+
+  ZK is a rich internet application (RIA) framework which invokes Java event handlers running at the server in response DOM events from the browser. This allows an application developer to choose rich GUI patterns normally applied within desktop programming environments. 
+
+  This article will explore three Event Driven GUI Patterns using the ZK framework; "Passive View", "Supervising Controller" and "Presentation Model". The patterns are presented in the context a simple screen implemented three times using the approach outlined by each pattern.
+
+  The sourcecode for the article is available on GitHub at the {{{https://github.com/simbo1905/ZkToDo2/}ZkToDo2}} project. 
+
+Rich Client GUI Patterns
+
+  GUI patterns address the subject of how to organise code to make best use of GUI frameworks. ZK has an asynchronous, stateful, event-driven programming model known as a "rich client system". This article will contrast three rich client GUI architectural patterns as described by {{{http://martinfowler.com/eaaDev/}Martin Fowler}}: 
+
+  - Passive View: A screen of components with all application specific behaviour extracted into a dominant controller such that the GUI widgets have their state controlled entirely by the controller.  
+
+  - Supervising Controller: Factor the UI into a view and a controller where the view handles simple mapping to the underlying model and the controller handles input response and complex view logic. 
+
+  - Presentation Model: Represent the state and behaviour of the presentation independently of the GUI widgets used within the interface. 
+
+  It should be noted that each approach has its own opportunities and challenges. The optimal approach depends on the context of the application; both the organisation of the screens and of the business logic. 
+
+ZK Event Driven Programming
+
+  ZK is an event-driven, component-based framework that gives the illusion of painting the serverside "Desktop" of Java GUI widgets as HTML into the browser screen. This  makes it easier to write complex data driven GUIs using a Java rich client GUI API on the server. This section will provide an overview of the framework runtime which achieves this effect.
+
+  Figure 1 taken from the ZK Developer Guide shows an outline of a running ZK application. A browser request causes the ZK Loader to render ZUML (ZUL/XHTML) pages as a desktop of Java GUI widgets (Components) which are held within the HTTP Session. This desktop of serverside Java components is rendered to the browser as DHTML. Browser DOM events are dispatched by the ZK Client Engine (Javascript/jQuery) over AJAX to the ZK Asynchronous Update "AU" Engine (Java/Servlet). The ZK AU Engine then runs the serverside event handler of the corresponding Java GUI Component. 
+
+[http://books.zkoss.org/images/f/f5/Architecture-s.png] ZK Architecture Overview
+
+  Serverside Java event handlers attached to the desktop components then invoke the application business logic. Any modifications to the Java GUI Widgets made by the application event handlers are asynchronously returned to the browser in the AJAX response. The ZK Client Engine dynamically redraws the corresponding parts of the browser DOM in response to the asynchronous update.
+
+  ZK provides a databinding framework "ZK Bind" which removes the necessity of writing boilerplate code to move data between screen state (the GUI Widgets) and session state (the unsaved business entities). Attributes within the page configure the databinding of the screen components onto serverside object properties. Attributes may also configure "commandbindings" of screen event handlers onto serverside object methods. This capability allows developers to choose between the full gambit of MVP, MVC, MVVM and MVVMP patterns. 
+
+The Example Screen
+
+  The example user interface is the simple CRUD screen backed by a single database table shown below: 
+
+[./images/screen.png] Sample Screen
+
+  The sample code accompanying this article has the same screen implemented three times using the three GUI patterns. The simple backend of the screen is a JPA entity and a transactional service for performing persistence operations. The sourcecode is available on github.com under the Apache2 opensource licence. 
+
+  A detailed walk-through of the ZK features used in these screens is given in a near identical example within the official {{{http://books.zkoss.org/wiki/ZK_Getting_Started/Creating_a_Database-driven_Application}ZK documentation}}. The reader is encouraged to refer to that documented example to supplement the descriptions below. 
+
+The Passive View Implementation  
+
+  The "Passive View" implementation is shown within the file {{{https://github.com/simbo1905/ZkToDo2/blob/developerworks/src/main/webapp/passiveview.zul}passiveview.zul}} and the accompanying {{{https://github.com/simbo1905/ZkToDo2/blob/developerworks/src/main/java/org/zkforge/zktodo2/ui/Presenter.java}Presenter.java}} class. The name of the Java class refers to the pattern moniker "Model-View-Presenter (MVP)". Here is the entire ZUL screen: 
+
++--------------------------
+        <?xml version="1.0" encoding="UTF-8"?>
+    2 : <?page title="ZkTodo2 - Passive View"?>
+    3 : <zk xmlns="http://www.zkoss.org/2005/zul">
+    4 : <window title="ZkTodo2 - Passive View" width="640px" border="normal" apply="org.zkforge.zktodo2.ui.Presenter">
+    5 : <listbox id="list" multiple="true" rows="12">
+    6 :   <listhead>
+    7 :    <listheader label="Item" />
+    8 :    <listheader label="Priority" width="80px" />
+    9 :    <listheader label="Opened" width="90px" />
+   10 :   </listhead>
+   11 :  </listbox>
+   12 :  <vbox>
+   13 :     <hbox>
+   14 :     Item:<textbox id="name" cols="40" constraint="no empty"/>
+   15 :     Priority:<intbox id="priority" cols="1" constraint="no empty"/>
+   16 :     Date:<datebox id="date" cols="14" constraint="no empty"/>
+   17 :     </hbox>
+   18 :     <hbox>
+   19 :     <button id="add" label="Add" width="36px" height="24px"/>
+   20 :     <button id="delete" label="Delete" width="50px" height="24px"/>
+   21 :     <button id="update" label="Update" width="52px" height="24px"/>
+   22 :     </hbox>
+   23 :  </vbox> 
+   24 : </window>
+   25 : <button label="Reload Page"
+   26 : 	onClick='Clients.evalJavaScript("window.location = window.location;")' />
+   27 : </zk>
++--------------------------
+
+  Here are extracts from the Java file:
+
++--------------------------
+    1 : package org.zkforge.zktodo2.ui;
+
+   34 : @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
+   35 : public class Presenter extends SelectorComposer<Window> implements
+   36 : 		ListitemRenderer<Reminder> {
+
+   40 : 	// auto-wired property
+   41 : 	@WireVariable ReminderService reminderService;
+   42 : 
+   43 : 	// components
+   44 : 	@Wire Textbox name;
+   45 : 	@Wire Intbox priority;
+   46 : 	@Wire Datebox date;
+   47 : 	@Wire Listbox list;
+   48 : 	
+   49 : 	// conversation state
+   50 : 	ListModelList<Reminder> listModelList;	
+   51 : 	Reminder selectedReminder = new Reminder();
+   52 : 	
+   53 : 	@Override
+   54 : 	public void doAfterCompose(Window comp) throws Exception {
+   55 : 		super.doAfterCompose(comp); // super method wires the components
+   56 : 		// load the data and bind to the list then set self as list renderer
+   57 : 		listModelList = new ListModelList<Reminder>();
+   58 : 		List<Reminder> reminders = reminderService.findAll();
+   59 : 		listModelList.addAll(reminders);
+   60 : 		list.setModel(listModelList);
+   61 : 		list.setItemRenderer(this);
+   62 : 	}
+   63 : 	
+   64 : 	@Listen("onSelect = #list")
+   65 : 	public void select(SelectEvent<Listitem, Reminder> e){
+   66 : 		selectedReminder = e.getSelectedObjects().iterator().next();
+   67 : 		date.setValue(selectedReminder.getDate());
+   68 : 		priority.setValue(selectedReminder.getPriority());
+   69 : 		name.setValue(selectedReminder.getName());
+   70 : 		return;
+   71 : 	}
+   72 : 
+   73 : 	@Listen("onClick = #add")
+   74 : 	public void add(Event e) {
+   75 : 		Date dateValue = date.getValue();
+   76 : 		Integer priorityValue = priority.getValue();
+   77 : 		String nameValue = name.getValue();
+   78 : 		if( dateValue != null && priorityValue != null && nameValue != null ){
+   79 : 			Reminder reminder = new Reminder();
+   80 : 			reminder.setDate(date.getValue());
+   81 : 			reminder.setName(name.getValue());
+   82 : 			reminder.setPriority(priority.getValue());
+   83 : 			this.reminderService.persist(reminder);
+   84 : 			List<Reminder> reminders = this.reminderService.findAll();
+   85 : 			this.listModelList.clear();
+   86 : 			this.listModelList.addAll(reminders);
+   87 : 			this.selectedReminder = reminder;
+   88 : 		}
+   89 : 	}
+   90 : 
+   91 : 	@Listen("onClick = #update")
+   92 : 	public void update(Event e) {
+   93 : 		if( selectedReminder != null ){
+
+  116 : 		}
+  117 : 	}
+  118 : 
+  119 : 	@Listen("onClick = #delete")
+  120 : 	public void delete(Event e) {
+
+  142 : 	}
+  143 : 
+  144 : 	protected SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy");
+  145 : 	
+  146 : 	@Override
+  147 : 	public void render(Listitem listItem, Reminder reminder, int index) throws Exception {
+  148 : 		new Listcell(reminder.getName()).setParent(listItem);
+  149 : 		new Listcell(reminder.getPriority()+"").setParent(listItem);
+  150 : 		new Listcell(dateFormat.format(reminder.getDate())).setParent(listItem);
+  151 : 	}
+  152 : 
+  153 : }
++--------------------------
+
+  The ZUL page provides only the static layout of the screen. No display logic nor databindings are configured within the markup. The application logic is added into the page by the "apply" attribute in line 4. This names the Presenter class as the composer for this screen. 
+
+  Annotations within the Java class automatic wire screen components and event handlers into the Presenter object. The @VariableResolver (line 34) and @WireVariable (line 41) cause the domain services to be obtained from Spring. The @Wire annotations (lines 44-47) cause the screen GUI Components defined by the ZUL file to be injected. The @Listen annotations on the methods specify selectors to bind the Java methods onto the GUI widget event handlers.
+
+  The Presenter class is a GUI heavy class. The class implements ListitemRenderer and supplies the Listbox rendering method at line 147. The doAfterCompose method (line 54) populates the screen after it has been initialised by loading the entities from the service (line 58). It then sets itself as the render of the list model (line 61). These details are absent from the other examples which offload this work to the framework Binder which is configured by additional markup within the page. 
+
+The Presentation Model Implementation
+
+  The "Presentation Model" implementation is shown within the file {{{https://github.com/simbo1905/ZkToDo2/blob/developerworks/src/main/webapp/presentationmodel.zul}presentationmodel.zul}} and the accompanying {{{https://github.com/simbo1905/ZkToDo2/blob/developerworks/src/main/java/org/zkforge/zktodo2/ui/ViewModel.java}ViewModel.java}} class. The name of the Java refers to the moniker "Model-View-ViewModel (MVVM)". Here is the whole ZUL screen: 
+  
++--------------------------
+        <?xml version="1.0" encoding="UTF-8"?>
+    2 : <?page title="ZkTodo2 - Application Model"?>
+    3 : <zk xmlns="http://www.zkoss.org/2005/zul">
+    4 : 	<window title="ZkTodo2 - Application Model"
+    5 : 		width="640px" border="normal" apply="org.zkoss.bind.BindComposer"
+    6 : 		viewModel="@id('vm') @init('org.zkforge.zktodo2.ui.ViewModel')"
+    7 : 		validationMessages="@id('vmsgs')">
+    8 : 		<listbox id="list" multiple="true" rows="6"
+    9 : 			model="@load(vm.reminders)"
+   10 : 			selectedItem="@bind(vm.selectedReminder)">
+   11 : 			<listhead>
+   12 : 				<listheader label="Item" />
+   13 : 				<listheader label="Priority" width="80px" />
+   14 : 				<listheader label="Date" width="90px" />
+   15 : 			</listhead>
+   16 : 			<template name="model" var="reminder">
+   17 : 				<listitem>
+   18 : 					<listcell label="@load(reminder.name)" />
+   19 : 					<listcell label="@load(reminder.priority)" />
+   20 : 					<listcell label="@load(reminder.date)" />
+   21 : 				</listitem>
+   22 : 			</template>
+   23 : 		</listbox>
+   24 : 		<vlayout
+   25 : 			form="@id('r') @load(vm.selectedReminder) @save(vm.selectedReminder, before='save') @load(vm.selectedReminder, after='create') @validator('org.zkforge.zktodo2.ui.ReminderValidator')">
+   26 : 			<hlayout>
+   27 : 				Item:
+   28 : 				<textbox cols="40" instant="true"
+   29 : 					value="@bind(r.name)" />
+   30 : 				Priority:
+   31 : 				<intbox cols="2" instant="true"
+   32 : 					value="@bind(r.priority)" />
+   33 : 				Date:
+   34 : 				<datebox cols="14" instant="true"
+   35 : 					value="@bind(r.date) @converter('org.zkforge.zktodo2.ui.TimestampConverter')" />
+   36 : 			</hlayout>
+   37 : 			<hlayout>
+   38 : 				<button label="New" width="36px" height="24px"
+   39 : 					onClick="@command('create')" />
+   40 : 				<button label="Delete" width="46px"
+   41 : 					height="24px" onClick="@command('delete')" />
+   42 : 				<button label="Save" width="46px"
+   43 : 					height="24px" onClick="@command('save')" />
+   44 : 			</hlayout>
+   45 : 			<hlayout>
+   46 : 				<label style="color:red" value="@load(vmsgs['name'])" />
+   47 : 				<label style="color:red"
+   48 : 					value="@load(vmsgs['priority'])" />
+   49 : 				<label style="color:red" value="@load(vmsgs['date'])" />
+   50 : 			</hlayout>
+   51 : 		</vlayout>
+   52 : 	</window>
+   53 : 	<button label="Reload Page"
+   54 : 		onClick='Clients.evalJavaScript("window.location = window.location;")' />
+   55 : </zk>
++--------------------------
+  
+  At line 5 of the zul file the framework BindComposer is applied to the screen. This introduces databindings and commandbindings to map both screen state and screen events onto the serverside objects. The bindings are in the form of EL expressions within "@annotation" attributes. For example lines 18-20 have XML @load attributes which load the name, priority and date of the Reminder objects into Listcell components. 
+  
+  At line 6 an instance of the ViewModel class is assigned to the viewModel attribute of the window. This sets it as the target of the @command bindings that maps the button onClick event handles to serverside methods (lines 39, 41, 43). The ViewModel object is assigned the EL variable name 'vm'. 
+  
+  Here are extracts from the ViewModel java class: 
+
++--------------------------
+    1 : package org.zkforge.zktodo2.ui;
+
+   13 : @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class) // wire with Spring
+   14 : public class ViewModel  {
+   15 : 	
+   16 : 	// auto-wired property
+   17 : 	@WireVariable ReminderService reminderService = null;
+
+   27 : 	protected List<Reminder> reminders = new ArrayList<Reminder>();
+   28 : 	
+   29 : 	public List<Reminder> getReminders() {
+   30 : 		List<Reminder> rs = this.reminderService.findAll();
+   31 : 		this.reminders.clear();
+   32 : 		this.reminders.addAll(rs);
+   33 : 		return this.reminders;
+   34 : 	}
+   35 : 
+   36 : 	protected Reminder selectedReminder = new Reminder();
+
+   47 : 	@Command
+   48 : 	@NotifyChange({"reminders","selectedReminder"})
+   49 : 	public void delete() {
+   50 : 		if( this.selectedReminder.getId() != null ){
+   51 : 			try {
+   52 : 				this.reminderService.delete(selectedReminder);
+   53 : 				this.selectedReminder = new Reminder();
+   54 : 			} catch (Exception e) {
+   55 : 				e.printStackTrace();
+   56 : 			}
+   57 : 		}
+   58 : 	}
+   59 : 
+   60 : 	@Command
+   61 : 	@NotifyChange({"reminders","selectedReminder"})
+   62 : 	public void save() {
+   63 : 		if( this.selectedReminder.getId() != null ){
+   64 : 			try {
+   65 : 				this.reminderService.persist(selectedReminder);
+   66 : 			} catch (Exception e) {
+   67 : 				e.printStackTrace();
+   68 : 			}
+   69 : 		} else {
+   70 : 			this.reminderService.persist(this.selectedReminder);
+   71 : 		}
+   72 : 	}
+   73 : 	
+   74 : 	@Command
+   75 : 	@NotifyChange({"reminders","selectedReminder"})
+   76 : 	public void create() {
+   77 : 		this.selectedReminder = new Reminder();
+   78 : 	}
+   79 : 
+   80 : }
++--------------------------
+
+  Annotations within the Java class initialise the ViewModel object.  The @VariableResolver (line 13) and @WireVariable (line 17) annotations cause the domain services to be obtained from Spring. @Command annotations on the Java methods mark them as commandbinding methods for the framework binder. The @NotifyChange annotations on the Java methods indicate which state will be updated in response to commands. This indicates to the binder which properties should be reloaded into the screen after executing commands.  
+
+  The ViewModel class does not have references to GUI widgets nor GUI events. It's responsibility is to be the screen independent model of the users interaction with the application. It holds the session state in the properties 'reminders' (line 27) and 'selectedReminder' (line 36). The ViewModel is the mediator of the domain service 'reminderService' (line 17). 
+
+  An instance of the ViewModel is the target of the screen databindings; is the "bindmodel". The salient feature of the Presentation Model example is that the ViewModel is active and mediates the business services. The client of the ViewModel is the framework Binder which updates the GUI widgets. The user is interacting with the active bindmodel through screens animated by the framework Binder. 
+
+The Supervising Controller Implementation 
+
+  The "Supervising Controller" approach is shown within the file {{{https://github.com/simbo1905/ZkToDo2/blob/developerworks/src/main/webapp/supervisingcontroller.zul}supervisingcontroller.zul}}, the accompanying {{{https://github.com/simbo1905/ZkToDo2/blob/developerworks/src/main/java/org/zkforge/zktodo2/ui/Controller.java}Controller.java}} and {{{https://github.com/simbo1905/ZkToDo2/blob/developerworks/src/main/java/org/zkforge/zktodo2/Model.java}Model.java}} classes. The names of the Java classes refer to the pattern moniker "Model-View-Controller (MVC)". 
+
+  Here is the ZUL screen file: 
+  
++--------------------------
+        <?xml version="1.0" encoding="UTF-8"?>
+    2 : <?page title="ZkTodo2 - Supervising Controller"?>
+    3 : <zk xmlns="http://www.zkoss.org/2005/zul">
+    4 : <window title="ZkTodo2 - Supervising Controller" 
+    5 : 	width="640px" border="normal" apply="org.zkoss.bind.BindComposer"
+    6 : 	viewModel="@id('controller') @init('org.zkforge.zktodo2.ui.Controller')"
+    7 : 	validationMessages="@id('vmsgs')">
+    8 : 		<listbox id="list" multiple="true" rows="6"
+    9 : 			model="@load(controller.model.reminders) @load(controller.model.reminders, after={'create','save','delete'})"
+   10 : 			selectedItem="@bind(controller.model.selectedReminder)">
+   11 : 			<listhead>
+   12 : 				<listheader label="Item" />
+   13 : 				<listheader label="Priority" width="80px" />
+   14 : 				<listheader label="Date" width="90px" />
+   15 : 			</listhead>
+   16 : 			<template name="model" var="reminder">
+   17 : 				<listitem>
+   18 : 					<listcell label="@load(reminder.name)" />
+   19 : 					<listcell label="@load(reminder.priority)" />
+   20 : 					<listcell label="@load(reminder.date)" />
+   21 : 				</listitem>
+   22 : 			</template>
+   23 : 		</listbox>
+   24 : 		<vlayout
+   25 : 			form="@id('r') @load(controller.model.selectedReminder) @save(controller.model.selectedReminder, before='save') @load(controller.model.selectedReminder, after='create') @validator('org.zkforge.zktodo2.ui.ReminderValidator')">
+   26 : 			<hlayout>
+   27 : 				Item: <textbox cols="40" instant="true" id="name" value="@bind(r.name)" />
+   28 : 				Priority: <intbox cols="2" instant="true" id="priority" value="@bind(r.priority)" />
+   29 : 				Date: <datebox cols="14" instant="true" id="date" value="@bind(r.date) @converter('org.zkforge.zktodo2.ui.TimestampConverter')" />
+   30 : 			</hlayout>
+   31 : 			<hlayout>
+   32 : 				<button label="New" width="36px" height="24px" onClick="@command('create')" />
+   33 : 				<button label="Delete" width="46px" height="24px" onClick="@command('delete')" />
+   34 : 				<button label="Save" width="46px" height="24px" onClick="@command('save')" />
+   35 : 			</hlayout>
+   36 : 			<hlayout>
+   37 : 				<label style="color:red" value="@load(vmsgs['name'])" />
+   38 : 				<label style="color:red" value="@load(vmsgs['priority'])" />
+   39 : 				<label style="color:red" value="@load(vmsgs['date'])" />
+   40 : 			</hlayout>
+   41 : 		</vlayout>
+   42 : 	</window>
+   43 : 	<button label="Reload Page"
+   44 : 		onClick='Clients.evalJavaScript("window.location = window.location;")' />
+   45 : </zk>
++--------------------------
+
+  At line 5 the framework BindComposer is applied to the screen. At line 6 an instance of the Controller is made the target of the framework Binder. Much of the ZUL file is similar to the presentation model screen using databindings and commandbindings. The main difference is in the organisation of the Java code. The Controller object has a property 'controller.model' which is referenced in the databindings throughout the page. This property is an instance of class Model that represents the users session state with the application business logic. 
+  
+  Here are extracts from the Model class: 
+
++--------------------------
+    1 : package org.zkforge.zktodo2;
+
+   10 : @Scope("desktop")
+   11 : @Named("model")
+   12 : public class Model {
+
+   18 : 	protected Reminder selectedReminder = new Reminder();
+   19 : 
+   20 : 	public Reminder getSelectedReminder() {
+   21 : 		return this.selectedReminder;
+   22 : 	}
+   23 : 	
+   24 : 	public void setSelectedReminder(Reminder reminder) {
+   25 : 		this.selectedReminder = reminder;
+   26 : 	}
+   27 : 
+   28 : 	private List<Reminder> reminders = new ArrayList<Reminder>();
+   29 : 	
+   30 : 	public List<Reminder> getReminders() {
+   31 : 		return this.reminders;
+   32 : 	}
+   33 : }
++--------------------------
+  
+  The model is a simple bean holding the screen data in the properties 'selectedReminder' (line 18) and 'reminders' (line 28). At line 10 the spring bean is given "Desktop" scope. This binds the users application session state to the current ZK Desktop. 
+  
+  Here are extracts from the Controller class: 
+  
++--------------------------
+   30 : @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class) // wire with Spring
+   31 : public class Controller {
+   32 : 
+   33 : 	// wired components
+   34 : 	@Wire Textbox name;
+   35 : 	@Wire Intbox priority;
+   36 : 	@Wire Datebox date;
+   37 : 	@Wire Listbox list;
+   38 : 
+   39 : 	// wired property 	
+   40 : 	@WireVariable Model model = null; 
+
+   50 : 	// wired property
+   51 : 	@WireVariable ReminderService reminderService = null;
+
+   61 : 	@Init
+   62 : 	public void init(@ContextParam(ContextType.VIEW) Component view){
+   63 : 		Selectors.wireComponents(view, this, false);
+   64 : 		reload();
+   65 : 	}
+   66 : 	
+   67 : 	protected void reload() {
+   68 : 		List<Reminder> reminders = this.reminderService.findAll();
+   69 : 		this.model.getReminders().clear();
+   70 : 		this.model.getReminders().addAll(reminders);
+   71 : 	}
+
+   76 : 	@Command
+   77 : 	public void create(@ContextParam(ContextType.TRIGGER_EVENT) Event e) {
+   78 : 		Date dateValue = date.getValue();
+   79 : 		Integer priorityValue = priority.getValue();
+   80 : 		String nameValue = name.getValue();
+   81 : 		if( dateValue != null && priorityValue != null && nameValue != null ){
+   82 : 			Reminder reminder = new Reminder(nameValue, priorityValue, dateValue);
+   83 : 			this.reminderService.persist(reminder);
+   84 : 			this.model.setSelectedReminder(reminder);
+   85 : 			reload();
+   86 : 		}
+   87 : 		return;
+   88 : 	}
+
+   93 : 	@Command
+   94 : 	public void save(@ContextParam(ContextType.TRIGGER_EVENT) Event e) {
+   95 : 		Reminder selectedReminder = this.model.getSelectedReminder();
+   96 : 		if( selectedReminder != null ){
+   97 : 			try {
+   98 : 				this.reminderService.persist(selectedReminder);
+   99 : 			} catch (Exception exception){
+  100 : 				// not implemented
+  101 : 			}
+  102 : 			reload();
+  103 : 		}
+  104 : 	}
+
+  109 : 	@Command
+  110 : 	public void delete(@ContextParam(ContextType.TRIGGER_EVENT) Event e) {
+
+  121 : 	}
+  122 : 
+  123 : }
++--------------------------
+  
+  The controller is given an instance of the model bean (line 40) and the business service (line 51). Within the ZUL file 'controller.model' is the target of the databindings; it is the bindmodel. Within the methods the controller mediates the services and updates the bindmodel. 
+  
+  The salient feature of this implementation is the segregation of UI event processing and application conversational state. The responsibility of the controller object is to respond to screen events. The responsibility of the model is to represent the business state displayed on the screen. 
+
+  Within the sample code the Model object is passive and has no references to the business services. The Controller mediates the business services and "pushes" entities into the passive bindmodel. An alternative approach is to have the Model class have the references to the services rather than the Controller class. Then the Controller could then "pull" entities through the methods of an active bindmodel. 
+
+Pattern Comparison
+
+  The imperative rather than declarative nature of the Presenter within the Passive View example is it both its strength and its weakness. The display logic is very explicit making debugging simple. By explicitly handing all the display logic the code has fine-grained control; yet is verbose and screen specific. It requires developer discipline to keep screen logic separated from the business logic. 
+
+  Such fine-grained control of display logic is useful for creating re-usable screen fragments. As such it is compatible with the other approaches to build macro-widgets and standardised dialogue screens. Large scale screen presenters may be brittle as late feedback as to the layout and organisation of a screen could force a significant rewrite. JUnit testing of custom screen logic can be brittle and tedious.  
+
+  The declarative nature of the screen within the Presentation Model is both it's strength and it's weakness. The display logic is offloaded to the framework binder using the observer pattern. This may make debugging screen update problems difficult and can lead to excessive observer updates if care is not taken. On the other hand rendering is configured rather than programmed which should reduce development time. The absence of custom display code should make JUnit tests less brittle. 
+
+  The absence of GUI Widget references and GUI Events within ViewModel class used with Presentation Model encourages a clear segregation of display logic from business logic. This requires expertise in configuring the framework Binder to drive the screen by observing the ViewModel. In return for this investment different screens may be used to "skin" a ViewModel. A "ZK Touch" screen (jQuery Mobile) can render the ViewModel for a phone in addition regular pages rendering the same ViewModel for a traditional mouse driven screen. 
+
+  The flexibility of the Supervising Controller approach is both it's strength and it's weakness. A blend of the two other approaches may be taken. Databinding can be supplemented by direct GUI Widget updates from the controller as seen in the Passive View example. The model to which the screen is bound to can be a passive bindmodel (state only) or have methods which mediate business services like the Presentation Model example. It may aim to get the best of the other two approaches; but without care may achieve only their combined weaknesses.
+
+  The segregation of UI action processing from business session state seen in the Supervising Controller code is a traditional web application approach. Yet separation of state and behaviour can lead to brittle procedural logic rather than a supple object model. Business logic easily bleeds into procedural controllers making maintenance and reuse harder. On the other hand if the business logic is procedural or external in nature then the logic may naturally fall into a controller which mediates the business methods which then pushes the results into a passive bindmodel. 
+
+Summary 
+
+  This article has presented an overview of the implementation of three rich client GUI patterns using ZK. The definition of the patterns given by Martin Fowler provides a clear statement of intent; they are strategies to organize rich GUI code. 
+
+  An architectural pattern is an abstract concept; any implementation is an interpretation of an outline. The implementation has a context (framework, existing code, skills, requirements, process) which moderates the approach. The sample screen presented in this article application is trivial in nature. It would be ill advised to extrapolate the simple implementations as presented to a full scale system. Instead the examples serve only to encourage discussion as to the paths open to developers when using the ZK Framework; they are not a map but a suggestion of possible routes. To ask the question "which is the best strategy?" may be asking the question "who is first amongst equals?". Each pattern is an outline approach that has emerged in a response to real world experiences; as such they are each distilled wisdom. 

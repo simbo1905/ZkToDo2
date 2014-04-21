@@ -1,0 +1,18 @@
+---
+applications:
+  zktodo2-cf.zip:
+    name: simbo1905
+    framework:
+      name: standalone
+      info:
+        mem: 512M
+        description: Standalone Application
+        exec: 
+    runtime: java7
+    command: java $JAVA_OPTS jetty-runner-jmx.jar --port ${VCAP_APP_PORT} zktodo2.war
+    url: simbo1905.cloudfoundry.com
+    mem: 512M
+    instances: 1
+    services:
+      pg_zktodo2:
+        type: postgresql

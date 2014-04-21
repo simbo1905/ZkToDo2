@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+	<system-config>
+		<!-- 
+		Spring binds web scoped beans to the thread so we instructed ZK not 
+		to fork threads. That will prevent you from using certain suspend/resume
+		features. The line within the web.xml that requires that we disable 
+		the event thread is 
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+		-->
+		<disable-event-thread />
+	</system-config>
+</zk>

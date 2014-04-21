@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd
+	">
+
+	<bean id="vcapservices" class="org.intalio.cloudfoundry.vcapservices.impl.VCapServices" />
+	
+	<!-- 
+	If we are in cloudfoundry, the environment variable VCAP_SERVICES
+	contains the database connection in JSON.
+	
+	The factory will part VCAP_SERVICES when it exists and create from the first
+	postgres.* service the database connection URL.
+	If it does not exist, the factory will simply use the value of
+	the system property"-DDATABASE_URL=postgres://user:password@hostname/dbname"
+	-->	
+	<bean id="dbUrl" factory-bean="vcapservices" factory-method="getConnectionAsURI">
+		<constructor-arg value="DATABASE_URL" />
+		<constructor-arg value="postgresql" />
+		<constructor-arg value="/^postgres.*/" />
+	</bean>
+
+</beans>

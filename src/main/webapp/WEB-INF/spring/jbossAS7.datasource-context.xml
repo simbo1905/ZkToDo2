@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd
+	">
+	
+	<!-- 
+	JBoss AS7 Solution: Note that this solution is no longer keep up to date as upgraded to jetty on openshift. 
+	 -->
+
+	<!-- 
+	Try either mysql.zktodo2.properties or postgresql.zktodo2.properties on openshift AS7
+	 -->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:postgresql.zktodo2.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 
+		The following spring entity manager configuration has:
+			* No datasource set directly. It needs to set in the persistence.xml
+			* Uses the default container filename META-INF/persistence.xml
+	 -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+		p:persistence-xml-location="classpath:META-INF/persistence.xml">
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+				p:showSql="true" p:generateDdl="true">
+			</bean>
+		</property>
+		<property name="jpaProperties">
+			<value>
+				hibernate.ejb.naming_strategy=org.hibernate.cfg.ImprovedNamingStrategy
+				hibernate.dialect=${hibernate.dialect}
+				hibernate.hbm2ddl.auto=${hibernate.hbm2ddl.auto}
+			</value>
+		</property>
+	</bean>
+	
+</beans>

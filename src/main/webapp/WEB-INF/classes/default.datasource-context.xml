@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd
+	">
+	
+	<!-- 
+	This spring context snippet uses a dbUrl bean defined in another snippet 
+	to setup a connection pool which is given to a JPA entity manager factory. 
+	The web.xml puts the spring snippets together.
+	 -->
+
+	<!--
+	If you want a different database include a different properties file here. 
+	-->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:postgresql.zktodo2.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 
+	Connection pool config will parse the properties held in URL bean "dbUrl" and xyz.zktodo2.properties.
+	The bean "dbUrl" is defined in a separate spring config file as different cloud environments require 
+	different factories to resolve the database properties in a given cloud environment. 
+	 -->
+	<bean class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close" id="dataSource">
+		<property name="driverClassName" value="${database.driverClassName}" />
+		<property name="url"
+			value="#{ 'jdbc:postgresql://' + @dbUrl.getHost() + @dbUrl.getPath() }" />
+		<property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }" />
+		<property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }" />
+	</bean>
+
+	<!-- 
+		The following spring entity manager configuration has:
+			* A datasource set directly. 
+			* It does _not_ use the magic filename "META-INF/persistence.xml"
+		If you want to use a container datasource see the container.datasource-context.xml which
+		does use the magic file which specifies jndi for JBossAS7 and other containers. 
+	 -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+		p:persistence-xml-location="classpath:META-INF/default.persistence.xml"
+		p:data-source-ref="dataSource">
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+				p:showSql="true" p:generateDdl="true">
+			</bean>
+		</property>
+		<property name="jpaProperties">
+			<value>
+				hibernate.ejb.naming_strategy=org.hibernate.cfg.ImprovedNamingStrategy
+				hibernate.dialect=${hibernate.dialect}
+				hibernate.hbm2ddl.auto=${hibernate.hbm2ddl.auto}
+			</value>
+		</property>
+	</bean>
+
+</beans>

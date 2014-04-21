@@ -1,0 +1,40 @@
+
+Heroku Cloud (see http://devcenter.heroku.com/articles/git)
+
+Heroku Tools Linux/Mac Install Hint:
+
+	# http://toolbelt.heroku.com/linux/readme
+	sudo apt-get install ruby-full
+	
+First:
+
+	Build with the instructions in commandline.build.and.run.txt to ensure you have maven working fine
+
+Then:
+
+	#in the folder where you have the source and can compile build the app with commandline.build.and.run.txt
+	heroku login
+	#to recreate a new cloud instance to push the code up onto
+	heroku create --stack cedar
+	#the output of that command will give you the "http://APP_ID.herokuapp.com/" web url and the heroku git repo url "git@heroku.com:APP_ID.git" 
+	# (you can add this target to another copy of the code e.g. "git remote add heroku git@heroku.com:glowing-light-1070.git")
+	#push the code up to heroku to compile/package/deploy/start 
+	git push heroku master
+	#the following command opens a browser at the correct app (very helpful when you have different dev,qa,prod instances)
+	heroku open
+
+Running locally with Heroku toolbelt & PostgreSQL DB
+	
+	export DATABASE_URL=postgres://foodToGoUser:foodToGoPassword@localhost/testdb
+	mvn package
+	foreman start
+
+Footnotes
+
+	"hibernate.hbm2ddl.auto=update" in file src/main/webapp/WEB-INF/classes/postgresql.zktodo2.properties 
+	should create the required database table. Note that setting it to 'validate' 
+	is not something that Heroku db seems to like. Of course those setting is a bit lazy you can have 
+	hibernate generate the sql ddl script and use the local/heroku tools to manage your schema 
+	for a real app.
+	
+	Heroku started out only supporting postgresql but now also support mysql ("cleardb"). 
