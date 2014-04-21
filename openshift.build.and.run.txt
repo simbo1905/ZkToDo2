@@ -40,8 +40,8 @@ Create Domain, Application and Database
 	rhc-create-domain -n zkdemo -l your@login.email -p 
 	
 	#setup the cloud app instance as DIY type (okay to set the app name to 'zktd2')
-	rhc-create-app -a zktd2 -t diy-0.1  
-	
+	rhc app create -l your@login.email -pXXXXX -a zktd2 -t diy 
+
 	# details can be confirmed with by logging into the openshift web console
 	# your app is UUID@appname-namespace.rhcloud.com (e.g. 62f0ef4ab25b47de8702c9ed12bfdbaf@zktd2-zkdemo.rhcloud.com)
 	# ensure you can login to your cloud instance with "ssh UUID@appname-namespace.rhcloud.com"
@@ -50,12 +50,13 @@ Create Domain, Application and Database
 	
 	# add a postregsql database to your instance
 	# important! note down the details of your database including password, db, url (which has host ip) as output by this command
-	rhc-ctl-app -a zktd2 -e add-postgresql-8.4 
+	rhc cartridge add postgresql-9.2 --app zktd2 
 	
 	#ssh to your cloud instance, connect to the database and run a test query, create the table (find the UUID on your web console and use your app-domain.rhcloud.com)
+	#you may have to add your local ssh public key to your account using the web console. 
 	ssh 62f0ef4ab25b47de8702c9ed12bfdbaf@zktd2-zkdemo.rhcloud.com
 	# the password and ip to use were on the output of the create database command you ran as well as your database name
-	PGPASSWORD=${OPENSHIFT_DB_PASSWORD} psql -h ${OPENSHIFT_DB_HOST} -U ${OPENSHIFT_DB_USERNAME} -d zktd2
+	PGPASSWORD=${OPENSHIFT_POSTGRESQL_DB_PASSWORD} psql -h ${OPENSHIFT_POSTGRESQL_DB_HOST} -U ${OPENSHIFT_POSTGRESQL_DB_USERNAME} -d ${OPENSHIFT_GEAR_NAME}
 	select 1 as a, 2 as b, 3 as c;
 	CREATE TABLE reminder ( reminder_id bigint NOT NULL, date timestamp without time zone, name character varying(255), priority integer, CONSTRAINT reminder_pkey PRIMARY KEY (reminder_id ));
 	\q
