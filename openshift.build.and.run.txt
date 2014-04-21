@@ -65,7 +65,7 @@ Create Domain, Application and Database
 	# go into the server folder on your workstation and git pull in the demo source code into the server
 	cd zktd2/
 	# backup the readme file as it has interesting infomation about your app
-	cp README ..
+	cp README.md ..
 	#add the demo code repo to the folder
 	git remote add upstream https://simbo1905@github.com/simbo1905/ZkToDo2.git
 	# in the next command just hit return if asked for a password for downloading the code
@@ -78,7 +78,7 @@ Create Domain, Application and Database
 	#once you have it working push it up to 'origin' which should be your server which will build it and start the app
 	git push
 	#tail the logs in a second window
-	rhc-tail-files -a zktd2 
+	rhc tail zktd2
 	
 	Note: if your deployment does not go okay first time you may have to ssh into your server
 	and use "ps -ef" to find the java and postgresql processes and "kill -9" them. Then touch 
@@ -87,7 +87,7 @@ Create Domain, Application and Database
 
 Optional:
 
-	# the console shows you the ssh url of your openshift server repository so you can add it a fresh clone of my code with
+	# the console shows you the ssh url of your openshift server repository so you can add to it a fresh clone of my code with
 	git remote add openshift ssh://XXX@YY.rhcloud.com/~/git/ZZZZ.git/
 	git push openshift master
 	# search statckoverflow.com if you have git issues
@@ -112,18 +112,8 @@ Optional:
 Foot Notes
 ==========
 
-Most of their commands let you add "-p your_password". Note also that eclipse lets you create 
+Most of their commands let you add "-pYour_Password". Note also that eclipse lets you create 
 run command which are external scripts so you can no doubt set it up so that you can tail 
 the server logs from inside of eclipse with an eclipse run. 
 
-Openshift started out only supporting MySQL but now also support postgresql.  
-
-There are some quickstart docs https://openshift.redhat.com/app/express#create_application
-
-Yet the full docs are at http://docs.redhat.com/ so try google "site:http://docs.redhat.com/ rhc-create-app"
-
-The instructions above do a source push (your code on their cloud) but you can also push only a WAR
-using a completely different set of commands. 
-
 End. 
-
