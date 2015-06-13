@@ -3,7 +3,7 @@
 
 This is the sourcecode project from the white paper [Implementing event-driven GUI patterns using the ZK Java AJAX framework](http://www.ibm.com/developerworks/websphere/zones/portal/proddoc/zkjavaajax/). 
 
-Tested against Java8, ZK 7.0.1, Spring 3.2.8 and Hiberante 3.6.10 
+Tested against Java8, ZK 7.0.3, Spring 3.2.8 and Hiberante 3.6.10 
 
 #### See it in the clouds
 
