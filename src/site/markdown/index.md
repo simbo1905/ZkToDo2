@@ -17,7 +17,7 @@
 
 	mvn -Djetty.port=8080 -DDATABASE_URL=postgres://user:password@localhost/db package jetty:run
 
-within the source code there are config settings for running on mysql db, postgresql db and hsqldb see 
+within the source code there are config settings for running on mysql db, postgresql db and derby see 
 the commandline.build.and.run.txt for more details on switching to MySQL database.  
 
 #### Note

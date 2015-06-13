@@ -3,7 +3,7 @@
 
 This is the sourcecode project from the white paper [Implementing event-driven GUI patterns using the ZK Java AJAX framework](http://www.ibm.com/developerworks/websphere/zones/portal/proddoc/zkjavaajax/). 
 
-Tested against Java8, ZK 7.0.3, Spring 3.2.8 and Hiberante 3.6.10 
+Tested against Java8, ZK 7.0.3, Spring 3.2.13 and Hiberante 4.3.10.Final
 
 #### See it in the clouds
 
@@ -19,7 +19,7 @@ Running on the [Heroku PaaS Cloud](http://glowing-light-1070.herokuapp.com/ "Her
 
 	mvn -Djetty.port=8080 -DDATABASE_URL=postgres://user:password@localhost:port/db package jetty:run
 
-within the source code there are config settings for running on mysql db, postgresql db and hsqldb see 
+within the source code there are config settings for running on mysql db, postgresql db and derby see 
 the commandline.build.and.run.txt for more details on switching to MySQL database. See `opensshift.build.and.run.txt` for the create table command.  
 
 #### Note

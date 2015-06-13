@@ -11,3 +11,4 @@ zktodo2test.dat.properties
 /nohup.out
 /zktodo2-cf.zip
 /.DS_Store
+derby.log
