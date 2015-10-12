@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.zkoss.bind.annotation.Immutable;
 /**
  * The JPA entity which is rendered onto the screen.
  */
@@ -39,6 +40,7 @@ public class Reminder {
 		this.priority = priority;
 		this.date = date;
 	}
+	@Immutable // required with ZK 8 else the UI gives "Cannot create a proxy object:[class java.sql.Timestamp], an empty constructor is needed"
 	public Date getDate() {
 		return date;
 	}

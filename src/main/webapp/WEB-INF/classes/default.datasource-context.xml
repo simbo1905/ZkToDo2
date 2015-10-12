@@ -32,7 +32,7 @@
 	different factories to resolve the database properties in a given cloud environment. 
 	 -->
 	<bean class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close" id="dataSource">
+		destroy-method="close" id="dataSource" depends-on="dbUrl">
 		<property name="driverClassName" value="${database.driverClassName}" />
 		<property name="url"
 			value="#{ 'jdbc:postgresql://' + @dbUrl.getHost() + @dbUrl.getPath() }" />

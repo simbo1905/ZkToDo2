@@ -78,7 +78,7 @@ text-align: right;
 	</style>
 </head>
 <body>
-<h2>Welcome To The ZkToDo2 Patterns Demo Application (ZK 7.0 Refresh)</h2>
+<h2>Welcome To The ZkToDo2 Patterns Demo Application (ZK 8.0 Refresh)</h2>
 <ul id="bigbuttons">
 <li class="mvvm"> <a href="presentationmodel.zul">Presentation Model (MVVM)</a> </li>
 <li class="mvc"> <a href="supervisingcontroller.zul">Supervising Controller (MVC)</a> </li>
