@@ -6,7 +6,7 @@ import java.util.List;
 import org.zkforge.zktodo2.Reminder;
 import org.zkforge.zktodo2.ReminderService;
 import org.zkoss.bind.annotation.Command;
-import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.bind.annotation.SmartNotifyChange;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 
@@ -49,13 +49,13 @@ public class ViewModel  {
 		return this.selectedReminder;
 	}
 	
-	@NotifyChange
+	@SmartNotifyChange
 	public void setSelectedReminder(Reminder reminder) {
 		this.selectedReminder = reminder;
 	}
 	
 	@Command
-	@NotifyChange({"reminders","selectedReminder"})
+	@SmartNotifyChange({"reminders","selectedReminder"})
 	public void delete() {
 		if( this.selectedReminder.getId() != null ){
 			try {
@@ -68,7 +68,7 @@ public class ViewModel  {
 	}
 
 	@Command
-	@NotifyChange({"reminders","selectedReminder"})
+	@SmartNotifyChange({"reminders","selectedReminder"})
 	public void save() {
 		if( this.selectedReminder.getId() != null ){
 			try {
@@ -82,7 +82,7 @@ public class ViewModel  {
 	}
 	
 	@Command
-	@NotifyChange({"reminders","selectedReminder"})
+	@SmartNotifyChange({"reminders","selectedReminder"})
 	public void create() {
 		this.selectedReminder = new Reminder();
 	}
