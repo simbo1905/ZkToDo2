@@ -24,7 +24,7 @@
 		<geronimo-jta.version>1.1.1</geronimo-jta.version>
 		<commons-lang.version>2.6</commons-lang.version>
 		<commons-fileupload.version>1.3.1</commons-fileupload.version>
-		<commons-io.version>2.4</commons-io.version>
+		<commons-io.version>2.7</commons-io.version>
 		<servlet-api.version>2.4</servlet-api.version>
 		<junit.version>4.12</junit.version>
 		<concurrent.version>1.3.4</concurrent.version>
@@ -177,7 +177,7 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>${postgresql.version}</version>
-			<classifier />
+			<classifier/>
 		</dependency>
 		<dependency>
 			<groupId>commons-dbcp</groupId>
@@ -254,12 +254,10 @@
 						<configuration>
 							<tasks>
 								<jar destfile="${project.build.directory}/jetty-runner-jmx.jar">
-									<zipfileset
-										src="${project.build.directory}/dependency/jetty-jmx.jar" />
-									<zipfileset
-										src="${project.build.directory}/dependency/jetty-runner.jar" />
+									<zipfileset src="${project.build.directory}/dependency/jetty-jmx.jar"/>
+									<zipfileset src="${project.build.directory}/dependency/jetty-runner.jar"/>
 									<manifest>
-										<attribute name="Main-Class" value="org.mortbay.jetty.runner.Runner" />
+										<attribute name="Main-Class" value="org.mortbay.jetty.runner.Runner"/>
 									</manifest>
 								</jar>
 							</tasks>
