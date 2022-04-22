@@ -18,7 +18,7 @@
 		<zk.version>8.0.0</zk.version>
 		<zkspring.version>3.1.1</zkspring.version>
 		<spring.version>4.0.9.RELEASE</spring.version>
-		<spring-data-jpa.version>1.8.2.RELEASE</spring-data-jpa.version>
+		<spring-data-jpa.version>2.5.11</spring-data-jpa.version>
 		<hibernate-entitymanager.version>4.3.10.Final</hibernate-entitymanager.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
 		<geronimo-jta.version>1.1.1</geronimo-jta.version>
@@ -177,7 +177,7 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>${postgresql.version}</version>
-			<classifier />
+			<classifier/>
 		</dependency>
 		<dependency>
 			<groupId>commons-dbcp</groupId>
@@ -254,12 +254,10 @@
 						<configuration>
 							<tasks>
 								<jar destfile="${project.build.directory}/jetty-runner-jmx.jar">
-									<zipfileset
-										src="${project.build.directory}/dependency/jetty-jmx.jar" />
-									<zipfileset
-										src="${project.build.directory}/dependency/jetty-runner.jar" />
+									<zipfileset src="${project.build.directory}/dependency/jetty-jmx.jar"/>
+									<zipfileset src="${project.build.directory}/dependency/jetty-runner.jar"/>
 									<manifest>
-										<attribute name="Main-Class" value="org.mortbay.jetty.runner.Runner" />
+										<attribute name="Main-Class" value="org.mortbay.jetty.runner.Runner"/>
 									</manifest>
 								</jar>
 							</tasks>
