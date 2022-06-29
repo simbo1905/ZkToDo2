@@ -34,7 +34,7 @@
 		<dom4j.version>1.6.1</dom4j.version>
 		<jsr330.version>1</jsr330.version>
 		<slf4j.version>1.7.12</slf4j.version>
-		<derby.version>10.12.1.1</derby.version>
+		<derby.version>10.14.2.0</derby.version>
 	</properties>
 	<dependencies>
 		<dependency>
